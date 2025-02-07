@@ -10,6 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
+      
         $category=Category::paginate(5);
         return view('Back.Category.index',compact('category'));
     }
@@ -19,7 +20,7 @@ class CategoryController extends Controller
     }
     public function store(Request $request)
 {
-   
+//    dd($request->all());
     $request->validate([
         'Title' => 'required|string',
         'Slug' => 'required|string',

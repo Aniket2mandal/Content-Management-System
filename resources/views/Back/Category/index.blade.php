@@ -6,13 +6,13 @@
 <div class="card mt-4">
     <div class="card-header">
         <h3 class="card-title mt-4">Category List</h3>
-     @if(auth()->user()->hasRole('Admin'))
+   
         <div class="card-tools mt-4">
             <a href="{{ route('category.create') }}" class="btn btn-success">
                 Add New Category <i class="fas fa-plus"></i>
             </a>
         </div>
-        @endif
+  
     </div>
 
     <div class="card-body">
@@ -22,10 +22,10 @@
                     <th>Title</th>
                     <th>Slug</th>
                     <th>Description</th>
-                    @if(auth()->user()->hasAnyRole(['Admin','user']))
+                  
                     <th>Status</th>
                     <th>Action</th>
-            @endif
+          
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +35,7 @@
                         <td>{{ $categories->Slug }}</td>
                         <td>{{ $categories->Description }}</td>
                      
-                        @if(auth()->user()->hasAnyRole(['Admin','user']))
+                      
                         <td>
                             <!-- @if($categories->Status == 1)
                                 <span class="badge bg-success">Active</span>
@@ -61,7 +61,7 @@
                                 <i class="fas fa-trash"></i> <b>Delete</b>
                             </a>
                         </td>
-                        @endif
+                  
                  
                     </tr>
                 @endforeach

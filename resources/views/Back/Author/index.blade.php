@@ -6,13 +6,13 @@
 <div class="card mt-4">
     <div class="card-header">
         <h3 class="card-title mt-4">Author List</h3>
-        @if(auth()->user()->hasRole('Admin'))
+
         <div class="card-tools mt-4">
             <a href="{{ route('author.create') }}" class="btn btn-success">
                 Add New Author <i class="fas fa-plus"></i>
             </a>
         </div>
-        @endif
+
     </div>
 
     <div class="card-body">

@@ -21,7 +21,7 @@ class AuthorController extends Controller
     }
     public function store(Request $request)
     {
-        //  dd($request->Status);
+        //  dd($request->all());
         $request->validate([
             'Name' => 'required|string',
             'Description' => 'required|string',
@@ -37,7 +37,7 @@ class AuthorController extends Controller
         }
         $author = new Author;
         $author->Name = $request->Name;
-        $author->Description = $request->Description;
+        $author->Description = \strip_tags($request->Description);
         $author->Status = $request->Status;
         $author->image = $imageName;
         $author->save();
@@ -66,7 +66,7 @@ class AuthorController extends Controller
         }
         $author = Author::find($id);
         $author->Name = $request->Name;
-        $author->Description = $request->Description;
+        $author->Description = \strip_tags($request->Description);
         $author->Status = $request->Status;
         $author->image = $imageName;
         $author->save();

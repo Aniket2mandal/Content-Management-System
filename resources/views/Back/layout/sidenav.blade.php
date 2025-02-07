@@ -83,7 +83,7 @@
               </p>
             </a>
           </li> -->
-          @if(auth()->user()->hasRole('Admin'))
+          
           <li class="nav-item">
             <a href="#" class="nav-link">
             <!-- <use xlink:href="#person-sharp"></use> -->
@@ -115,7 +115,7 @@
             </ul>
 </li>
 
-@endif
+
 
 <li class="nav-item">
             <a href="#" class="nav-link">

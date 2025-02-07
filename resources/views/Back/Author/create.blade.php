@@ -37,7 +37,7 @@
                         id="Description"
                         name="Description"
                         rows="5"
-                        required></textarea>
+                        style="display: none;"></textarea>
                     {{-- Error Message --}}
                     @error('Description')
                     <div class="text-danger">{{ $message }}</div>
@@ -84,7 +84,7 @@
                 </div>
             </div>
 
-    </div>
+  
     <!--end::Body-->
 
     <!--begin::Footer-->
@@ -92,11 +92,13 @@
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
     </div>
+
     <div class="card-footer">
 
     </div>
     <!--end::Footer-->
     </form>
+    </div>
     <!--end::Form-->
 </div>
 <!--end::Quick Example-->

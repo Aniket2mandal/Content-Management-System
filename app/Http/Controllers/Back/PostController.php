@@ -14,20 +14,25 @@ class PostController extends Controller
 {
     public function index()
     {
+        // FOR POLICY
+     $this->authorize('viewany',Post::class);
         // $post = Post::paginate(5);
-        $post = Post::with('authors','categories')->paginate(5);
-
+        $post = Post::with('authors', 'categories')->paginate(5);
         return view('Back.Post.index', compact('post'));
     }
+
+    //FOR CREATING POSTS
     public function create()
     {
         $category = Category::all();
         $author = Author::all();
         return view('Back.Post.create', compact('category', 'author'));
     }
+
     public function store(Request $request)
     {
         // dd($request->all());
+        // $this->authorize('create',Post::class);
 
         $request->validate([
             'Title' => 'required|string',
@@ -43,8 +48,7 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
-        }
-        else{
+        } else {
             $imageName = null;
         }
 
@@ -61,7 +65,7 @@ class PostController extends Controller
         $post_author->author_id = $request->Author;
         $post_author->save();
 
-        $post_category= new PostCategory();
+        $post_category = new PostCategory();
         $post_category->post_id = $post->id;
         $post_category->category_id = $request->Category;
         $post_category->save();
@@ -69,17 +73,21 @@ class PostController extends Controller
         return redirect()->route('post.index')->with('success', 'Post Created Successfully');
     }
 
+
+    // FOR UPDATING POSTS
     public function edit($id)
     {
         // dd($id);
         $post = Post::find($id);
         $category = Category::all();
         $author = Author::all();
-        return view('Back.Post.edit', compact('post', 'category','author'));
+        return view('Back.Post.edit', compact('post', 'category', 'author'));
     }
 
     public function update(Request $request, $id)
     {
+      
+        
         // dd($request->all());
         $request->validate([
             'Title' => 'required|string',
@@ -92,17 +100,19 @@ class PostController extends Controller
 
         ]);
         $post = Post::find($id);
+
+     $this->authorize('edit',$post);
+     
         // dd($request->file('image'));
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
-        }
-        else{
-            $imageName = old('image',$post->image);
+        } else {
+            $imageName = old('image', $post->image);
         }
 
-       
-        if(!$post){
+
+        if (!$post) {
             return redirect()->route('post.index')->with('error', 'Post Not Found');
         }
         $post->Title = $request->Title;
@@ -113,8 +123,8 @@ class PostController extends Controller
         $post->save();
 
         // FOR POST AUTHOR 
-        $post_author =PostAuthor::where('post_id',$post->id)->first();
-        if(!$post_author){
+        $post_author = PostAuthor::where('post_id', $post->id)->first();
+        if (!$post_author) {
             $post_author = new PostAuthor();
         }
         $post_author->post_id = $post->id;
@@ -122,8 +132,8 @@ class PostController extends Controller
         $post_author->save();
 
         // FOR POST CATEGORY
-        $post_category= PostCategory::where('post_id',$post->id)->first();
-        if(!$post_category){
+        $post_category = PostCategory::where('post_id', $post->id)->first();
+        if (!$post_category) {
             $post_category = new PostCategory();
         }
         $post_category->post_id = $post->id;
@@ -158,6 +168,7 @@ class PostController extends Controller
 
     public function delete($id)
     {
+      
         // dd($id);
         Post::find($id)->delete();
         return redirect()->route('post.index')->with('success', 'Post Deleted Successfully');

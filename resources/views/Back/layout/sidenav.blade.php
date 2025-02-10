@@ -151,7 +151,17 @@
 </li>
 
 
-
+<li class="nav-item">
+            <a href="{{ route('page.index') }}" class="nav-link">
+            <!-- <use xlink:href="#person-sharp"></use> -->
+               <i class="fas fa-file"></i>
+              <p>
+               Pages
+                <!-- <span class="badge badge-info right">2</span> -->
+              </p>
+            </a>
+            
+</li>
 
 <li class="nav-item">
             <a href="#" class="nav-link">
@@ -164,6 +174,8 @@
             </a>
             
 </li>
+
+
               <!-- <li class="nav-item">
                 <a href="pages/layout/boxed.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

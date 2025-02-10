@@ -5,6 +5,7 @@
 use App\Http\Controllers\Back\AuthorController;
 use App\Http\Controllers\Back\CategoryController;
 use App\Http\Controllers\Back\DashboardController;
+use App\Http\Controllers\Back\PageController;
 use App\Http\Controllers\Back\PermissionController;
 use App\Http\Controllers\Back\PostController;
 use App\Http\Controllers\Back\RoleController;
@@ -108,5 +109,11 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/userupdate/{id}', [UserController::class, 'update'])->name('user.update');
         Route::post('/userstatus/{id}', [UserController::class, 'status'])->name('user.status');
         Route::get('/userdelete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+        // PAGES
+        Route::get('/pagehome',[PageController::class,'index'])->name('page.index');
+        Route::get('/pagecreate',[PageController::class,'index'])->name('page.create');
+        
+
 });
 

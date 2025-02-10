@@ -11,7 +11,7 @@ class AuthorController extends Controller
 {
     public function index()
     {
-        $author = Author::paginate(5);
+        $author = Author::paginate(20);
     
         return view('Back.Author.index', compact('author'));
     }

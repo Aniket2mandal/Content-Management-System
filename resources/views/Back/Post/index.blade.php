@@ -5,11 +5,11 @@
 <div class="card mt-4">
     <div class="card-header ">
         <h3 class="card-title mt-4">Post List</h3>
-       
+
         <div class="card-tools">
             <!-- <div class="input-group input-group-sm" style="width: 150px;"> -->
             <!-- <input type="text" name="table_search" class="form-control float-right" placeholder="Search" /> -->
-             @can('create', \App\Models\Post::class)
+            @can('create', \App\Models\Post::class)
             <div class="input-group-append mt-4">
                 <a href="{{route('post.create')}}" type="submit" class="btn btn-success">
                     Add New Post <i class="fas fa-plus"></i>
@@ -20,7 +20,7 @@
         </div>
     </div>
     @can('viewany', \App\Models\Post::class)
- 
+
     <div class="card-body ">
         <table class="table table-bordered table-striped mt-4">
             <thead class="table table-dark">
@@ -50,11 +50,11 @@
                     <td>@if ($posts && $posts->image)
                         <img src="{{ asset('images/' . $posts->image) }}" alt="Post Image" width="80" height="80">
                         @else
-                        <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image" width="80" height="80">
+                        <img src="{{ asset('adminlte/img/avatar.png')  }}" class="img-circle" alt="User Image" width="80" height="80">
                         @endif
                     </td>
                     <td>
-                    @if ($posts->categories->isNotEmpty()) <!-- Check if there are authors -->
+                        @if ($posts->categories->isNotEmpty()) <!-- Check if there are authors -->
                         @foreach($posts->categories as $category)
                         {{ $category->Title }}
                         @endforeach
@@ -72,30 +72,29 @@
                         @endif
                     </td>
                     <td>
-
+                        @can('changeStatus',App\Models\Post::class)
                         <div class="form-group ">
                             <!-- Toggle switch (default checked for Active) -->
                             <input type="hidden" name="Status" class="Status" value="0">
                             <input type="checkbox" name="Status" class="Status" data-id="{{$posts->id}}" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status',$posts->Status) ? 'checked' : '' }}>
                             <!-- <small class="form-text text-muted">Switch to set the status to active or inactive</small> -->
                         </div>
-                   
+                        @endcan
                     </td>
-                      
+
                     <td class="">
-                    <!-- @if(auth()->user()->can('edit post')) -->
-                     @can('edit',$post)
+
+                        @can('edit',App\Models\Post::class)
                         <a href="{{route('post.edit',$posts->id)}}" class="btn btn-primary btn-sm me-2 ">
                             <i class="fas fa-pencil-alt"></i> <b>Edit</b>
                         </a>
                         @endcan
-                   <!-- @endif -->
 
-                   @can('delete',$post)
-                        <a href="{{route('post.delete',$posts->id)}}" class="btn btn-danger btn-sm ml-2 ">
-                            <i class="fas fa-trash"></i> <b>Delete</b>
-                        </a>
-                    @endcan
+
+                        @can('delete',App\Models\Post::class)
+                        <button id="delete" data-id="{{ $posts->id }}" class="delete-btn btn btn-danger btn-sm"><i class="fas fa-trash"></i> <b>Delete</b></button>
+
+                        @endcan
                     </td>
                 </tr>
                 @endforeach
@@ -126,7 +125,7 @@
                     // SweetAlert2 success popup
                     Swal.fire({
                         title: 'Success!',
-                        text: 'The Category status has been updated.',
+                        text: 'The post status has been updated.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
@@ -142,6 +141,54 @@
                 }
             });
         });
+
+        $('.delete-btn').click(function() {
+            var postId = $(this).data('id');
+            console.log(postId);
+            swal.fire({
+                title: "Are You Sure?",
+                text: "Do you want to delete the item ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, proceed',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("yess it is");
+                    $.ajax({
+                        method: 'GET',
+                        url: '/postdelete/' + postId,
+
+                        success: function(response) {
+
+                            // SweetAlert2 success popup
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'The post deleted sucessfully.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+
+                                // Remove the post element from the DOM (you can select the post by its ID or class)
+                                $('#post-' + postId).remove(); // Assuming each post has an id like "post-1", "post-2", etc.
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle any errors
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while deleting the post.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
+
+            });
+        });
+
     });
 </script>
 

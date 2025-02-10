@@ -23,17 +23,19 @@ class PostPolicy
     return $user->hasPermissionTo('create post');
    }
 
-   public function edit(User $user,Post $post){
+   public function edit(User $user){
     // logic not matched
-    return $user->hasRole('Admin')||($user->hasPermissionTo('update post') && $user->id===$post->authors->contains('author_id',$user->id));
+    // return $user->hasRole('Admin')||($user->hasPermissionTo('update post') && $user->id===$post->authors->contains('author_id',$user->id));
+      return $user->hasPermissionTo('edit post');
    }
 
-   public function delete(User $user,Post $post){
-    return $user->hasPermissionTo('delete post')||$user->id===$post->authors->contains('id',$user->id);
+   public function delete(User $user){
+    // return $user->hasPermissionTo('delete post')||$user->id===$post->authors->contains('id',$user->id);
+    return $user->hasPermissionTo('delete post');
    }
 
-   public function changeStatus(User $user,Post $post){
-    return $user->hasPermissionTo('change status')||$user->id===$post->authors->contains('id',$user->id);
+   public function changeStatus(User $user){
+    return $user->hasPermissionTo('change status');
    }
 
 }

@@ -64,16 +64,24 @@
                     <label for="status" class="form-label">Status</label>
                    <button type="button" class="btn btn-success" id="Status">Active</button>
                 </div> -->
+              
                 <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="inputGroupFile02" name="image"  onchange="previewImage(event)" />
+                    <input type="file" class="form-control" id="inputGroupFile02" name="image" onchange="previewImage(event)" />
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
+
+                    @if(isset($post) && $post->image)
+                    <div class="input-group mb-3 mt-2">
+                        <img src="{{ asset('images/' . $post->image) }}" alt="Old Image" style="max-height: 100px; max-width: 100px;">
+                        <!-- <p>Current image</p> -->
+                    </div>
+                    @endif
                     {{-- Error Message --}}
                     @error('image')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                   
-                
+
+
                 <!-- Image Preview -->
                 <div class="mt-3" id="imagePreviewContainer" style="position: relative; display: none;">
                     <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="width: 100px; border: 1px solid #ddd; padding: 5px;">
@@ -91,44 +99,44 @@
                         </select>
                     </div> -->
 
-                    <div class="form-group ">
-                <label for="status">Status:</label><br>
-                <!-- Toggle switch (default checked for Active) -->
-                <input type="hidden" name="Status" value="0">
-                <input type="checkbox" name="Status" id="Status" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status',$post->Status) ? 'checked' : '' }}>
-                <small class="form-text text-muted">Switch to set the status to active or inactive</small>
-            </div>
+                <div class="form-group ">
+                    <label for="status">Status:</label><br>
+                    <!-- Toggle switch (default checked for Active) -->
+                    <input type="hidden" name="Status" value="0">
+                    <input type="checkbox" name="Status" id="Status" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status',$post->Status) ? 'checked' : '' }}>
+                    <small class="form-text text-muted">Switch to set the status to active or inactive</small>
+                </div>
 
 
-                    <div class="mb-3 col-md-4">
-                        <label for="status" class="form-label">Category</label>
-                        <select class="form-control select2" id="Category" name="Category" required>
-                            <option value="" selected>Select Category</option>
-                            @foreach($category as $item)
-                            <option value="{{ $item->id }}"{{old('Category',$item->Title)?'selected':''}}>{{ $item->Title }}</option>
-                            @endforeach
-                        </select>
-                        {{-- Error Message --}}
+                <div class="mb-3 col-md-4">
+                    <label for="status" class="form-label">Category</label>
+                    <select class="form-control select2" id="Category" name="Category" required>
+                        <option value="" selected>Select Category</option>
+                        @foreach($category as $item)
+                        <option value="{{ $item->id }}" {{old('Category',$item->Title)?'selected':''}}>{{ $item->Title }}</option>
+                        @endforeach
+                    </select>
+                    {{-- Error Message --}}
                     @error('Category')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
-                    </div>
+                </div>
 
-                    <div class="mb-3 col-md-4">
-                        <label for="status" class="form-label">Author</label>
-                        <select class="form-control select2" id="Author" name="Author" required>
-                            <option value="" selected>Select Author</option>
-                            @foreach($author as $item)
-                            <option value="{{ $item->id }}" {{old('Author',$item->Name)?'selected':''}}>{{ $item->Name }}</option>
-                            @endforeach
-                        </select>
-                        {{-- Error Message --}}
+                <div class="mb-3 col-md-4">
+                    <label for="status" class="form-label">Author</label>
+                    <select class="form-control select2" id="Author" name="Author" required>
+                        <option value="" selected>Select Author</option>
+                        @foreach($author as $item)
+                        <option value="{{ $item->id }}" {{old('Author',$item->Name)?'selected':''}}>{{ $item->Name }}</option>
+                        @endforeach
+                    </select>
+                    {{-- Error Message --}}
                     @error('Author')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
-                    </div>
+                </div>
 
-                    <!-- <div class="mb-3 col-md-6">
+                <!-- <div class="mb-3 col-md-6">
     <label for="catefory" class="form-label">Category</label>
     <select class="form-control select2" id="Category" name="Category" required>
     <option value="" selected>Select Category</option>
@@ -136,22 +144,22 @@
                          
 
     </select> -->
-                </div>
             </div>
     </div>
-    <!--end::Body-->
+</div>
+<!--end::Body-->
 
-    <!--begin::Footer-->
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
-    </div>
-    <div class="card-footer">
+<!--begin::Footer-->
+<div class="card-footer">
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" id="cancelButton" class="btn btn-danger">Cancel</button>
+</div>
+<div class="card-footer">
 
-    </div>
-    <!--end::Footer-->
-    </form>
-    <!--end::Form-->
+</div>
+<!--end::Footer-->
+</form>
+<!--end::Form-->
 </div>
 <!--end::Quick Example-->
 </div>

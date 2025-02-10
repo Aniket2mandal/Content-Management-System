@@ -36,9 +36,15 @@
                 </div>
 
                 <!-- Description Field with TinyMCE Editor -->
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="Description" rows="5" required>{{ $category->Description }}</textarea>
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea
+
+                        class="form-control"
+                        id="Description"
+                        name="Description"
+                        rows="5"></textarea>
+              
                     {{-- Error Message --}}
                     @error('Description')
                     <div class="text-danger">{{ $message }}</div>

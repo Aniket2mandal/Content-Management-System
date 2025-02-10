@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
@@ -20,9 +21,9 @@ class UserSeeder extends Seeder
             // $userRole = Role::findByName('user');
         
             // // Assigning roles to existing users
-            // $adminUser = User::find(2); // Assuming the user with ID 1 is an admin
-            // $adminUser->syncRoles($adminRole);
-        
+            $password=Hash::make('password');
+            $adminUser = User::create(['name' => 'super admin','email'=>'super@gmail.com','password'=>$password,'status'=>1]);
+            $adminUser->syncRoles('super admin');
            
         }
     }

@@ -100,7 +100,10 @@
     </script>
     <script>
     $(document).ready(function() {
-        $('#Permission').select2();
+        $('#Permission').select2({
+        
+        });
+       
     });
 </script>
 <!-- Select2 JavaScript -->

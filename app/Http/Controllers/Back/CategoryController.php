@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
       
-        $category=Category::paginate(5);
+        $category=Category::paginate(20);
         return view('Back.Category.index',compact('category'));
     }
     public function create()
@@ -35,7 +35,7 @@ class CategoryController extends Controller
     $category = new Category();
     $category->Title = $request->Title;
     $category->Slug = $request->Slug;
-    $category->Description = $request->Description;
+    $category->Description = \strip_tags($request->Description);
     $category->Status = $request->Status;
     $category->save();
 
@@ -64,7 +64,7 @@ public function update(Request $request, $id)
     $category = Category::find($id);
     $category->Title = $request->Title;
     $category->Slug = $request->Slug;
-    $category->Description = $request->Description;
+    $category->Description = \strip_tags($request->Description);
     $category->Status = $request->Status;
     $category->save();
     return redirect()->route('category.index')->with('success', 'Category Updated Successfully');

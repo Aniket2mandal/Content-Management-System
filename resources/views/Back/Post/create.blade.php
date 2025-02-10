@@ -42,7 +42,7 @@
                     <label for="summary" class="form-label">Summary</label>
                     <textarea
                         class="form-control"
-                        id="Summary"
+                        id="Description"
                         name="Summary"
                         rows="5"></textarea>
                 </div>

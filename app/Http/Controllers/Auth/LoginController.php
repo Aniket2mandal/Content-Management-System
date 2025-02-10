@@ -40,21 +40,19 @@ class LoginController extends Controller
         ]);
     // Check if the user exists and email is verified
     $user = User::where('email', $request->email)->first();
+    // dd($user->status);
     if (Auth::attempt(['email'=>$request->email,'password'=>$request->password])) {
+        if($user->status ===0){
+            Auth::logout();
+            return redirect('/login')->withErrors(['Your account is inactive. Please contact support.']);
+      }
         $user = Auth::user();
-             if($user->status ==0){
-                Auth::logout();
-                return redirect()->route('login')->withErrors(['Your account is inactive. Please contact support.']);
-                // return redirect('/login');
-        }
         return redirect('/dashboard');
     }
     return redirect('/login');
 
         // $user = Auth::user();
-        // dd($user);
-    
-    
+        // dd($user); 
         
     }
 

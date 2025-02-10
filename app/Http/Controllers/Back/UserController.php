@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::with('userimage')->paginate(5);
+        $user = User::with('userimage')->paginate(20);
         return view('Back.User.index', compact('user'));
     }
     public function create()
@@ -84,6 +84,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::with('userimage')->find($id);
+        // dd($user->roles);
         $roles = Role::all();
         return view('Back.User.create', compact('user', 'roles'));
     }
@@ -99,17 +100,21 @@ class UserController extends Controller
             'Status' => 'integer',
             'Role' => 'required|string'
         ]);
+        // dd($request->Role);
         //  dd($request->existing_image);
         $user = User::find($id);
+      
         if ($request->hasFile('image')) {
-            if ($user->userimage && file_exists(storage_path('app/public/images/' . $user->userimage->image))) {
-                unlink(storage_path('app/public/images/' . $user->userimage->image)); // Delete the old image
-
+            if ($user->userimage && file_exists(public_path('images'). $user->userimage->image)){
+                if (is_file(public_path('images') . '/' . $user->userimage->image)) {
+                    unlink(public_path('images') . '/' . $user->userimage->image); // Delete the old image
+                }
+                // unlink(public_path('images'). $user->userimage->image); // Delete the old image
             }
             // Store the new image
-            $imageName = $request->file('image')->store('images', 'public');
-            // $imageName = time() . '.' . $request->image->extension();
-            // $request->image->move(public_path('images'), $imageName);
+            // $imageName = $request->file('image')->store('images', 'public');
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
         } else {
             $imageName = $request->input('existing_image');
         }
@@ -123,6 +128,7 @@ class UserController extends Controller
             $user->removeRole($user->roles->first());
             $user->assignRole($request->Role);
         }
+        $user->assignRole($request->Role);
         // if ($request->has('Role') && !empty($request->Role)) {
         //     // $user->removeRole($user->roles);
         //     $user->assignRole($request->Role);

@@ -54,7 +54,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->Title = $request->Title;
-        $post->Description = $request->Description;
+        $post->Description = \strip_tags($request->Description);
         $post->Summary = $request->Summary;
         $post->Status = $request->Status;
         $post->image = $imageName;
@@ -78,7 +78,9 @@ class PostController extends Controller
     public function edit($id)
     {
         // dd($id);
+        // dd(auth()->user()->permissions);
         $post = Post::find($id);
+
         $category = Category::all();
         $author = Author::all();
         return view('Back.Post.edit', compact('post', 'category', 'author'));
@@ -101,7 +103,9 @@ class PostController extends Controller
         ]);
         $post = Post::find($id);
 
-     $this->authorize('edit',$post);
+        // CHECK THE USER IS AUTHORIZE OR NOT BEFOR EDITING POST
+    //  $this->authorize('edit',$post);
+    
      
         // dd($request->file('image'));
         if ($request->hasFile('image')) {
@@ -116,7 +120,7 @@ class PostController extends Controller
             return redirect()->route('post.index')->with('error', 'Post Not Found');
         }
         $post->Title = $request->Title;
-        $post->Description = $request->Description;
+        $post->Description = \strip_tags($request->Description);
         $post->Summary = $request->Summary;
         $post->Status = $request->Status;
         $post->image = $imageName;
@@ -168,9 +172,12 @@ class PostController extends Controller
 
     public function delete($id)
     {
+    //   dd($id);
+      $post=  Post::find($id);
+    // $this->authorize('delete',$post);
+      $post->delete();
       
-        // dd($id);
-        Post::find($id)->delete();
-        return redirect()->route('post.index')->with('success', 'Post Deleted Successfully');
+      return response()->json(['success' => true]);
+        // return redirect()->route('post.index')->with('success', 'Post Deleted Successfully');
     }
 }

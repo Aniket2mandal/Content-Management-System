@@ -112,8 +112,13 @@ Route::middleware(['auth'])->group(function () {
 
         // PAGES
         Route::get('/pagehome',[PageController::class,'index'])->name('page.index');
-        Route::get('/pagecreate',[PageController::class,'index'])->name('page.create');
-        
+        Route::get('/pagecreate',[PageController::class,'create'])->name('page.create');
+        Route::post('/pagestore',[PageController::class,'store'])->name('page.store');
+        Route::get('/pageedit/{id}',[PageController::class,'edit'])->name('page.edit');
+        Route::put('/pageupdate/{id}',[PageController::class,'update'])->name('page.update');
+        Route::get('/pagedelete/{id}',[PageController::class,'delete'])->name('page.delete');
+        Route::post('/pagestatus/{id}',[PageController::class,'status'])->name('page.status');
+
 
 });
 

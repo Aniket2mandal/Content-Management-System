@@ -9,16 +9,16 @@
         <div class="card-tools">
             <!-- <div class="input-group input-group-sm" style="width: 150px;"> -->
             <!-- <input type="text" name="table_search" class="form-control float-right" placeholder="Search" /> -->
-          
+
             <div class="input-group-append mt-4">
-              
-                <button id="create" data-toggle="modal" data-target="#createEventModal" class="create-btn btn btn-success"> Add New Page <i class="fas fa-plus"></i></button>
+
+                <button id="create" class="create-btn btn btn-success"> Add New Page <i class="fas fa-plus"></i></button>
             </div>
-   
+
             <!-- </div> -->
         </div>
     </div>
-    
+
 
     <div class="card-body ">
         <table class="table table-bordered table-striped mt-4">
@@ -32,55 +32,50 @@
                     <th>Description</th>
                     <th>Status</th>
                     <th>Action</th>
-                  
-                 
+
+
                 </tr>
             </thead>
             <tbody>
                 @php
                 $i=1;
                 @endphp
-               
+                @foreach($pages as $page)
                 <tr class="align-middle">
                     <td>{{$i++}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$page->Page_title}}</td>
+                    <td>{{$page->Page_slug}}</td>
+                    <td>{{$page->Page_summary}}</td>
+                    <td>{{$page->Page_description}}</td>
                     <td>
-                       
+
                         <div class="form-group ">
                             <!-- Toggle switch (default checked for Active) -->
                             <input type="hidden" name="Status" class="Status" value="0">
-                            <input type="checkbox" name="Status" class="Status" data-id="" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status') ? 'checked' : '' }}>
+                            <input type="checkbox" name="Status" class="Status" data-id="{{$page->id}}" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status',$page->Page_status) ? 'checked' : '' }}>
                             <!-- <small class="form-text text-muted">Switch to set the status to active or inactive</small> -->
                         </div>
-                        
+
                     </td>
 
                     <td class="">
+                        <button id="edit" data-id="{{$page->id}}" class=" edit-btn btn-primary btn-sm"> <i class="fas fa-pencil-alt"></i> <b>Edit</b></button>
+                        <button id="delete" data-id="{{$page->id}}" class="delete-btn btn btn-danger btn-sm"><i class="fas fa-trash"></i> <b>Delete</b></button>
 
-                        
-                        <a href="" class="btn btn-primary btn-sm me-2 ">
-                            <i class="fas fa-pencil-alt"></i> <b>Edit</b>
-                        </a>
-                        <button id="delete" data-id="" class="delete-btn btn btn-danger btn-sm"><i class="fas fa-trash"></i> <b>Delete</b></button>
-
-                  
                     </td>
                 </tr>
-             
+                @endforeach
             </tbody>
         </table>
         <!-- Pagination -->
-     
+
     </div>
 </div>
 <!-- <button class="btn btn-successs" data-toggle="modal" data-target="#createEventModal">Create Event</button> -->
 
 <!-- Modal -->
 <div class="modal fade" id="createEventModal" tabindex="-1" role="dialog" aria-labelledby="createEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createEventModalLabel">Create Page</h5>
@@ -89,7 +84,7 @@
                 </button>
             </div>
             <div class="modal-body">
-            @include('Back.Pages.create') ;
+                @include('Back.Pages.create') ;
             </div>
         </div>
     </div>
@@ -101,9 +96,10 @@
         $('.Status').change(function() {
             var postId = $(this).data('id');
             var Status = $(this).prop('checked') ? '1' : '0';
+            console.log(postId + Status);
             $.ajax({
                 method: 'POST',
-                url: '/poststatus/' + postId,
+                url: '/pagestatus/' + postId,
                 data: {
                     '_token': '{{csrf_token()}}',
                     'Status': Status
@@ -113,7 +109,7 @@
                     // SweetAlert2 success popup
                     Swal.fire({
                         title: 'Success!',
-                        text: 'The post status has been updated.',
+                        text: 'The page status has been updated.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
@@ -146,7 +142,7 @@
                     console.log("yess it is");
                     $.ajax({
                         method: 'GET',
-                        url: '/postdelete/' + postId,
+                        url: '/pagedelete/' + postId,
 
                         success: function(response) {
 
@@ -157,7 +153,7 @@
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {
-
+                                location.reload();
                                 // Remove the post element from the DOM (you can select the post by its ID or class)
                                 $('#post-' + postId).remove(); // Assuming each post has an id like "post-1", "post-2", etc.
                             });
@@ -177,7 +173,61 @@
             });
         });
 
+        // Show the modal for creating a new page
+        $('#create').on('click', function() {
+            // Clear the form before opening the modal
+            $('#eventForm')[0].reset();
 
+            // Change form action and method for creating a new page
+            $('#eventForm').attr('action', '/pagestore');
+            $('#eventForm').attr('method', 'POST');
+
+            // Open the modal
+            $('#createEventModal').modal('show');
+        });
+
+        // Show the modal for editing an existing page
+        $('.edit-btn').on('click', function() {
+            var pageId = $(this).data('id'); // Assuming you're passing the page ID in the button's data-id attribute
+            console.log(pageId);
+            // Set up the form action and method for editing
+            $('#eventForm').attr('action', '/pageupdate/' + pageId); // Adjust URL with page ID
+            $('#eventForm').attr('method', 'PUT');
+            //    url='/pageedit/' + pageId;
+            //    console.log(url);
+            // Populate the form with the current data for editing
+            $.ajax({
+                url: '/pageedit/' + pageId,
+                // Endpoint to fetch the existing page data
+                type: 'GET',
+
+                success: function(response) {
+                    console.log(response);
+                 
+                    // Populate the form with the data from the response
+                    $('#title').val(response.data.Page_title);
+                    $('#slug').val(response.data.Page_slug);
+                    // FOR STATUS
+                    
+                    $('#Status').closest('.form-group').remove();
+                    
+                    $('#summary').val(response.data.Page_summary);
+                    tinymce.get('Description').setContent(response.data.Page_description);  // Set content in TinyMCE editor
+
+                    $('#createEventModal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to load page data.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+
+        // Submit form when modal is saved
         $('#eventForm').on('submit', function(e) {
             e.preventDefault();
 
@@ -185,23 +235,29 @@
             console.log(formData); // Debug statement
 
             $.ajax({
-                url: '',
-                type: 'POST',
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
                 data: formData,
                 success: function(response) {
-                    console.log("Success response:", response); // Debug statement
-                    alert('Event created successfully');
-                    location.reload();
-                },
-                error: function(xhr) {
-                    console.log("Error response:", xhr); // Debug statement
-                    var errors = xhr.responseJSON ? xhr.responseJSON.errors : {'error': 'Internal Server Error'};
-                    var errorHtml = '<div class="alert alert-danger"><ul>';
-                    $.each(errors, function(key, value) {
-                        errorHtml += '<li>' + value + '</li>';
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'The page created sucessfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+
+                        $('#createEventModal').modal('hide'); //Hide the modal after success
                     });
-                    errorHtml += '</ul></div>';
-                    $('.modal-body').prepend(errorHtml);
+
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while saving the page.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
         });

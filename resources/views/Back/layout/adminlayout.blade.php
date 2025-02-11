@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Add Bootstrap Toggle CSS in your <head> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   
 
 </head>
@@ -73,8 +75,7 @@
 <!-- Select2 JS -->
 
 
-<!-- Add Bootstrap Toggle CSS in your <head> -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
 
 <!-- Add Bootstrap Toggle JS before the closing </body> tag -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -106,6 +107,7 @@
        
     });
 </script>
+
 <!-- Select2 JavaScript -->
 <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
 

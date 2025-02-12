@@ -13,13 +13,13 @@ class RoleController extends Controller
     {
         $roles = Role::paginate(20);
         // $permission=$roles->permissions;
-        return view('Back.Role.index',compact('roles'));
+        return view('backend.role.index',compact('roles'));
     }
     public function create()
     {
       
         $permissions=Permission::all();
-        return view('Back.Role.create',compact('permissions',));
+        return view('backend.role.create',compact('permissions',));
     }
 
     public function store(Request $request)
@@ -47,19 +47,21 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $permissions = Permission::all();
-        return view('Back.Role.create', compact('role', 'permissions'));
+        return view('backend.role.edit', compact('role', 'permissions'));
     }
 
     public function update(Request $request, $id)
     {
+     
+        
         $request->validate([
             'Name' => 'required|string',
             'Slug' => 'required|string',
             'Permission'=>'nullable|array'
         ]);
         $role = Role::find($id);
-        $role->Name = $request->Name;
-        $role->Slug = $request->Slug;
+        $role->name = $request->Name;
+        $role->slug = $request->Slug;
         if ($request->has('Permission') && !empty($request->Permission)) {
             $role->syncPermissions($request->Permission);
         }

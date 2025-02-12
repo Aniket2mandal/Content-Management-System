@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -26,7 +27,8 @@ class DatabaseSeeder extends Seeder
 
     $this->call([
         PermissionSeeder::class,
-        UserSeeder::class
+        UserSeeder::class,
+        RoleSeeder::class
     ]);
 
 }

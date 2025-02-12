@@ -11,13 +11,13 @@ class PermissionController extends Controller
     public function index()
     {
         $permission=Permission::paginate(20);
-        return view('Back.Permission.index',compact('permission'));
+        return view('backend.permission.index',compact('permission'));
     }
 
     public function create()
     {
      
-        return view('Back.Permission.create');
+        return view('backend.permission.create');
     }
 
     public function store(Request $request)
@@ -37,6 +37,6 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $permission = Permission::find($id);
-        return view('Back.Permission.edit', compact('permission'));
+        return view('backend.permission.edit', compact('permission'));
     }
 }

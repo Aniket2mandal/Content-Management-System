@@ -9,4 +9,5 @@ class PostCategory extends Model
 {
     use HasFactory;
     protected $fillable = ['post_id', 'category_id'];
+    public $timestamps = true; 
 }

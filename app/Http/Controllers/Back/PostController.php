@@ -15,18 +15,19 @@ class PostController extends Controller
     public function index()
     {
         // FOR POLICY
-     $this->authorize('viewany',Post::class);
+        $this->authorize('viewany', Post::class);
         // $post = Post::paginate(5);
         $post = Post::with('authors', 'categories')->paginate(5);
-        return view('Back.Post.index', compact('post'));
+        return view('backend.post.index', compact('post'));
     }
 
     //FOR CREATING POSTS
     public function create()
     {
-        $category = Category::all();
-        $author = Author::all();
-        return view('Back.Post.create', compact('category', 'author'));
+        $category = Category::where('Status', 1)->get();
+        // dd($category);
+        $author = Author::where('Status', 1)->get();
+        return view('backend.post.create', compact('category', 'author'));
     }
 
     public function store(Request $request)
@@ -47,7 +48,7 @@ class PostController extends Controller
         // dd($request->file('image'));
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/post'), $imageName);
         } else {
             $imageName = null;
         }
@@ -55,20 +56,16 @@ class PostController extends Controller
         $post = new Post();
         $post->Title = $request->Title;
         $post->Description = \strip_tags($request->Description);
-        $post->Summary = $request->Summary;
+        $post->Summary = \strip_tags($request->Summary);
         $post->Status = $request->Status;
         $post->image = $imageName;
         $post->save();
 
-        $post_author = new PostAuthor();
-        $post_author->post_id = $post->id;
-        $post_author->author_id = $request->Author;
-        $post_author->save();
+        // Sync Categories (Assuming Category IDs are passed in the request)
+        $post->categories()->sync($request->Category);
 
-        $post_category = new PostCategory();
-        $post_category->post_id = $post->id;
-        $post_category->category_id = $request->Category;
-        $post_category->save();
+        // Sync Authors (Assuming Author IDs are passed in the request)
+        $post->authors()->sync($request->Author);
 
         return redirect()->route('post.index')->with('success', 'Post Created Successfully');
     }
@@ -81,15 +78,14 @@ class PostController extends Controller
         // dd(auth()->user()->permissions);
         $post = Post::find($id);
 
-        $category = Category::all();
-        $author = Author::all();
-        return view('Back.Post.edit', compact('post', 'category', 'author'));
+        $category = Category::where('Status', 1)->get();
+        // dd($category);
+        $author = Author::where('Status', 1)->get();
+        return view('backend.post.edit', compact('post', 'category', 'author'));
     }
 
     public function update(Request $request, $id)
     {
-      
-        
         // dd($request->all());
         $request->validate([
             'Title' => 'required|string',
@@ -104,13 +100,12 @@ class PostController extends Controller
         $post = Post::find($id);
 
         // CHECK THE USER IS AUTHORIZE OR NOT BEFOR EDITING POST
-    //  $this->authorize('edit',$post);
-    
-     
+        //  $this->authorize('edit',$post);
+
         // dd($request->file('image'));
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/post'), $imageName);
         } else {
             $imageName = old('image', $post->image);
         }
@@ -121,7 +116,7 @@ class PostController extends Controller
         }
         $post->Title = $request->Title;
         $post->Description = \strip_tags($request->Description);
-        $post->Summary = $request->Summary;
+        $post->Summary = \strip_tags($request->Summary);
         $post->Status = $request->Status;
         $post->image = $imageName;
         $post->save();
@@ -172,12 +167,12 @@ class PostController extends Controller
 
     public function delete($id)
     {
-    //   dd($id);
-      $post=  Post::find($id);
-    // $this->authorize('delete',$post);
-      $post->delete();
-      
-      return response()->json(['success' => true]);
+        //   dd($id);
+        $post =  Post::find($id);
+        // $this->authorize('delete',$post);
+        $post->delete();
+
+        return response()->json(['success' => true]);
         // return redirect()->route('post.index')->with('success', 'Post Deleted Successfully');
     }
 }

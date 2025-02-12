@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
@@ -15,25 +15,25 @@ class CategoryPolicy
      * @return void
      */
     public function viewany(User $user){
-        return $user->hasPermissionTo('view category');
+        return $user->hasPermissionTo('view role');
         }
      
         public function create(User $user){
-         return $user->hasPermissionTo('create category');
+         return $user->hasPermissionTo('create role');
         }
      
         public function edit(User $user){
          // logic not matched
          // return $user->hasRole('Admin')||($user->hasPermissionTo('update post') && $user->id===$post->authors->contains('author_id',$user->id));
-           return $user->hasPermissionTo('edit category');
+           return $user->hasPermissionTo('edit role');
         }
      
         public function delete(User $user){
          // return $user->hasPermissionTo('delete post')||$user->id===$post->authors->contains('id',$user->id);
-         return $user->hasPermissionTo('delete category');
+         return $user->hasPermissionTo('delete role');
         }
      
-        public function changeStatus(User $user){
-         return $user->hasPermissionTo('change category status');
+        public function assignrole(User $user){
+         return $user->hasPermissionTo('assign role');
         }
 }

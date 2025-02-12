@@ -40,8 +40,15 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete user', 'slug' => 'delete-users']);
         Permission::create(['name' => 'view user', 'slug' => 'view-users']);
 
+        // PAGE CRUD PERMISSIONS
+        Permission::create(['name' => 'create page', 'slug' => 'create-page']);
+        Permission::create(['name' => 'edit page', 'slug' => 'edit-page']);
+        Permission::create(['name' => 'delete page', 'slug' => 'delete-page']);
+        Permission::create(['name' => 'view page', 'slug' => 'view-page']);
+
         // Role Permissions
         Permission::create(['name' => 'assign role', 'slug' => 'assign-roles']);
+        Permission::create(['name' => 'create role', 'slug' => 'create-roles']);
         Permission::create(['name' => 'edit role', 'slug' => 'edit-roles']);
         Permission::create(['name' => 'delete role', 'slug' => 'delete-roles']);
         Permission::create(['name' => 'view role', 'slug' => 'view-roles']);
@@ -51,7 +58,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'assign permission', 'slug' => 'assign-permissions']);
 
         // STATUS PERMISSIOSN
-        Permission::create(['name' => 'change status','Slug'=>'change-status']);
+        Permission::create(['name' => 'change user status','Slug'=>'change-user-status']);
+        Permission::create(['name' => 'change author status','Slug'=>'change-author-status']);
+        Permission::create(['name' => 'change category status','Slug'=>'change-category-status']);
+        Permission::create(['name' => 'change post status','Slug'=>'change-post-status']);
 
     }
 }

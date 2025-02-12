@@ -12,11 +12,11 @@ class CategoryController extends Controller
     {
       
         $category=Category::paginate(20);
-        return view('Back.Category.index',compact('category'));
+        return view('backend.category.index',compact('category'));
     }
     public function create()
     {
-        return view('Back.Category.create');
+        return view('backend.category.create');
     }
     public function store(Request $request)
 {
@@ -46,7 +46,7 @@ class CategoryController extends Controller
 public function edit($id)
 {
     $category = Category::find($id);
-    return view('Back.Category.edit',compact('category'));
+    return view('backend.category.edit',compact('category'));
 }
 
 public function update(Request $request, $id)

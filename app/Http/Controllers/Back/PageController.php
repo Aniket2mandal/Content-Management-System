@@ -12,12 +12,12 @@ class PageController extends Controller
     public function index()
     {
         $pages = Page::paginate(20);
-        return view('Back.Pages.index', compact('pages'));
+        return view('backend.pages.index', compact('pages'));
     }
 
     public function create()
     {
-        return view('Back.Pages.create');
+        return view('backend.pages.create');
     }
 
     public function store(Request $request)

@@ -13,12 +13,12 @@ class Post extends Model
 
     public function authors()
     {
-        return $this->belongsToMany(Author::class, 'post_authors', 'post_id', 'author_id');
+        return $this->belongsToMany(Author::class, 'post_authors', 'post_id', 'author_id')->withTimestamps();;
     }
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'post_categories', 'post_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'post_categories', 'post_id', 'category_id')->withTimestamps();;
     }
     
 }

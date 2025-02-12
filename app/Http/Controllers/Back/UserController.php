@@ -13,14 +13,14 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::with('userimage')->paginate(20);
-        return view('Back.User.index', compact('user'));
+        $user = User::with('userimage')->where('email', '!=', 'super@gmail.com')->paginate(20);
+        return view('backend.user.index', compact('user'));
     }
     public function create()
     {
         $user = null;
         $roles = Role::all();
-        return view('Back.User.create', compact('roles', 'user'));
+        return view('backend.user.create', compact('roles', 'user'));
     }
 
     public function store(Request $request)
@@ -38,7 +38,7 @@ class UserController extends Controller
         // dd($request->Role);
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/user'), $imageName);
         } else {
             $imageName = null;
         }
@@ -48,8 +48,8 @@ class UserController extends Controller
         $user->Name = $request->Name;
         $user->Email = $request->Email;
         $user->password = Hash::make($request->password);
-        if (!$request->Role){
-        $user->assignRole('user');
+        if (!$request->Role) {
+            $user->assignRole('user');
         }
         $user->assignRole($request->Role);
         $user->Status = $request->Status;
@@ -86,35 +86,48 @@ class UserController extends Controller
         $user = User::with('userimage')->find($id);
         // dd($user->roles);
         $roles = Role::all();
-        return view('Back.User.create', compact('user', 'roles'));
+        return view('backend.user.edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'Name' => 'required|string',
-            'Email' => 'required|email',
-            // 'password' => 'required|min:8|confirmed', // No need for custom rules here
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'existing_image' => 'nullable|string',
-            'Status' => 'integer',
-            'Role' => 'required|string'
-        ]);
+        if ($request->password) {
+            $request->validate([
+                'Name' => 'required|string',
+                'Email' => 'required|email',
+                'password' => '|min:8|confirmed', // No need for custom rules here
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'existing_image' => 'nullable|string',
+                'Status' => 'integer',
+                'Role' => 'required|string'
+            ]);
+        } else {
+            $request->validate([
+                'Name' => 'required|string',
+                'Email' => 'required|email',
+                // 'password' => '|min:8|confirmed', // No need for custom rules here
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'existing_image' => 'nullable|string',
+                'Status' => 'integer',
+                'Role' => 'required|string'
+            ]);
+        }
         // dd($request->Role);
         //  dd($request->existing_image);
         $user = User::find($id);
-      
+        // dd($user->password);
+
         if ($request->hasFile('image')) {
-            if ($user->userimage && file_exists(public_path('images'). $user->userimage->image)){
-                if (is_file(public_path('images') . '/' . $user->userimage->image)) {
-                    unlink(public_path('images') . '/' . $user->userimage->image); // Delete the old image
+            if ($user->userimage && file_exists(public_path('images/user') . $user->userimage->image)) {
+                if (is_file(public_path('images/user') . '/' . $user->userimage->image)) {
+                    unlink(public_path('images/user') . '/' . $user->userimage->image); // Delete the old image
                 }
                 // unlink(public_path('images'). $user->userimage->image); // Delete the old image
             }
             // Store the new image
             // $imageName = $request->file('image')->store('images', 'public');
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/user'), $imageName);
         } else {
             $imageName = $request->input('existing_image');
         }
@@ -122,17 +135,15 @@ class UserController extends Controller
 
         $user->Name = $request->Name;
         $user->Email = $request->Email;
-        // $user->Password = bcrypt($request->Password);
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
         if ($user->roles->isNotEmpty()) {
             // Remove the first role in the collection
             $user->removeRole($user->roles->first());
             $user->assignRole($request->Role);
         }
         $user->assignRole($request->Role);
-        // if ($request->has('Role') && !empty($request->Role)) {
-        //     // $user->removeRole($user->roles);
-        //     $user->assignRole($request->Role);
-        // }
         $user->Status = $request->Status;
         $user->save();
 

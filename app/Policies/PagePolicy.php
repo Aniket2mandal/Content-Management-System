@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class PagePolicy
 {
     use HandlesAuthorization;
 
@@ -14,26 +14,27 @@ class CategoryPolicy
      *
      * @return void
      */
-    public function viewany(User $user){
-        return $user->hasPermissionTo('view category');
+   
+     public function viewany(User $user){
+        return $user->hasPermissionTo('view page');
         }
      
         public function create(User $user){
-         return $user->hasPermissionTo('create category');
+         return $user->hasPermissionTo('create page');
         }
      
         public function edit(User $user){
          // logic not matched
          // return $user->hasRole('Admin')||($user->hasPermissionTo('update post') && $user->id===$post->authors->contains('author_id',$user->id));
-           return $user->hasPermissionTo('edit category');
+           return $user->hasPermissionTo('edit page');
         }
      
         public function delete(User $user){
          // return $user->hasPermissionTo('delete post')||$user->id===$post->authors->contains('id',$user->id);
-         return $user->hasPermissionTo('delete category');
+         return $user->hasPermissionTo('delete page');
         }
      
-        public function changeStatus(User $user){
-         return $user->hasPermissionTo('change category status');
-        }
+            public function changeStatus(User $user){
+            return $user->hasPermissionTo('change page status');
+           }
 }

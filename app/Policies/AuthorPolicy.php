@@ -34,6 +34,6 @@ class AuthorPolicy
         }
      
         public function changeStatus(User $user){
-         return $user->hasPermissionTo('change status');
+         return $user->hasPermissionTo('change author status');
         }
 }

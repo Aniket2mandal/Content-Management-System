@@ -13,11 +13,11 @@ class AuthorController extends Controller
     {
         $author = Author::paginate(20);
     
-        return view('Back.Author.index', compact('author'));
+        return view('backend.author.index', compact('author'));
     }
     public function create()
     {
-        return view('Back.Author.create');
+        return view('backend.author.create');
     }
     public function store(Request $request)
     {
@@ -31,7 +31,7 @@ class AuthorController extends Controller
 
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/author'), $imageName);
         } else {
             $imageName = null;
         }
@@ -47,7 +47,7 @@ class AuthorController extends Controller
     public function edit($id)
     {
         $author = Author::find($id);
-        return view('Back.Author.edit', compact('author'));
+        return view('backend.author.edit', compact('author'));
     }
 
     public function update(Request $request, $id)
@@ -60,7 +60,7 @@ class AuthorController extends Controller
         ]);
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/author'), $imageName);
         } else {
             $imageName = null;
         }

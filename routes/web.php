@@ -2,18 +2,28 @@
 
 
 
-use App\Http\Controllers\Back\AuthorController;
-use App\Http\Controllers\Back\CategoryController;
-use App\Http\Controllers\Back\DashboardController;
-use App\Http\Controllers\Back\PageController;
-use App\Http\Controllers\Back\PermissionController;
-use App\Http\Controllers\Back\PostController;
-use App\Http\Controllers\Back\RoleController;
-use App\Http\Controllers\Back\UserController;
+
+use App\Http\Controllers\Backend\AuthorController;
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Backend\PermissionController;
+use App\Http\Controllers\Backend\PostController;
+use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\SeoController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+
+
+
+
 
 
 
@@ -118,6 +128,13 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/pageupdate/{id}',[PageController::class,'update'])->name('page.update');
         Route::get('/pagedelete/{id}',[PageController::class,'delete'])->name('page.delete');
         Route::post('/pagestatus/{id}',[PageController::class,'status'])->name('page.status');
+
+        // SEO
+        Route::get('/seoinfromation/create',[SeoController::class,'index'])->name('seo.infocreate');
+        Route::get('/seofield/create',[SeoController::class,'create'])->name('seo.fieldcreate');
+        Route::post('/seofield/store',[SeoController::class,'fieldstore'])->name('seo.fieldstore');
+    
+        Route::post('/seoinfo/store',[SeoController::class,'infostore'])->name('seo.infostore');
 
 
 });

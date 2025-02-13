@@ -23,7 +23,7 @@
                         class="form-control"
                         id="Name"
                         name="Name"
-                        required />
+                         />
                     {{-- Error Message --}}
                     @error('Name')
                     <div class="text-danger">{{ $message }}</div>

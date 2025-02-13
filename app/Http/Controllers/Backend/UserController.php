@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -16,6 +16,7 @@ class UserController extends Controller
         $user = User::with('userimage')->where('email', '!=', 'super@gmail.com')->paginate(20);
         return view('backend.user.index', compact('user'));
     }
+
     public function create()
     {
         $user = null;

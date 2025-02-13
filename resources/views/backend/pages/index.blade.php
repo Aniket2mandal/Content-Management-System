@@ -216,9 +216,11 @@
                     // FOR STATUS
                     $('#editEventModal #Status').closest('.form-group').remove();
                     $('#editEventModal #summary').val(response.data.Page_summary);
+                    tinymce.get('Description').setContent(response.data.Page_description); 
+                    
                    // Set content in TinyMCE editor
                     $('#editEventModal').modal('show');
-                    tinymce.get('Description').setContent(response.data.Page_description); 
+                    
                 },
                 error: function(xhr, status, error) {
                     Swal.fire({

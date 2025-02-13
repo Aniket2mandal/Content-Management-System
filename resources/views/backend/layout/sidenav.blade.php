@@ -94,6 +94,7 @@
           <li class="nav-item">
             <a href="#" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
+              <i class="fas fa-users nav-icon"></i>
               <p>
                 User
                 <i class="fas fa-angle-left right"></i>
@@ -133,6 +134,7 @@
           <li class="nav-item">
             <a href="#" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
+              <i class="fas fa-list nav-icon"></i>
               <p>
                 Post
                 <i class="fas fa-angle-left right"></i>
@@ -184,8 +186,10 @@
        
       
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{route('seo.infocreate')}}" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
+              <i class="fas fa-search"></i>
+
               <p>
                 SEO
                 <!-- <i class="fas fa-angle-left right"></i> -->

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -26,9 +27,11 @@ class DatabaseSeeder extends Seeder
     // $userRole->givePermissionTo(['edit articles']);
 
     $this->call([
-        PermissionSeeder::class,
-        UserSeeder::class,
-        RoleSeeder::class
+        // PermissionSeeder::class,
+        // UserSeeder::class,
+        // RoleSeeder::class,
+        // CategorySeeder::class,
+        AuthorSeeder::class
     ]);
 
 }

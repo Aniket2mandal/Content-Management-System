@@ -13,7 +13,7 @@
 <!--begin::Footer-->
 <div class="card-footer">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{{ route('page.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a>
+    <!-- <a href="{{ route('page.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a> -->
 </div>
 <!--end::Footer-->
 {!! Form::close() !!}

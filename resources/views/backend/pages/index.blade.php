@@ -60,10 +60,10 @@
 
                     <td class="">
                         @can('edit', \App\Models\Page::class)
-                        <button  data-id="{{$page->id}}" class="edit-btn btn-primary btn-sm"> <i class="fas fa-pencil-alt"></i> <b>Edit</b></button>
+                        <button data-id="{{$page->id}}" class="edit-btn btn-primary btn-sm"> <i class="fas fa-pencil-alt"></i> <b>Edit</b></button>
                         @endcan
                         @can('delete', \App\Models\Page::class)
-                        <button id="delete"  data-id="{{$page->id}}" class="delete-btn btn btn-danger btn-sm"><i class="fas fa-trash"></i> <b>Delete</b></button>
+                        <button id="delete" data-id="{{$page->id}}" class="delete-btn btn btn-danger btn-sm"><i class="fas fa-trash"></i> <b>Delete</b></button>
                         @endcan
                     </td>
                 </tr>
@@ -71,13 +71,13 @@
             </tbody>
         </table>
         <!-- Pagination -->
-  <!-- Pagination -->
-  <div class="card-footer clearfix">
+        <!-- Pagination -->
+        <div class="card-footer clearfix">
             {{ $pages->links('pagination::bootstrap-4') }}
         </div>
     </div>
-    </div>
-    @endcan
+</div>
+@endcan
 </div>
 <!-- <button class="btn btn-successs" data-toggle="modal" data-target="#createEventModal">Create Event</button> -->
 
@@ -98,21 +98,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="editEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editEventModalLabel">Edit Page</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @include('backend.pages.edit') ;
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -199,28 +185,26 @@
         });
 
         // Show the modal for editing an existing page
+        // Show the modal for editing an existing page
         $('.edit-btn').on('click', function() {
-            var pageId = $(this).data('id'); // Assuming you're passing the page ID in the button's data-id attribute
-            console.log(pageId);
+            var pageId = $(this).data('id'); // Get the page ID
+
             $.ajax({
-                url: '/pageedit/' + pageId,
-                // Endpoint to fetch the existing page data
+                url: '/pageedit/' + pageId, // Fetch the page data
                 type: 'GET',
-
                 success: function(response) {
-                    console.log(response);
+                    // Update form fields with the existing page data
+                    $('#eventcreateForm').attr('action', '/pageupdate/' + pageId); // Change the action to the update route
+                    $('#eventcreateForm').attr('method', 'PUT'); // Change the method to PUT for update
 
-                    // Populate the form with the data from the response
-                    $('#editEventModal #title').val(response.data.Page_title);
-                    $('#editEventModal #slug').val(response.data.Page_slug);
-                    // FOR STATUS
-                    $('#editEventModal #Status').closest('.form-group').remove();
-                    $('#editEventModal #summary').val(response.data.Page_summary);
-                    tinymce.get('Description').setContent(response.data.Page_description); 
-                    
-                   // Set content in TinyMCE editor
-                    $('#editEventModal').modal('show');
-                    
+                    $('#title').val(response.data.Page_title);
+                    $('#slug').val(response.data.Page_slug);
+                    // $('#createEventModal #Status').closest('.form-group').remove();
+                    $('#summary').val(response.data.Page_summary);
+                    tinymce.get('Description').setContent(response.data.Page_description); // Assuming you're using TinyMCE
+
+                    // Show the modal for editing
+                    $('#createEventModal').modal('show');
                 },
                 error: function(xhr, status, error) {
                     Swal.fire({
@@ -233,71 +217,31 @@
             });
         });
 
-        // Submit form when modal is saved
+
         $('#eventcreateForm').on('submit', function(e) {
             e.preventDefault();
 
-            var formData = $(this).serialize();
-            console.log(formData); // Debug statement
+            var formData = $(this).serialize(); // Serialize the form data
 
             $.ajax({
-                url:'/pagestore',
-                method:'POST',
+                url: $(this).attr('action'), // Dynamically use the form's action (create or update)
+                method: $(this).attr('method'), // Use the correct HTTP method (POST or PUT)
                 data: formData,
                 success: function(response) {
                     Swal.fire({
                         title: 'Success!',
-                        text: 'The page created sucessfully.',
+                        text: response.message || 'The page was successfully saved.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
                         location.reload();
-
-                        $('#createEventModal').modal('hide'); //Hide the modal after success
+                        $('#createEventModal').modal('hide'); // Hide the modal after success
                     });
-
                 },
                 error: function(xhr, status, error) {
                     Swal.fire({
                         title: 'Error!',
                         text: 'An error occurred while saving the page.',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            });
-        });
-
-
-        // Submit form when modal is saved
-        $('#eventeditForm').on('submit', function(e) {
-            e.preventDefault();
-            
-            var pageId = $(this).data('id');
-            var formData = $(this).serialize();
-            console.log(formData); // Debug statement
-
-            $.ajax({
-                url:'/pageupdate/',
-                method:'PUT',
-                data: formData,
-                success: function(response) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'The page updated sucessfully.',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        location.reload();
-
-                        $('#editEventModal').modal('hide'); //Hide the modal after success
-                    });
-
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'An error occurred while updating the page.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });

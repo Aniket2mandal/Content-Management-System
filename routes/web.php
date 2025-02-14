@@ -132,9 +132,10 @@ Route::middleware(['auth'])->group(function () {
         // SEO
         Route::get('/seoinfromation/create',[SeoController::class,'index'])->name('seo.infocreate');
         Route::get('/seofield/create',[SeoController::class,'create'])->name('seo.fieldcreate');
-        Route::post('/seofield/store',[SeoController::class,'fieldstore'])->name('seo.fieldstore');
+        Route::post('/seofield/store',[SeoController::class,'store'])->name('seo.fieldstore');
     
-        Route::post('/seoinfo/store',[SeoController::class,'infostore'])->name('seo.infostore');
+        Route::post('/seoinfo/store',[SeoController::class,'update'])->name('seo.infostore');
+        Route::get('seo/delete/{id}',[SeoController::class,'delete'])->name('seo.delete');
 
 
 });

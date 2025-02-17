@@ -6,22 +6,22 @@
     <div class="card card-primary card-outline mb-4">
         <!--begin::Header-->
         <div class="card-header ">
-            <div class="card-title">Create Partner</div>
+            <div class="card-title">Edit User</div>
         </div>
         <!--end::Header-->
         <!--begin::Form-->
 
-        {!! Form::open(['route' => 'testimonial.store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['route' => ['partner.update', $partner['id']], 'method' => 'PUT','enctype'=>'multipart/form-data']) !!}
         @csrf
         <!--begin::Body-->
         <div class="card-body">
-            @include('backend.testimonial.testimonialform')
+            @include('backend.partner.partnerform')
         </div>
         <!--end::Body-->
         <!--begin::Footer-->
         <div class="card-footer">
             {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-            <a href="{{ route('testimonial.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a>
+            <a href="{{ route('partner.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a>
         </div>
         <!--end::Footer-->
         {!! Form::close() !!}

@@ -6,7 +6,7 @@
     <div class="card card-primary card-outline mb-4">
         <!--begin::Header-->
         <div class="card-header ">
-            <div class="card-title">Create User</div>
+            <div class="card-title">Edit Partner</div>
         </div>
         <!--end::Header-->
         <!--begin::Form-->
@@ -21,7 +21,7 @@
         <!--begin::Footer-->
         <div class="card-footer">
             {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-            <a href="{{ route('user.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a>
+            <a href="{{ route('testimonial.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a>
         </div>
         <!--end::Footer-->
         {!! Form::close() !!}

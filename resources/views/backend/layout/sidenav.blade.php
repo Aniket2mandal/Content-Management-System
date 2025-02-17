@@ -215,6 +215,21 @@
           </li>
 
 
+          <li class="nav-item">
+            <a href="{{route('partner.index')}}" class="nav-link">
+              <!-- <use xlink:href="#person-sharp"></use> -->
+              <i class="fas fa-users"></i>
+
+              <p>
+                Partners
+                <!-- <i class="fas fa-angle-left right"></i> -->
+                <!-- <span class="badge badge-info right">2</span> -->
+              </p>
+            </a>
+
+          </li>
+
+
           <!-- <li class="nav-item">
                 <a href="pages/layout/boxed.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

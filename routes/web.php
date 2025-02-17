@@ -3,6 +3,7 @@
 
 
 
+
 use App\Http\Controllers\Backend\AuthorController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -11,11 +12,13 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SeoController;
+use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -130,12 +133,21 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/pagestatus/{id}',[PageController::class,'status'])->name('page.status');
 
         // SEO
-        Route::get('/seoinfromation/create',[SeoController::class,'index'])->name('seo.infocreate');
+        Route::get('/seo/index',[SeoController::class,'index'])->name('seo.index');
         Route::get('/seofield/create',[SeoController::class,'create'])->name('seo.fieldcreate');
         Route::post('/seofield/store',[SeoController::class,'store'])->name('seo.fieldstore');
-    
-        Route::post('/seoinfo/store',[SeoController::class,'update'])->name('seo.infostore');
+        Route::put('/seo/update',[SeoController::class,'update'])->name('seo.update');
         Route::get('seo/delete/{id}',[SeoController::class,'delete'])->name('seo.delete');
+
+
+        // TESTIMONIAL
+        Route::get('/testimonial/index',[TestimonialController::class,'index'])->name('testimonial.index');
+        Route::get('testimonial/create',[TestimonialController::class,'create'])->name('testimonial.create');
+        Route::post('testimonial/store',[TestimonialController::class,'store'])->name('testimonial.store');
+        Route::get('testimonial/edit/{id}',[TestimonialController::class,'edit'])->name('testimonial.edit');
+        Route::put('testimonial/update/{id}',[TestimonialController::class,'update'])->name('testimonial.update');
+        Route::post('testimonial/statusUpdate/{id}',[TestimonialController::class,'statusUpdate'])->name('testimonial.statusUpdate');
+        Route::get('testimonial/delete/{id}',[TestimonialController::class,'delete'])->name('testimonial.delete');
 
 
 });

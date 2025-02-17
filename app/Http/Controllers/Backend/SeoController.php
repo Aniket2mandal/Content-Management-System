@@ -12,83 +12,62 @@ class SeoController extends Controller
 {
     public function index()
     {
-        $fields = Seo::all();
-        return view('backend.seo.information', compact('fields'));
+        $seoFields = Seo::paginate(10);
+        return view('backend.seo.index', compact('seoFields'));
     }
-
-    public function create()
+    function create()
     {
-
         return view('backend.seo.createfield');
     }
-
     public function store(Request $request)
     {
-        // dd($request->all());
-        // $request->validate([
+        
         $request->validate([
             'fields' => 'required|array',
-            'fields.*.field_type' => ['required', 'string', Rule::in(['text', 'textarea', 'number'])],
-            'fields.*.label_name' => 'required|string|max:255',
-            'fields.*.field_name' => 'required|string|regex:/^[a-z0-9_]+$/',
+            'fields.*.type' => ['required', 'string', Rule::in(['text', 'textarea', 'number'])],
+            'fields.*.label' => 'required|string|max:255',
+            'fields.*.name' => 'required|string|regex:/^[a-z0-9_]+$/|unique:seos,name',
         ]);
         // dd($request->all());
-        //     'field_type' => 'required|array',
-        //     'label_name' => 'required|array',
-        //     'field_name' => 'required|array',
-        //     'field_name.*' => 'regex:/^[a-z0-9_]+$/'
-        // ]);
-        // dd($request->all());
+
         foreach ($request->fields as $field) {
-            $seo = new Seo;
-            // $fieldName = str_replace('"', '', $request->field_name[$i]);
-            $seo->field_type = $field['field_type'];  // Store the field type
-            $seo->label_name = $field['label_name'];  // Store the label name
-            $cleanedFieldName = str_replace('"', '', $field['field_name']);
-            $seo->field_name = $cleanedFieldName;  // Store the field name
-            $seo->save();  // Save the record
+            // dd($field['type']);
+            Seo::create([
+                'type' => $field['type'],
+                'label' => $field['label'],
+                'name' => $field['name'],
+                // 'value' => null,
+            ]);
         }
-        return redirect()->route('seo.infocreate')->with('success', 'Field Created Successfully');
+
+        return redirect()->route('seo.index')->with('success', 'Fields added successfully!');
     }
 
     public function update(Request $request)
     {
-        // Validate the incoming request
-        $request->validate([
-            'fields' => 'required|array',
-            'fields.*.value' => 'nullable|string|max:255', // Adjust based on your database column type
-        ]);
         // dd($request->all());
-        // Loop through each field to update
-        foreach ($request->fields as $field_name => $data) {
-            // Get value or fallback to default
-            $value = $data['value'] ?? 'default value';
-            $field = preg_replace('/^"|"$/', '', $field_name);
-            // dd($field);
-
-            // Find SEO field by field_name
-            $seo = Seo::where('field_name',   $field)->first();
-            dd($seo);
-            // If the field exists, update its value
-            if ($seo) {
-                $seo->update([
-                    'value' => $value,
-                ]);
+            foreach ($request->fields as $id => $data) {
+                // dd($data['value']);
+                $seoField = Seo::find($id);
+                // dd($seoField);
+                if ($seoField) {
+                    //   dd($data['value']);
+                    $seoField->update([
+                        // 'label' => $data['label'],
+                        'value' => $data['value'] ?? null,
+                    ]);
+                }
             }
-        }
 
-        return redirect()->route('seo.infocreate')->with('success', 'Fields Updated Successfully');
+        return redirect()->route('seo.index')->with('success', 'SEO Fields updated successfully!');
     }
-
-
-
-    public function delete($id)
+    function delete($id)
     {
-        $seo = Seo::find($id);
-        if ($seo) {
-            $seo->delete();
-            return response()->json(['success' => true], 200);
+        $seoField = Seo::find($id);
+        if($seoField){
+        $seoField->delete();
+        return response()->json(['success' => true, 'message' => 'SEO Field deleted successfully!']);
         }
-        //   return response()->json(['success' => false], 404);
+        // return response()->json(['success' => true, 'message' => 'SEO Field deleted successfully!']);
     }
 }

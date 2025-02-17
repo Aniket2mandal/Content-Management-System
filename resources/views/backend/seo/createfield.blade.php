@@ -11,88 +11,126 @@
         </div>
         <!--end::Header-->
 
-        {!! Form::open(['route' => 'seo.fieldstore', 'method' => 'POST', 'id' => 'createFieldForm']) !!}
-        @csrf
-        <!--begin::Body-->
-        <div class="card-body" id="fieldsContainer" style="padding: 15px;">
-            <!-- Dynamically added fields will appear here -->
+        {!! Form::open(['route' => 'seo.fieldstore', 'method' => 'POST', 'id' => 'dynamic-form']) !!}
+
+        <div id="fields-container" class="mb-3">
+          
         </div>
 
-        <div class="card-footer">
-            <button type="button" class="btn btn-success" id="addNewField">Add a New Field</button>
-            <button type="submit" class="btn btn-primary" id="submitFields">Save Fields</button>
-        </div>
+        <button type="button" id="add-field" class="btn btn-success mt-3">Add New Field +</button>
+        {!! Form::submit('Submit', ['class' => 'btn btn-primary mt-3', 'id' => 'submit-button', 'disabled' => true]) !!}
+        <a href="{{ route('seo.index') }}" class="btn btn-danger mt-3">Cancel</a>
+
         {!! Form::close() !!}
     </div>
-    <!--end::Quick Example-->
-</div>
 
-
-
-<!-- Include JQuery for dynamic field handling -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Add new dynamic field form
-        var fieldIndex = 0; // Start index for field names
-
-$('#addNewField').click(function() {
-    fieldIndex++; // Increment the index for unique field names
-
-    var fieldHtml = `
-    <div class="row dynamic-field-form mb-3" data-index="${fieldIndex}">
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="fields[${fieldIndex}][field_type]" class="form-label">Field Type:</label>
-                <select name="fields[${fieldIndex}][field_type]" class="form-control">
-                    <option value="text">Text</option>
-                    <option value="textarea">Text Area</option>
-                    <option value="number">Number</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="fields[${fieldIndex}][label_name]" class="form-label">Label Name:</label>
-                <input type="text" name="fields[${fieldIndex}][label_name]" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="fields[${fieldIndex}][field_name]" class="form-label">Field Name:</label>
-                <input type="text" name="fields[${fieldIndex}][field_name]" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <button type="button" class="btn btn-danger removeField" style="margin-top: 32px;">
-                <i class="fas fa-trash"></i> Remove
-            </button>
-        </div>
-    </div>`;
-
-    $('#fieldsContainer').append(fieldHtml);
-    adjustCardHeight(); 
-});
-        // Remove a dynamic field form
-        $('#fieldsContainer').on('click', '.removeField', function() {
-            $(this).closest('.dynamic-field-form').remove();
-            adjustCardHeight(); // Adjust the card's height after removing the form
-        });
-
-        // Adjust the card height to fit the added forms
-        function adjustCardHeight() {
-            var totalFields = $('#fieldsContainer .dynamic-field-form').length; // Total number of fields
-            // console.log(totalFields);
-            // var rows = Math.ceil(totalFields ); // 4 fields per row (col-md-3)
-            // console.log(rows);
-            var cardHeight = (totalFields * 120); // Adjust this value for spacing between fields
-            $('.card-body').css('min-height', cardHeight + 'px'); // Dynamically set the minimum height
+    <style>
+        .field-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f9f9f9;
+            margin-bottom: 10px;
         }
 
-        // Initial height adjustment when the page loads
-        adjustCardHeight();
-     
+        .field-group .form-control,
+        .field-group select {
+            flex: 1;
+        }
+
+        .remove-field {
+            white-space: nowrap;
+        }
+    </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let fieldIndex = 0;
+    const addFieldButton = document.getElementById('add-field');
+    const submitButton = document.getElementById('submit-button');
+    const container = document.getElementById('fields-container');
+
+    // Function to add a new field
+    function addNewField() {
+        const fieldHTML = `
+            <div class="field-group" id="field-${fieldIndex}">
+                <select name="fields[${fieldIndex}][type]" class="form-control field-type" required>
+                    <option value="text">Text</option>
+                    <option value="textarea">Textarea</option>
+                    <option value="number">Number</option>
+                </select>
+
+                <input type="text" name="fields[${fieldIndex}][label]" class="form-control field-label" 
+                    placeholder="Enter Label" data-index="${fieldIndex}" required>
+
+                <input type="text" name="fields[${fieldIndex}][name]" class="form-control field-name" 
+                    placeholder="Field Name" pattern="^[a-z0-9_]+$" readonly required>
+
+                <button type="button" class="btn btn-danger remove-field" data-id="${fieldIndex}">Remove</button>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', fieldHTML);
+        fieldIndex++;
+        checkSubmitButton();
+    }
+
+    // Handle click event on "Add New Field" button
+    addFieldButton.addEventListener('click', function () {
+        addNewField();
     });
+
+    // Handle input event for label name (generate field name)
+    container.addEventListener('input', function (event) {
+        if (event.target.classList.contains('field-label')) {
+            let index = event.target.getAttribute('data-index');
+            let slug = event.target.value
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9]+/g, '_') // Replace non-alphanumeric characters with "_"
+                .replace(/^_|_$/g, ''); // Remove leading or trailing "_"
+
+            // Select input safely using a more robust approach
+            let fieldNameInput = event.target.closest('.field-group').querySelector('.field-name');
+
+            if (fieldNameInput) {
+                fieldNameInput.value = slug;
+            }
+        }
+    });
+
+    // Handle input event to enforce number validation
+    container.addEventListener('input', function (event) {
+        if (event.target.classList.contains('field-value')) {
+            let fieldGroup = event.target.closest('.field-group');
+            let fieldType = fieldGroup.querySelector('.field-type').value;
+
+            if (fieldType === 'number') {
+                event.target.value = event.target.value.replace(/[^0-9]/g, ''); // Allow only numbers
+            }
+        }
+    });
+
+    // Handle click event for removing a field
+    container.addEventListener('click', function (event) {
+        if (event.target.classList.contains('remove-field')) {
+            const fieldId = event.target.getAttribute('data-id');
+            const fieldElement = document.getElementById(`field-${fieldId}`);
+            if (fieldElement) {
+                fieldElement.remove();
+                checkSubmitButton();
+            }
+        }
+    });
+
+    // Enable/disable submit button based on fields count
+    function checkSubmitButton() {
+        submitButton.disabled = container.children.length === 0;
+    }
+});
 </script>
+
 
 @endsection

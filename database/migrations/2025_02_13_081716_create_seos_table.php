@@ -15,9 +15,9 @@ class CreateSeosTable extends Migration
     {
         Schema::create('seos', function (Blueprint $table) {
             $table->id();
-            $table->string('field_type');
-            $table->string('label_name');
-            $table->string('field_name');
+            $table->string('type');
+            $table->string('label');
+            $table->string('name')->unique();
             $table->string('value')->nullable();
             $table->timestamps();
         });

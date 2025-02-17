@@ -1,0 +1,134 @@
+@extends('backend.layout.adminlayout')
+
+@section('content')
+<div class="card mt-4">
+    <div class="card-header card-primary">
+        <h3 class="card-title mt-4"> create field </h3>
+
+        <div class="card-tools mt-4">
+            <a href="{{ route('seo.fieldcreate') }}" class="btn btn-success">
+                create field <i class="fas fa-plus"></i>
+            </a>
+        </div>
+
+
+    </div>
+
+
+    <div class="col-md mt-4">
+        <!--begin::Quick Example-->
+        <!--end::Header-->
+
+        {!! Form::open(['route' => 'seo.update', 'method' => 'PUT']) !!}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Label</th>
+                    <th>Value</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($seoFields as $seo)
+                    <tr>
+                        <td>
+                            {!! Form::text("fields[{$seo->id}][label]", $seo->label, ['class' => 'form-control']) !!}
+                        </td>
+                        <td>
+                            @if ($seo->type == 'text')
+                                {!! Form::text("fields[{$seo->id}][value]", $seo->value, ['class' => 'form-control']) !!}
+                            @elseif ($seo->type == 'textarea')
+                                {{-- {!! Form::textarea("fields[{$seo->id}][value]", $seo->value, ['class' => 'form-control tiny-mce']) !!} --}}
+                                {!! Form::textarea("fields[{$seo->id}][value]", $seo->value, [
+                                    'class' => 'form-control description',
+                                    'id' => 'Description',
+                                    'rows' => 5,
+                                ]) !!}
+                            @elseif ($seo->type == 'number')
+                                {!! Form::number("fields[{$seo->id}][value]", $seo->value, [
+                                    'class' => 'form-control number-field',
+                                    'oninput' => "this.value = this.value.replace(/[^0-9]/g, '')",
+                                    'step' => 'any',
+                                ]) !!}
+                            @endif
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="delete-btn btn btn-danger"
+                                data-id="{{ $seo->id }}">Delete</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        {!! Form::close() !!}
+
+        <div class="d-flex justify-content-center mt-4">
+            {{ $seoFields->links('pagination::bootstrap-4') }}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+           
+        $('.delete-btn').click(function() {
+            var postId = $(this).data('id');
+            console.log(postId);
+            swal.fire({
+                title: "Are You Sure?",
+                text: "Do you want to delete the item ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, proceed',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("yess it is");
+                    $.ajax({
+                        method: 'GET',
+                        url: '/seo/delete/' + postId,
+
+                        success: function(response) {
+
+                            // SweetAlert2 success popup
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'The post deleted sucessfully.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                location.reload();
+                                // Remove the post element from the DOM (you can select the post by its ID or class)
+                                $('#post-' + postId).remove(); // Assuming each post has an id like "post-1", "post-2", etc.
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle any errors
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while deleting the post.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
+
+            });
+        });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.number-field').forEach(function(input) {
+                input.addEventListener('keypress', function(event) {
+                    if (event.key < '0' || event.key > '9') {
+
+                        event.preventDefault();
+                    }
+                })
+            })
+        })
+    </script>
+
+@endsection

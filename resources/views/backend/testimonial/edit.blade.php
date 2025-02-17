@@ -11,11 +11,11 @@
         <!--end::Header-->
         <!--begin::Form-->
 
-        {!! Form::open(['route' => 'user.store', 'method' => 'POST','enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['route' => ['testimonial.update', $testimonial['id']], 'method' => 'PUT','enctype'=>'multipart/form-data']) !!}
         @csrf
         <!--begin::Body-->
         <div class="card-body">
-        @include('backend.user.userform')
+            @include('backend.testimonial.testimonialform')
         </div>
         <!--end::Body-->
         <!--begin::Footer-->

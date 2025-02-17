@@ -39,6 +39,7 @@ if (!function_exists('getLatestTestimonials')) {
     }
 }
 
+// STOR TESTIMONIAL
 if (!function_exists('saveTestimonials')) {
     function saveTestimonials($newTestimonial)
     {
@@ -56,7 +57,7 @@ if (!function_exists('saveTestimonials')) {
     }
 }
 
-
+// EDIT TESTIMONIAL
 if (!function_exists('editTestimonial')) {
     function editTestimonials($newTestimonial)
     {
@@ -76,7 +77,7 @@ if (!function_exists('editTestimonial')) {
     }
 }
 
-
+// UPDATE TESTIMONIAL
 if (!function_exists('updateTestimonials')) {
     function updateTestimonials($newTestimonial)
     {
@@ -115,7 +116,7 @@ if (!function_exists('updateTestimonials')) {
 
 
 
-
+// UPDATE STATUS OF TESTIMONIAL FROM INDEX
 if (!function_exists('updateTestimonialsStatus')) {
     function updateTestimonialsStatus($newTestimonialStatus)
     {
@@ -134,6 +135,7 @@ if (!function_exists('updateTestimonialsStatus')) {
     }
 }
 
+// DELETE TESTIMONIAL
 if (!function_exists('deleteTestimonials')) {
     function deleteTestimonials($newTestimonial)
     {
@@ -213,7 +215,7 @@ if (!function_exists('savePartners')) {
     }
 }
 
-
+// EDIT PARTNERS
 if (!function_exists('editPartners')) {
     function editPartners($newPartner)
     {
@@ -230,6 +232,7 @@ if (!function_exists('editPartners')) {
     }
 }
 
+// UPDATE PARTNERS
 if (!function_exists('updatePartners')) {
     function updatePartners($newPartner)
     {
@@ -239,7 +242,7 @@ if (!function_exists('updatePartners')) {
         foreach ($jsonData['partners'] as &$partner) {
             if ($partner['id'] == $newPartner['id']) {
                 if ($newPartner['image']) {
-                    $testimonial = $newPartner;
+                    $partner = $newPartner;
                 } else {
                     $partner['name'] = $newPartner['name'];
                     $partner['url'] = $newPartner['url'];
@@ -261,7 +264,7 @@ if (!function_exists('updatePartners')) {
     }
 }
 
-
+// UPDATE STATUS OF PARTNERS FROM INDEX
 if (!function_exists('updatePartnersStatus')) {
     function updatePartnersStatus($newPartner)
     {
@@ -278,8 +281,9 @@ if (!function_exists('updatePartnersStatus')) {
         file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
         return $found;
     }
+}
 
-
+// DELETE PARTNERS
     if (!function_exists('deletePartners')) {
         function deletePartners($newPartner)
         {
@@ -303,4 +307,150 @@ if (!function_exists('updatePartnersStatus')) {
             return $found ? true : 'Partner not found';
         }
     }
+
+
+
+// SLIDERS
+if(!function_exists('getLatestSliders')){
+    function getLatestSliders(){
+        $filePath = storage_path('app/bhitta.json');
+
+        if (!file_exists($filePath)) {
+            return [];
+        }
+
+        // Read the JSON file
+        $jsonData = json_decode(file_get_contents($filePath), true);
+
+        // Get limit from JSON file (default to 5 if not set)
+        // $limit = $jsonData['limit'] ?? 5;
+
+        // Get only published testimonials
+        if (isset($jsonData['sliders'])) {
+            $sliders = array_filter($jsonData['sliders'], function ($slider) {
+                // return $testimonial['published'] === "1";
+                return $slider;
+            });
+        } else {
+            $sliders = [];
+        }
+
+        // Sort testimonials by latest (assuming latest is last in the array)
+        $sliders = array_reverse($sliders);
+
+        // Return only the limited number of testimonials
+        // return array_slice($testimonials, 0, $limit);
+        return array_slice($sliders, 0);
+    }
 }
+
+
+    if (!function_exists('saveSliders')) {
+        function saveSliders($newSlider)
+        {
+            $filePath = storage_path('app/bhitta.json');
+            $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
+            // Check if 'partners' key exists in the data, if not, initialize it
+            if (!isset($jsonData['sliders'])) {
+                $jsonData['sliders'] = [];
+            }
+    
+            $newSlider['id'] = count($jsonData['sliders']) + 1;
+            $jsonData['sliders'][] = $newSlider;
+    
+            // Save updated data back to JSON file
+            file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+        }
+    }
+
+    if (!function_exists('updateSlidersStatus')) {
+        function updateSlidersStatus($newSlider)
+        {
+            $filePath = storage_path('app/bhitta.json');
+            $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
+            $found = false;
+            foreach ($jsonData['sliders'] as &$slider) {
+                if ($slider['id'] == $newSlider['id']) {
+                    $slider['published'] = $newSlider['published'];
+                    $found = true;
+                    break;
+                }
+            }
+            file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+            return $found;
+        }
+}
+
+
+if (!function_exists('editSliders')) {
+    function editSliders($newSlider)
+    {
+        $filePath = storage_path('app/bhitta.json');
+        $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
+
+        foreach ($jsonData['sliders'] as &$slider) {
+            if ($slider['id'] == $newSlider['id']) {
+                return $slider;
+                break;
+            }
+        }
+        return null;
+    }
+}
+
+
+if (!function_exists('updateSliders')) {
+    function updateSliders($newSlider)
+    {
+        $filePath = storage_path('app/bhitta.json');
+        $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
+
+        foreach ($jsonData['sliders'] as &$slider) {
+            if ($slider['id'] == $newSlider['id']) {
+                if ($newSlider['image']) {
+                    $slider = $newSlider;
+                } else {
+                    $slider['name'] = $newSlider['name'];
+                    $slider['url'] = $newSlider['url'];
+                    $slider['image'] = $slider['image'];
+                    $slider['published'] = $newSlider['published'];
+                }
+                $found = true;
+                break;
+            }
+        }
+        if ($found) {
+            // Save changes to the file
+            $saveResult = file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+            if ($saveResult === false) {
+                return 'Error saving the file';
+            }
+        }
+        return $found ? true : 'Slider not found';
+    }
+}
+
+if (!function_exists('deleteSliders')) {
+    function deleteSliders($newSlider)
+    {
+        $filePath = storage_path('app/bhitta.json');
+        $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
+        $found = false;
+        foreach ($jsonData['sliders'] as $key => &$slider) {
+            if ($slider['id'] == $newSlider['id']) {
+                unset($jsonData['sliders'][$key]);
+                $found = true;
+                break;
+            }
+        }
+        if ($found) {
+            // Save changes to the file
+            $saveResult = file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+            if ($saveResult === false) {
+                return 'Error saving the file';
+            }
+        }
+        return $found ? true : 'Slider not found';
+    }
+}
+

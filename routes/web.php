@@ -8,17 +8,19 @@ use App\Http\Controllers\Backend\AuthorController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Backend\PartnerController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SeoController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PartnerController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -160,4 +162,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/partner/update/{id}', [PartnerController::class, 'update'])->name('partner.update');
     Route::post('/partner/statusUpdate/{id}', [PartnerController::class, 'statusUpdate'])->name('partner.statusUpdate');
     Route::get('/partner/delete/{id}', [PartnerController::class, 'delete'])->name('partner.delete');
+
+    // SLIDERS
+    Route::get('/slider/index', [SliderController::class, 'index'])->name('slider.index');
+    Route::get('/slider/create', [SliderController::class, 'create'])->name('slider.create');
+    Route::post('/slider/store', [SliderController::class, 'store'])->name('slider.store');
+    Route::get('/slider/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
+    Route::put('/slider/update/{id}', [SliderController::class, 'update'])->name('slider.update');
+    Route::post('/slider/statusUpdate/{id}', [SliderController::class, 'statusUpdate'])->name('slider.statusUpdate');
+    Route::get('/slider/delete/{id}', [SliderController::class, 'delete'])->name('slider.delete');
 });

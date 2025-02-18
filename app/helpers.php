@@ -3,22 +3,71 @@
 use Illuminate\Support\Facades\Log;
 
 
+
+
+
+if (!function_exists('initializeBhittaConfig')) {
+    function initializeBhittaConfig()
+    {
+        // $testFile = storage_path('app/test.txt');
+        // file_put_contents($testFile, 'Test content');
+        // Log::info('Test file written at: ' . $testFile);
+
+        
+        $bhittaPath = storage_path('app/bhitta.json');
+
+        // Check if file exists
+        if (file_exists($bhittaPath)) {
+            // Log::info('Inside initializeBhittaConfig if condition');
+            $defaultConfig = [
+                "limit" => 5,
+                "slider_settings" => [
+                    "autoplay" => true,
+                    "speed" => 3000
+                ],
+                "testimonial_settings" => [
+                    "show_on_homepage" => true
+                ],
+                "partner_settings" => [
+                    "display_type" => "grid"
+                ]
+            ];
+            // Log::info('Attempting to write to bhitta.json at: ' . $bhittaPath);
+            // Save default settings
+            file_put_contents($bhittaPath, json_encode($defaultConfig, JSON_PRETTY_PRINT));
+            // Log::info('bhitta.json written successfully');
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
 // FOR TESTIMONIAL 
 
 if (!function_exists('getLatestTestimonials')) {
     function getLatestTestimonials()
     {
-        $filePath = storage_path('app/bhitta.json');
-
+        $bhittaPath = storage_path('app/bhitta.json');
+        //  = storage_path('app/bhitta.json');
+        $filePath  = storage_path('app/public/cache/testimonial.json');
         if (!file_exists($filePath)) {
             return [];
         }
 
-        // Read the JSON file
-        $jsonData = json_decode(file_get_contents($filePath), true);
-
         // Get limit from JSON file (default to 5 if not set)
-        // $limit = $jsonData['limit'] ?? 5;
+        if (file_exists($bhittaPath)) {
+            $bhittaData = json_decode(file_get_contents($bhittaPath), true);
+            $limit = $bhittaData['limit'] ?? 5;
+        }
+        // Read the SLIDER JSON file
+        $jsonData = json_decode(file_get_contents($filePath), true);
 
         // Get only published testimonials
         if ($jsonData['testimonials']) {
@@ -34,8 +83,8 @@ if (!function_exists('getLatestTestimonials')) {
         $testimonials = array_reverse($testimonials);
 
         // Return only the limited number of testimonials
-        // return array_slice($testimonials, 0, $limit);
-        return array_slice($testimonials, 0);
+        return array_slice($testimonials, 0, $limit);
+        // return array_slice($testimonials, 0);
     }
 }
 
@@ -43,8 +92,18 @@ if (!function_exists('getLatestTestimonials')) {
 if (!function_exists('saveTestimonials')) {
     function saveTestimonials($newTestimonial)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $folderPath = storage_path('app/public/cache');
+        $filePath = $folderPath . '/testimonial.json';
+        $bhittaPath = storage_path('app/bhitta.json');
 
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0777, true);
+        }
+        
+        if (file_exists($bhittaPath)) {
+            $bhittaData = json_decode(file_get_contents($bhittaPath), true);
+            $limit = $bhittaData['limit'] ?? 5;
+        }
         // Read existing data or initialize JSON structure
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['testimonials' => [], 'limit' => 5];
 
@@ -52,42 +111,46 @@ if (!function_exists('saveTestimonials')) {
         $newTestimonial['id'] = count($jsonData['testimonials']) + 1;
         $jsonData['testimonials'][] = $newTestimonial;
 
+        if (count($jsonData['testimonials']) > $limit) {
+            // Remove the oldest testimonial(s)
+            $jsonData['testimonials'] = array_slice($jsonData['testimonials'], -$limit);
+        }
         // Save updated data back to JSON file
         file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
     }
 }
 
 // EDIT TESTIMONIAL
-if (!function_exists('editTestimonial')) {
-    function editTestimonials($newTestimonial)
-    {
-        $filePath = storage_path('app/bhitta.json');
-        $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['testimonials' => [], 'limit' => 5];
-        // $found = false;
-        foreach ($jsonData['testimonials'] as &$testimonial) {
-            if ($testimonial['id'] == $newTestimonial['id']) {
-                // $testimonial['published'] = $newTestimonialStatus['published'];
-                return $testimonial;
-                // $found=true;
-                break;
-            }
-        }
-        // file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
-        return null;
-    }
-}
+// if (!function_exists('editTestimonial')) {
+//     function editTestimonials($newTestimonial)
+//     {
+//         $filePath = storage_path('app/public/cache/testimonial.json');
+//         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['testimonials' => [], 'limit' => 5];
+//         // $found = false;
+//         foreach ($jsonData['testimonials'] as &$testimonial) {
+//             if ($testimonial['id'] == $newTestimonial['id']) {
+//                 // $testimonial['published'] = $newTestimonialStatus['published'];
+//                 return $testimonial;
+//                 // $found=true;
+//                 break;
+//             }
+//         }
+//         // file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+//         return null;
+//     }
+// }
 
 // UPDATE TESTIMONIAL
 if (!function_exists('updateTestimonials')) {
     function updateTestimonials($newTestimonial)
     {
         // Log::info('Updating testimonial with ID: ' . $newTestimonial['id']);
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/testimonial.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['testimonials' => [], 'limit' => 5];
 
         $found = false; // Initialize found flag
         foreach ($jsonData['testimonials'] as &$testimonial) {
-            if ($testimonial['id'] == $newTestimonial['id']) {
+            if ($testimonial['db_id'] == $newTestimonial['db_id']) {
                 if ($newTestimonial['image']) {
                     $testimonial = $newTestimonial;
                 } else {
@@ -115,17 +178,16 @@ if (!function_exists('updateTestimonials')) {
 }
 
 
-
 // UPDATE STATUS OF TESTIMONIAL FROM INDEX
 if (!function_exists('updateTestimonialsStatus')) {
     function updateTestimonialsStatus($newTestimonialStatus)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/testimonial.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['testimonials' => [], 'limit' => 5];
         $found = false;
-        foreach ($jsonData['testimonials'] as &$testimonial) {
-            if ($testimonial['id'] == $newTestimonialStatus['id']) {
-                $testimonial['published'] = $newTestimonialStatus['published'];
+        foreach ($jsonData['testimonials'] as $key => &$testimonial) {
+            if ($testimonial['db_id'] == $newTestimonialStatus['db_id'] && $newTestimonialStatus['published']==0) {
+                  unset($jsonData['testimonials'][$key]);
                 $found = true;
                 break;
             }
@@ -139,11 +201,11 @@ if (!function_exists('updateTestimonialsStatus')) {
 if (!function_exists('deleteTestimonials')) {
     function deleteTestimonials($newTestimonial)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/testimonial.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['testimonials' => [], 'limit' => 5];
         $found = false;
         foreach ($jsonData['testimonials'] as $key => &$testimonial) {
-            if ($testimonial['id'] == $newTestimonial['id']) {
+            if ($testimonial['db_id'] == $newTestimonial['db_id']) {
                 // $testimonial['published'] = $newTestimonialStatus['published'];
                 unset($jsonData['testimonials'][$key]);
                 $found = true;
@@ -159,17 +221,34 @@ if (!function_exists('deleteTestimonials')) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 // // PARTNERS
 
 if (!function_exists('getLatestPartners')) {
     function getLatestPartners()
     {
-        $filePath = storage_path('app/bhitta.json');
-
+        $bhittaPath = storage_path('app/bhitta.json');
+        //  = storage_path('app/bhitta.json');
+        $filePath  = storage_path('app/public/cache/partner.json');
         if (!file_exists($filePath)) {
             return [];
         }
 
+        // Get limit from JSON file (default to 5 if not set)
+        if (file_exists($bhittaPath)) {
+            $bhittaData = json_decode(file_get_contents($bhittaPath), true);
+            $limit = $bhittaData['limit'] ?? 5;
+        }
         // Read the JSON file
         $jsonData = json_decode(file_get_contents($filePath), true);
 
@@ -200,7 +279,12 @@ if (!function_exists('getLatestPartners')) {
 if (!function_exists('savePartners')) {
     function savePartners($newPartner)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $folderPath = storage_path('app/public/cache');
+        $filePath = $folderPath . '/partner.json';
+
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0777, true);
+        }
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['partners' => [], 'limit' => 5];
         // Check if 'partners' key exists in the data, if not, initialize it
         if (!isset($jsonData['partners'])) {
@@ -219,7 +303,7 @@ if (!function_exists('savePartners')) {
 if (!function_exists('editPartners')) {
     function editPartners($newPartner)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/partner.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['partners' => [], 'limit' => 5];
 
         foreach ($jsonData['partners'] as &$partner) {
@@ -236,7 +320,7 @@ if (!function_exists('editPartners')) {
 if (!function_exists('updatePartners')) {
     function updatePartners($newPartner)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/partner.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['partners' => [], 'limit' => 5];
 
         foreach ($jsonData['partners'] as &$partner) {
@@ -268,7 +352,7 @@ if (!function_exists('updatePartners')) {
 if (!function_exists('updatePartnersStatus')) {
     function updatePartnersStatus($newPartner)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/partner.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['partners' => [], 'limit' => 5];
         $found = false;
         foreach ($jsonData['partners'] as &$partner) {
@@ -284,39 +368,62 @@ if (!function_exists('updatePartnersStatus')) {
 }
 
 // DELETE PARTNERS
-    if (!function_exists('deletePartners')) {
-        function deletePartners($newPartner)
-        {
-            $filePath = storage_path('app/bhitta.json');
-            $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['partners' => [], 'limit' => 5];
-            $found = false;
-            foreach ($jsonData['partners'] as $key => &$partner) {
-                if ($partner['id'] == $newPartner['id']) {
-                    unset($jsonData['partners'][$key]);
-                    $found = true;
-                    break;
-                }
+if (!function_exists('deletePartners')) {
+    function deletePartners($newPartner)
+    {
+        $filePath = storage_path('app/public/cache/partner.json');
+        $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['partners' => [], 'limit' => 5];
+        $found = false;
+        foreach ($jsonData['partners'] as $key => &$partner) {
+            if ($partner['id'] == $newPartner['id']) {
+                unset($jsonData['partners'][$key]);
+                $found = true;
+                break;
             }
-            if ($found) {
-                // Save changes to the file
-                $saveResult = file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
-                if ($saveResult === false) {
-                    return 'Error saving the file';
-                }
-            }
-            return $found ? true : 'Partner not found';
         }
+        if ($found) {
+            // Save changes to the file
+            $saveResult = file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+            if ($saveResult === false) {
+                return 'Error saving the file';
+            }
+        }
+        return $found ? true : 'Partner not found';
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 // SLIDERS
-if(!function_exists('getLatestSliders')){
-    function getLatestSliders(){
-        $filePath = storage_path('app/bhitta.json');
-
+if (!function_exists('getLatestSliders')) {
+    function getLatestSliders()
+    {
+        $bhittaPath = storage_path('app/bhitta.json');
+        //  = storage_path('app/bhitta.json');
+        $filePath  = storage_path('app/public/cache/slider.json');
         if (!file_exists($filePath)) {
             return [];
+        }
+
+        // Get limit from JSON file (default to 5 if not set)
+        if (file_exists($bhittaPath)) {
+            $bhittaData = json_decode(file_get_contents($bhittaPath), true);
+            $limit = $bhittaData['limit'] ?? 5;
         }
 
         // Read the JSON file
@@ -345,47 +452,52 @@ if(!function_exists('getLatestSliders')){
 }
 
 
-    if (!function_exists('saveSliders')) {
-        function saveSliders($newSlider)
-        {
-            $filePath = storage_path('app/bhitta.json');
-            $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
-            // Check if 'partners' key exists in the data, if not, initialize it
-            if (!isset($jsonData['sliders'])) {
-                $jsonData['sliders'] = [];
-            }
-    
-            $newSlider['id'] = count($jsonData['sliders']) + 1;
-            $jsonData['sliders'][] = $newSlider;
-    
-            // Save updated data back to JSON file
-            file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
-        }
-    }
+if (!function_exists('saveSliders')) {
+    function saveSliders($newSlider)
+    {
+        $folderPath = storage_path('app/public/cache');
+        $filePath = $folderPath . '/slider.json';
 
-    if (!function_exists('updateSlidersStatus')) {
-        function updateSlidersStatus($newSlider)
-        {
-            $filePath = storage_path('app/bhitta.json');
-            $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
-            $found = false;
-            foreach ($jsonData['sliders'] as &$slider) {
-                if ($slider['id'] == $newSlider['id']) {
-                    $slider['published'] = $newSlider['published'];
-                    $found = true;
-                    break;
-                }
-            }
-            file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
-            return $found;
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0777, true);
         }
+        $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
+        // Check if 'partners' key exists in the data, if not, initialize it
+        if (!isset($jsonData['sliders'])) {
+            $jsonData['sliders'] = [];
+        }
+
+        $newSlider['id'] = count($jsonData['sliders']) + 1;
+        $jsonData['sliders'][] = $newSlider;
+
+        // Save updated data back to JSON file
+        file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+    }
+}
+
+if (!function_exists('updateSlidersStatus')) {
+    function updateSlidersStatus($newSlider)
+    {
+        $filePath = storage_path('app/public/cache/slider.json');
+        $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
+        $found = false;
+        foreach ($jsonData['sliders'] as &$slider) {
+            if ($slider['id'] == $newSlider['id']) {
+                $slider['published'] = $newSlider['published'];
+                $found = true;
+                break;
+            }
+        }
+        file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
+        return $found;
+    }
 }
 
 
 if (!function_exists('editSliders')) {
     function editSliders($newSlider)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/slider.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
 
         foreach ($jsonData['sliders'] as &$slider) {
@@ -402,7 +514,7 @@ if (!function_exists('editSliders')) {
 if (!function_exists('updateSliders')) {
     function updateSliders($newSlider)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/slider.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
 
         foreach ($jsonData['sliders'] as &$slider) {
@@ -433,7 +545,7 @@ if (!function_exists('updateSliders')) {
 if (!function_exists('deleteSliders')) {
     function deleteSliders($newSlider)
     {
-        $filePath = storage_path('app/bhitta.json');
+        $filePath = storage_path('app/public/cache/slider.json');
         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
         $found = false;
         foreach ($jsonData['sliders'] as $key => &$slider) {
@@ -453,4 +565,3 @@ if (!function_exists('deleteSliders')) {
         return $found ? true : 'Slider not found';
     }
 }
-

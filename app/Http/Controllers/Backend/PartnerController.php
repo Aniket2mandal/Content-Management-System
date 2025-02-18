@@ -9,6 +9,7 @@ class PartnerController extends Controller
 {
     public function index()
     {
+       
         $partners = getLatestPartners(); // Fetch testimonials using helper function
         return view('backend.partner.index', compact('partners'));
     }
@@ -64,13 +65,13 @@ class PartnerController extends Controller
         }
     }
 
-
     public function edit($id){
         $newPartner=[
             'id'=>$id
         ];
 
         $partner=editPartners($newPartner);
+        // dd($partner);
         if($partner){
             return view('backend.partner.edit', compact('partner'));
         }

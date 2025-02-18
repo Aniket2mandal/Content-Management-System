@@ -9,6 +9,7 @@ class SliderController extends Controller
 {
     public function index()
     {
+        
         $sliders = getLatestSliders(); // Fetch testimonials using helper function
         return view('backend.slider.index', compact('sliders'));
     }
@@ -108,7 +109,7 @@ class SliderController extends Controller
      $newSlider=[
         'id'=>$id,
      ];
-
+     
      $slider=deleteSliders($newSlider);
      if ($slider === true) {
         // Log::info('Testimonial updated successfully!');

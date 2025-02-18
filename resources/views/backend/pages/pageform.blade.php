@@ -1,6 +1,6 @@
-<div class="mb-3">
+<!-- <div class="mb-3">
         {!! Form::label('Title', 'Title', ['class' => 'form-label','id'=>'titlelabel']) !!}
-        {!! Form::text('title', old('title'), ['class' => 'form-control', 'id' => 'title']) !!}
+        {!! Form::text('title', old('title',$page['title'] ?? null), ['class' => 'form-control', 'id' => 'title']) !!}
         {{-- Error Message --}}
         @error('title')
         <div class="text-danger">{{ $message }}</div>
@@ -8,7 +8,7 @@
     </div>
     <div class="mb-3">
         {!! Form::label('Slug', 'Slug', ['class' => 'form-label','id'=>'sluglabel']) !!}
-        {!! Form::text('slug', old('slug'), ['class' => 'form-control', 'id' => 'slug']) !!}
+        {!! Form::text('slug', old('slug',$page['slug'] ?? null), ['class' => 'form-control', 'id' => 'slug']) !!}
         {{-- Error Message --}}
         @error('slug')
         <div class="text-danger">{{ $message }}</div>
@@ -16,7 +16,7 @@
     </div>
     <div class="mb-3">
     {!! Form::label('Summary', 'Summary', ['class' => 'form-label','id'=>'summarylabel']) !!}
-    {!! Form::text('summary', old('summary'), ['class' => 'form-control', 'id' => 'summary']) !!}
+    {!! Form::text('summary', old('summary',$page['summary'] ?? null), ['class' => 'form-control', 'id' => 'summary']) !!}
             {{-- Error Message --}}
         @error('summary')
         <div class="text-danger">{{ $message }}</div>
@@ -27,7 +27,7 @@
         {!! Form::label('Status','Status:',['class'=>'form-label'])  !!}
         {!! Form:: hidden('Status',0) !!}
 
-        {!! Form:: checkbox('Status',1, false,[
+        {!! Form:: checkbox('Status',1, $page['Status'] ?? 0,[
                 'id' => 'Status',
                 'data-toggle' => 'toggle',
                 'data-on' => 'Active',
@@ -41,7 +41,7 @@
 
     <div class="mb-3">
         {!! Form::label('Description', 'Description', ['class' => 'form-label']) !!}
-        {!! Form::textarea('Description',old('Description'), [
+        {!! Form::textarea('Description',old('Description',$page['Description'] ?? null), [
             'id'=>'Description',
             'class' => 'form-control',
             'rows' => 5
@@ -50,4 +50,4 @@
         @error('Description')
         <div class="text-danger">{{ $message }}</div>
         @enderror
-    </div>
+    </div> -->

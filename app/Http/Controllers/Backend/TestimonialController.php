@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -10,8 +11,9 @@ class TestimonialController extends Controller
 {
     public function index()
     {
+        $testimonialdata=Testimonial::all();
         $testimonials = getLatestTestimonials(); // Fetch testimonials using helper function
-        return view('backend.testimonial.index', compact('testimonials'));
+        return view('backend.testimonial.index', compact('testimonials','testimonialdata'));
     }
 
     public function create()
@@ -36,26 +38,44 @@ class TestimonialController extends Controller
             $imagePath = null;
         }
 
-        // Prepare testimonial data
-        $newTestimonial = [
-            'name' => $request->name,
-            'message' =>  \strip_tags($request->message),
-            'image' => $imagePath,
-            'published' => $request->Status ?? 0
-        ];
+        $testimonial=new Testimonial;
+        $testimonial->name=$request->name;
+        $testimonial->message=\strip_tags($request->message);
+        $testimonial->image=$imagePath;
+        $testimonial->published=$request->Status;
+        $testimonial->save();
 
+        if($request->Status==1){
+        $testimonialdata = Testimonial::where('published', 1)->latest()->first();
+        // dd($testimonialdata);
+        // Initialize $newTestimonial
+        $newTestimonial = [];
+        
+        if ($testimonialdata) {
+            $newTestimonial = [
+                'db_id' => $testimonialdata->id,  // Corrected from $testimonial->id to $testimonialdata->id
+                'name' => $testimonialdata->name,
+                'message' => \strip_tags($testimonialdata->message),
+                'image' => $testimonialdata->image,  // Adjust based on how your images are stored
+                'published' => $testimonialdata->published ?? 0,
+            ];
+        }
         // Use helper function to save testimonial
         saveTestimonials($newTestimonial);
-
+    }
         return redirect()->route('testimonial.index')->with('success', 'Testimonial created successfully!');
     }
 
+
     public function edit($id)
     {
-        $newTestimonial = [
-            'id' => $id,
-        ];
-        $testimonial = editTestimonials($newTestimonial);
+        // dd($id);
+        // $newTestimonial = [
+        //     'id' => $id,
+        // ];
+        $testimonial=Testimonial::find($id);
+        // dd($testimonial);
+        // $testimonial = editTestimonials($newTestimonial);
         if ($testimonial) {
             return view('backend.testimonial.edit', compact('testimonial'));
         }
@@ -64,30 +84,39 @@ class TestimonialController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($id);
         $request->validate([
             'name' => 'required|string|max:255',
             'message' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'Status' => 'nullable|integer'
         ]);
-
-     
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('testimonials', 'public');
         } else {
             $imagePath = null; // If no image is uploaded, keep it null
         }
 
+        $testimonial=Testimonial::find($id);
+        // dd($testimonial);
+        $testimonial->name=$request->name;
+        $testimonial->message=\strip_tags($request->message);
+        $testimonial->image=$imagePath;
+        $testimonial->published=$request->Status;
+        $testimonial->save();
         // Prepare the testimonial data
-        $newTestimonial = [
-            'id' => $id,
-            'name' => $request->name,
-            'message' => \strip_tags($request->message),
-            'image' => $imagePath,
-            'published' => $request->Status ?? 0
-        ];
+        $newTestimonial = [];
+        // dd($testimonial);
+        if ($testimonial) {
+            $newTestimonial = [
+                'db_id' => $testimonial->id,  // Corrected from $testimonial->id to $testimonialdata->id
+                'name' => $testimonial->name,
+                'message' => \strip_tags($testimonial->message),
+                'image' => $testimonial->image,  // Adjust based on how your images are stored
+                'published' => $testimonial->published ?? 0,
+            ];
+        }
         // Log::info('Updating testimonial:', $newTestimonial);
-
         // Call the update function
         $result = updateTestimonials($newTestimonial);
         // Log::info('Testimonial update result:', ['result' => $result]);
@@ -110,14 +139,17 @@ class TestimonialController extends Controller
         $request->validate([
             'Status' => 'integer',
         ]);
-
+        $testimonial = Testimonial::find($id);
+            // Update the status field
+            $testimonial->published = $request->Status;
+            $testimonial->save(); 
         // dd($request->Status);
         $newTestimonialStatus = [
-            'id' => $id,
+            'db_id' => $id,
             'published' => $request->Status
         ];
-        $updated = updateTestimonialsStatus($newTestimonialStatus);
 
+        $updated = updateTestimonialsStatus($newTestimonialStatus);
         if ($updated) {
             return response()->json(['success' => 'Testimonial status updated successfully!']);
         } else {
@@ -125,16 +157,19 @@ class TestimonialController extends Controller
         }
     }
 
+
     public function delete($id)
     {
+        $testimonial=Testimonial::find($id);
+        $testimonial->delete();
         $newTestimonial = [
-            'id' => $id,
+            'db_id' => $id,
             // 'published' => $request->Status
         ];
 
         $deleted = deleteTestimonials($newTestimonial);
         if ($deleted) {
-            return response()->json(['success' => 'Testimonial status updated successfully!']);
+            return response()->json(['success' => 'Testimonial deleted successfully!']);
         } else {
             return response()->json(['error' => 'Testimonial not found!'], 404);
         }

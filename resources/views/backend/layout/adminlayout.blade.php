@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
     <!-- JQVMap -->
-    <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}"> 
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
@@ -63,7 +63,7 @@
     <!-- jQuery -->
 
  <!-- jQuery -->
- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+ <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>  
  <!-- Include jQuery (CDN version) -->
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -73,9 +73,6 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 
 <!-- Select2 JS -->
-
-
-
 
 <!-- Add Bootstrap Toggle JS before the closing </body> tag -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>

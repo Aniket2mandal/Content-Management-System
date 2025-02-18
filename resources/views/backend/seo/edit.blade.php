@@ -7,11 +7,11 @@
     <div class="card card-primary mb-4">
         <!--begin::Header-->
         <div class="card-header">
-            <div class="card-title">Create Fields</div>
+            <div class="card-title">Edit Fields</div>
         </div>
         <!--end::Header-->
 
-        {!! Form::open(['route' => 'seo.fieldstore', 'method' => 'POST', 'id' => 'dynamic-form']) !!}
+        {!! Form::open(['route' => ['seo.fieldupdate', $slider['id']], 'method' => 'POST', 'id' => 'dynamic-form']) !!}
 
         <div id="fields-container" class="mb-3">
           
@@ -141,8 +141,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function checkSubmitButton() {
         submitButton.disabled = container.children.length === 0;
     }
-
-    
 });
 </script>
 

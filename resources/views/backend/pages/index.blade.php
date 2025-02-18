@@ -203,6 +203,15 @@
                     $('#summary').val(response.data.Page_summary);
                     tinymce.get('Description').setContent(response.data.Page_description); // Assuming you're using TinyMCE
 
+                    if (response.data.Page_status == 1) {
+                        $('#createEventModal #Status').prop('checked', true); // If status is 1, check the box
+                    } else {
+                        $('#createEventModal #Status').prop('checked', false); // If status is 0, uncheck the box
+                    }
+
+                    // No need to refresh the toggle, just ensure it visually reflects the state
+                    $('#createEventModal #Status').trigger('change'); // Re-initialize the toggle
+
                     // Show the modal for editing
                     $('#createEventModal').modal('show');
                 },
@@ -218,9 +227,26 @@
         });
 
 
+        $('.create-btn').on('click', function() {
+            $('#eventcreateForm')[0].reset(); // This will reset the form fields to their default (blank) state.
+
+            // Reset the action and method for creating a new page
+            $('#eventcreateForm').attr('action', '/page.store'); // Set the form action to the create route
+            $('#eventcreateForm').attr('method', 'POST'); // Set the method to POST for creating a new page
+
+            // Clear any error messages (if applicable)
+            $('.text-danger').empty();
+            $('#createEventModal #Status').prop('checked', false); // Uncheck the checkbox
+            $('#createEventModal #Status').trigger('change');
+            // Show the modal for creating
+            $('#createEventModal').modal('show');
+        });
+
+
+
         $('#eventcreateForm').on('submit', function(e) {
             e.preventDefault();
-
+            // Clear the form fields
             var formData = $(this).serialize(); // Serialize the form data
 
             $.ajax({

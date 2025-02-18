@@ -11,7 +11,7 @@
         <!--end::Header-->
         <!--begin::Form-->
 
-        {!! Form::open(['route' => ['testimonial.update', $testimonial['id']], 'method' => 'PUT','enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['route' => ['testimonial.update', $testimonial->id], 'method' => 'PUT','enctype'=>'multipart/form-data']) !!}
         @csrf
         <!--begin::Body-->
         <div class="card-body">

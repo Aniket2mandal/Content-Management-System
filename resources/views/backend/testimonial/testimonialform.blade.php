@@ -1,6 +1,6 @@
 <div class="mb-3">
     {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
-    {!! Form::text('name', old('name', $testimonial['name'] ?? null), ['class' => 'form-control', 'id' => 'name']) !!}
+    {!! Form::text('name', old('name', $testimonial->name ?? null), ['class' => 'form-control', 'id' => 'name']) !!}
     {{-- Error Message --}}
     @error('name')
         <div class="text-danger">{{ $message }}</div>
@@ -9,7 +9,7 @@
 
 <div class="mb-3">
     {!! Form::label('message', 'Message', ['class' => 'form-label']) !!}
-    {!! Form::textarea('message', old('message', $testimonial['message'] ?? null), ['class' => 'form-control', 'id' => 'Description', 'rows' => 3]) !!}
+    {!! Form::textarea('message', old('message', $testimonial->message ?? null), ['class' => 'form-control', 'id' => 'Description', 'rows' => 3]) !!}
     {{-- Error Message --}}
     @error('message')
         <div class="text-danger">{{ $message }}</div>
@@ -22,7 +22,7 @@
     {{-- Display Current Image if Available --}}
     @if(!empty($testimonial['image']))
         <div class="mt-2">
-            <img src="{{ asset('storage/' . $testimonial['image']) }}" alt="Current Image" class="img-thumbnail" width="150">
+            <img src="{{ asset('storage/' . $testimonial->image) }}" alt="Current Image" class="img-thumbnail" width="150">
         </div>
     @endif
     {{-- Error Message --}}
@@ -33,7 +33,8 @@
 
 <div class="mb-3">
     {!! Form::label('Status', 'Status', ['class' => 'form-label']) !!}
-    {!! Form::checkbox('Status', 1, old('Status', $testimonial['published'] ?? 0), [
+    {!! Form::hidden('Status', 0) !!}
+    {!! Form::checkbox('Status', 1, old('Status', $testimonial->published ?? 0), [
         'id' => 'Status', 
         'data-toggle' => 'toggle', 
         'data-on' => 'Publish', 

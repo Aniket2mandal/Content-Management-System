@@ -140,6 +140,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/seo/index', [SeoController::class, 'index'])->name('seo.index');
     Route::get('/seofield/create', [SeoController::class, 'create'])->name('seo.fieldcreate');
     Route::post('/seofield/store', [SeoController::class, 'store'])->name('seo.fieldstore');
+    Route::get('seofield/edit/{id}',[SeoController::class,'fieldedit'])->name('seo.fieldedit');
+    Route::post('seofield/update',[SeoController::class,'fieldupdate'])->name('seo.fieldupdate');
     Route::put('/seo/update', [SeoController::class, 'update'])->name('seo.update');
     Route::get('seo/delete/{id}', [SeoController::class, 'delete'])->name('seo.delete');
 

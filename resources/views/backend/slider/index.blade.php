@@ -42,12 +42,12 @@
             @php
             $i = 1;
             @endphp
-            @foreach ($sliders as $slider)
+            @foreach ($sliderdata as $slider)
             <tr class="align-middle">
                 <td>{{ $i++ }}</td>
-                <td>{{ $slider['name'] }}</td>
-                <td>@if ($slider['image'])
-                    <img src="{{ asset('storage/' . $slider['image']) }}" alt="Current Image"  width="80"height="80">
+                <td>{{ $slider->name}}</td>
+                <td>@if ($slider->image)
+                    <img src="{{ asset('storage/' . $slider->image) }}" alt="Current Image"  width="80"height="80">
                     @else
                     <img src="{{ asset('adminlte/img/avatar.png')  }}" class="img-circle" alt="User Image" width="80" height="80">
                     @endif
@@ -58,7 +58,7 @@
                         <!-- Toggle switch for Publish/Unpublish -->
                         <input type="hidden" name="Status" class="Status" value="0">
                         <input type="checkbox" name="Status" class="Status"
-                            data-id="{{ $slider['id'] }}"
+                            data-id="{{ $slider->id }}"
                             data-toggle="toggle"
                             data-on="Publish"
                             data-off="Unpublish"
@@ -69,10 +69,13 @@
                     </div>
                 </td>
                 <td>
-                    <a href="{{ route('slider.edit',  ['id' => $slider['id']]) }}" class="btn btn-primary btn-sm me-2 d-inline">
+                <a href="{{ route('slider.edit',  $slider->id) }}" class="btn btn-primary btn-sm me-2 d-inline">
                         <i class="fas fa-pencil-alt"></i> <b>Edit</b>
                     </a>
-                    <button id="delete" data-id="{{ $slider['id'] }}" class="delete-btn btn btn-danger btn-sm">
+                    <!-- <a href="{{ route('slider.edit',  ['id' => $slider['id']]) }}" class="btn btn-primary btn-sm me-2 d-inline">
+                        <i class="fas fa-pencil-alt"></i> <b>Edit</b>
+                    </a> -->
+                    <button id="delete" data-id="{{ $slider->id }}" class="delete-btn btn btn-danger btn-sm">
                         <i class="fas fa-trash"></i> <b>Delete</b>
                     </button>
                 </td>

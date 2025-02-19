@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
+
 class PartnerController extends Controller
 {
     public function index()
     {
-       
+        $partnerdata = Partner::all();
         $partners = getLatestPartners(); // Fetch testimonials using helper function
-        return view('backend.partner.index', compact('partners'));
+        return view('backend.partner.index', compact('partners', 'partnerdata'));
     }
 
 
@@ -34,50 +36,73 @@ class PartnerController extends Controller
         } else {
             $imagePath = null;
         }
-        // dd($request->all());
-        $newPartner = [
-            'name' => $request->name,
-            'url' => $request->url,
-            'image' => $imagePath,
-            'published' => $request->Status ?? 0
-        ];
-        // dd($newPartner);
-        savePartners($newPartner);
+
+        $partner = new Partner;
+        $partner->name = $request->name;
+        $partner->url = $request->url;
+        $partner->image = $imagePath;
+        $partner->published = $request->Status;
+        $partner->save();
+        if ($request->Status == 1) {
+            $partnerdata = Partner::where('published', 1)->latest()->first();
+            // dd($request->all());
+            $newPartner = [];
+            if ($partnerdata) {
+                $newPartner = [
+                    'db_id' => $partnerdata->id,
+                    'name' => $partnerdata->name,
+                    'url' => $partnerdata->url,
+                    'image' => $imagePath,
+                    'published' => $partnerdata->published ?? 0
+                ];
+            }
+            // dd($newPartner);
+            savePartners($newPartner);
+        }
         return redirect()->route('partner.index')->with('success', 'Partner created successfully!');
     }
 
-    public function statusUpdate(Request $request,$id){
-    //   Log::info('Received request for testimonial ID: ' . $id);
-    //     Log::info('Received status: ' . $request->Status);
+    public function statusUpdate(Request $request, $id)
+    {
+        //   Log::info('Received request for testimonial ID: ' . $id);
+        //     Log::info('Received status: ' . $request->Status);
+        $request->validate([
+            'Status' => 'integer',
+        ]);
+        $partner = Partner::find($id);
+        $partner->published = $request->Status;
+        $partner->save();
+
         $newPartner = [
-            'id' => $id,
-            'published'=>$request->Status
+            'db_id' => $id,
+            'published' => $request->Status
         ];
         // dd($newPartner);
         // Log::info('Received array:', $newPartner);
-
-        $partner=updatePartnersStatus($newPartner);
-        if($partner){
+        updatePartnersStatus($newPartner);
+        if ($partner) {
             return response()->json(['success' => 'Partner status updated successfully!']);
-        }
-        else{
+        } else {
             return response()->json(['success' => 'Fail to update status ']);
         }
     }
 
-    public function edit($id){
-        $newPartner=[
-            'id'=>$id
-        ];
+    public function edit($id)
+    {
 
-        $partner=editPartners($newPartner);
+        // $newPartner=[
+        //     'id'=>$id
+        // ];
+        $partner = Partner::find($id);
+        // $partner=editPartners($newPartner);
         // dd($partner);
-        if($partner){
+        if ($partner) {
             return view('backend.partner.edit', compact('partner'));
         }
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'url' => 'nullable|url|max:255',
@@ -90,15 +115,26 @@ class PartnerController extends Controller
         } else {
             $imagePath = null;
         }
-        $newPartner = [
-            'id'=>$id,
-            'name' => $request->name,
-            'url' => $request->url,
-            'image' => $imagePath,
-            'published' => $request->Status ?? 0
-        ];
-        $partner=updatePartners($newPartner);
-        if ($partner === true) {
+
+        $partner = Partner::find($id);
+        // dd($testimonial);
+        $partner->name = $request->name;
+        $partner->url = $request->url;
+        $partner->image = $imagePath;
+        $partner->published = $request->Status;
+        $partner->save();
+        $newPartner = [];
+        if ($partner) {
+            $newPartner = [
+                'db_id' => $partner->id,
+                'name' => $partner->name,
+                'url' => $partner->url,
+                'image' => $imagePath,
+                'published' => $partner->published ?? 0
+            ];
+            updatePartners($newPartner);
+        }
+        if ($partner) {
             // Log::info('Testimonial updated successfully!');
             return redirect()->route('partner.index')->with('success', 'partner updated successfully!');
         } else {
@@ -107,18 +143,22 @@ class PartnerController extends Controller
         }
     }
 
-    public function delete($id){
-     $newPartner=[
-        'id'=>$id,
-     ];
+    public function delete($id)
+    {
 
-     $partner=deletePartners($newPartner);
-     if ($partner === true) {
-        // Log::info('Testimonial updated successfully!');
-        return redirect()->route('partner.index')->with('success', 'partner deleted successfully!');
-    } else {
-        // Log::error('Error updating testimonial: ' . $result);
-        return redirect()->back()->with('error', 'Error deleting partner: ');
-    }
+        $partner = Partner::find($id);
+        $partner->delete();
+        $newPartner = [
+            'db_id' => $id,
+        ];
+
+        deletePartners($newPartner);
+        if ($partner) {
+            // Log::info('Testimonial updated successfully!');
+            return redirect()->route('partner.index')->with('success', 'partner deleted successfully!');
+        } else {
+            // Log::error('Error updating testimonial: ' . $result);
+            return redirect()->back()->with('error', 'Error deleting partner: ');
+        }
     }
 }

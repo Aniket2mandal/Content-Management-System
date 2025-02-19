@@ -1,6 +1,6 @@
 <div class="mb-3">
     {!! Form::label('name', 'Name', ['class' => 'form-label']) !!}
-    {!! Form::text('name', old('name', $slider['name'] ?? null), ['class' => 'form-control', 'id' => 'name']) !!}
+    {!! Form::text('name', old('name', $slider->name ?? null), ['class' => 'form-control', 'id' => 'name']) !!}
     {{-- Error Message --}}
     @error('name')
         <div class="text-danger">{{ $message }}</div>
@@ -9,7 +9,7 @@
 
 <div class="mb-3">
     {!! Form::label('url', 'Url', ['class' => 'form-label']) !!}
-    {!! Form::url('url', old('url', $slider['url'] ?? null), ['class' => 'form-control', 'id' => 'url', 'rows' => 3]) !!}
+    {!! Form::url('url', old('url', $slider->url ?? null), ['class' => 'form-control', 'id' => 'url', 'rows' => 3]) !!}
     {{-- Error Message --}}
     @error('url')
         <div class="text-danger">{{ $message }}</div>
@@ -22,7 +22,7 @@
     {{-- Display Current Image if Available --}}
     @if(!empty($slider['image']))
         <div class="mt-2">
-            <img src="{{ asset('storage/' . $slider['image']) }}" alt="Current Image" class="img-thumbnail" width="150">
+            <img src="{{ asset('storage/' . $slider->image) }}" alt="Current Image" class="img-thumbnail" width="150">
         </div>
     @endif
     {{-- Error Message --}}
@@ -33,7 +33,8 @@
 
 <div class="mb-3">
     {!! Form::label('Status', 'Status', ['class' => 'form-label']) !!}
-    {!! Form::checkbox('Status', 1, old('Status', $slider['published'] ?? 0), [
+    {!! Form::hidden('Status', 0) !!}
+    {!! Form::checkbox('Status', 1, old('Status', $slider->published ?? 0), [
         'id' => 'Status', 
         'data-toggle' => 'toggle', 
         'data-on' => 'Publish', 

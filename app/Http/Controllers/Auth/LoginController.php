@@ -40,7 +40,7 @@ class LoginController extends Controller
         ]);
     // Check if the user exists and email is verified
     $user = User::where('email', $request->email)->first();
-    // dd($user->status);
+    // dd($user);
     if (Auth::attempt(['email'=>$request->email,'password'=>$request->password])) {
         if($user->status ===0){
             Auth::logout();

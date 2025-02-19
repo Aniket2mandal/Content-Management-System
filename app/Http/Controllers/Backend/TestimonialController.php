@@ -11,9 +11,9 @@ class TestimonialController extends Controller
 {
     public function index()
     {
-        $testimonialdata=Testimonial::all();
+        $testimonialdata = Testimonial::all();
         $testimonials = getLatestTestimonials(); // Fetch testimonials using helper function
-        return view('backend.testimonial.index', compact('testimonials','testimonialdata'));
+        return view('backend.testimonial.index', compact('testimonials', 'testimonialdata'));
     }
 
     public function create()
@@ -37,32 +37,31 @@ class TestimonialController extends Controller
         } else {
             $imagePath = null;
         }
-
-        $testimonial=new Testimonial;
-        $testimonial->name=$request->name;
-        $testimonial->message=\strip_tags($request->message);
-        $testimonial->image=$imagePath;
-        $testimonial->published=$request->Status;
+        $testimonial = new Testimonial;
+        $testimonial->name = $request->name;
+        $testimonial->message = \strip_tags($request->message);
+        $testimonial->image = $imagePath;
+        $testimonial->published = $request->Status;
         $testimonial->save();
 
-        if($request->Status==1){
-        $testimonialdata = Testimonial::where('published', 1)->latest()->first();
-        // dd($testimonialdata);
-        // Initialize $newTestimonial
-        $newTestimonial = [];
-        
-        if ($testimonialdata) {
-            $newTestimonial = [
-                'db_id' => $testimonialdata->id,  // Corrected from $testimonial->id to $testimonialdata->id
-                'name' => $testimonialdata->name,
-                'message' => \strip_tags($testimonialdata->message),
-                'image' => $testimonialdata->image,  // Adjust based on how your images are stored
-                'published' => $testimonialdata->published ?? 0,
-            ];
+        if ($request->Status == 1) {
+            $testimonialdata = Testimonial::where('published', 1)->latest()->first();
+            // dd($testimonialdata);
+            // Initialize $newTestimonial
+            $newTestimonial = [];
+
+            if ($testimonialdata) {
+                $newTestimonial = [
+                    'db_id' => $testimonialdata->id,  // Corrected from $testimonial->id to $testimonialdata->id
+                    'name' => $testimonialdata->name,
+                    'message' => \strip_tags($testimonialdata->message),
+                    'image' => $testimonialdata->image,  // Adjust based on how your images are stored
+                    'published' => $testimonialdata->published ?? 0,
+                ];
+            }
+            // Use helper function to save testimonial
+            saveTestimonials($newTestimonial);
         }
-        // Use helper function to save testimonial
-        saveTestimonials($newTestimonial);
-    }
         return redirect()->route('testimonial.index')->with('success', 'Testimonial created successfully!');
     }
 
@@ -73,7 +72,7 @@ class TestimonialController extends Controller
         // $newTestimonial = [
         //     'id' => $id,
         // ];
-        $testimonial=Testimonial::find($id);
+        $testimonial = Testimonial::find($id);
         // dd($testimonial);
         // $testimonial = editTestimonials($newTestimonial);
         if ($testimonial) {
@@ -97,12 +96,12 @@ class TestimonialController extends Controller
             $imagePath = null; // If no image is uploaded, keep it null
         }
 
-        $testimonial=Testimonial::find($id);
+        $testimonial = Testimonial::find($id);
         // dd($testimonial);
-        $testimonial->name=$request->name;
-        $testimonial->message=\strip_tags($request->message);
-        $testimonial->image=$imagePath;
-        $testimonial->published=$request->Status;
+        $testimonial->name = $request->name;
+        $testimonial->message = \strip_tags($request->message);
+        $testimonial->image = $imagePath;
+        $testimonial->published = $request->Status;
         $testimonial->save();
         // Prepare the testimonial data
         $newTestimonial = [];
@@ -120,12 +119,16 @@ class TestimonialController extends Controller
         // Call the update function
         $result = updateTestimonials($newTestimonial);
         // Log::info('Testimonial update result:', ['result' => $result]);
-        if ($result === true) {
+
+        if ($testimonial) {
             // Log::info('Testimonial updated successfully!');
             return redirect()->route('testimonial.index')->with('success', 'Testimonial updated successfully!');
         } else {
             // Log::error('Error updating testimonial: ' . $result);
             return redirect()->back()->with('error', 'Error updating testimonial: ' . $result);
+        }
+        if ($result) {
+            return response()->json(['success' => 'Testimonial  updated successfully!']);
         }
     }
 
@@ -140,9 +143,9 @@ class TestimonialController extends Controller
             'Status' => 'integer',
         ]);
         $testimonial = Testimonial::find($id);
-            // Update the status field
-            $testimonial->published = $request->Status;
-            $testimonial->save(); 
+        // Update the status field
+        $testimonial->published = $request->Status;
+        $testimonial->save();
         // dd($request->Status);
         $newTestimonialStatus = [
             'db_id' => $id,
@@ -150,7 +153,7 @@ class TestimonialController extends Controller
         ];
 
         $updated = updateTestimonialsStatus($newTestimonialStatus);
-        if ($updated) {
+        if ($testimonial) {
             return response()->json(['success' => 'Testimonial status updated successfully!']);
         } else {
             return response()->json(['error' => 'Testimonial not found!'], 404);
@@ -160,7 +163,7 @@ class TestimonialController extends Controller
 
     public function delete($id)
     {
-        $testimonial=Testimonial::find($id);
+        $testimonial = Testimonial::find($id);
         $testimonial->delete();
         $newTestimonial = [
             'db_id' => $id,

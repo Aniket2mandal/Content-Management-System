@@ -41,16 +41,16 @@
     @php
         $i = 1;
     @endphp
-    @foreach ($testimonials as $testimonial)
+    @foreach ($testimonialdata as $testimonial)
         <tr class="align-middle">
             <td>{{ $i++ }}</td>
-            <td>{{ $testimonial['name'] }}</td>
+            <td>{{ $testimonial->name }}</td>
             <td>
                 <div class="form-group">
                     <!-- Toggle switch for Publish/Unpublish -->
                     <input type="hidden" name="Status" class="Status" value="0">
                     <input type="checkbox" name="Status" class="Status"
-                        data-id="{{ $testimonial['db_id'] }}"
+                        data-id="{{ $testimonial->id }}"
                         data-toggle="toggle"
                         data-on="Publish"
                         data-off="Unpublish"
@@ -61,10 +61,12 @@
                 </div>
             </td>
             <td>
-                <a href="{{ route('testimonial.edit',  ['id' => $testimonial['db_id']]) }}" class="btn btn-primary btn-sm me-2 d-inline">
+               
+
+                <a href="{{ route('testimonial.edit',$testimonial->id) }}" class="btn btn-primary btn-sm me-2 d-inline">
                     <i class="fas fa-pencil-alt"></i> <b>Edit</b>
                 </a>
-                <button id="delete" data-id="{{ $testimonial['db_id'] }}" class="delete-btn btn btn-danger btn-sm">
+                <button id="delete" data-id="{{ $testimonial->id }}" class="delete-btn btn btn-danger btn-sm">
                     <i class="fas fa-trash"></i> <b>Delete</b>
                 </button>
             </td>

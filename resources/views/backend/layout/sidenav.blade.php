@@ -188,7 +188,8 @@
           <li class="nav-item">
             <a href="{{route('seo.index')}}" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
-              <i class="fas fa-search"></i>
+              <i class="fas fa-chart-line"></i>
+
 
               <p>
                 SEO
@@ -198,7 +199,6 @@
             </a>
 
           </li>
-
 
           <li class="nav-item">
             <a href="{{route('testimonial.index')}}" class="nav-link">

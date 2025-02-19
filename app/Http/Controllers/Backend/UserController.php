@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Userimage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -76,9 +77,16 @@ class UserController extends Controller
             // Update the status field
             $user->Status = $request->Status;
             $user->save();  // Save the changes to the database
-
+    
+            // Check if the status is being set to inactive
+            if ($request->Status == 0) {  // Assuming 0 means inactive
+                auth()->logout(); // Log out the user
+                return response()->json(['success' => true, 'logout' => true]);
+            }
+    
             return response()->json(['success' => true]);
         }
+    
         return response()->json(['success' => false], 404);
     }
 

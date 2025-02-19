@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
     // $userRole->givePermissionTo(['edit articles']);
 
     $this->call([
-        // PermissionSeeder::class,
-        // UserSeeder::class,
-        // RoleSeeder::class,
-        // CategorySeeder::class,
+        PermissionSeeder::class,
+        UserSeeder::class,
+        RoleSeeder::class,
+        CategorySeeder::class,
         AuthorSeeder::class
     ]);
 

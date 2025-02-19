@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
@@ -63,5 +64,31 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'change category status','Slug'=>'change-category-status']);
         Permission::create(['name' => 'change post status','Slug'=>'change-post-status']);
 
+        // SEO PERMISSION
+        DB::table('permissions')->insert([
+            'name' => 'view seo',
+            'slug' => 'view-seo',
+            'guard_name' => 'web'
+        ]);
+        
+        DB::table('permissions')->insert([
+            'name' => 'create field',
+            'slug' => 'create-field',
+            'guard_name' => 'web'
+        ]);
+        
+        DB::table('permissions')->insert([
+            'name' => 'edit seo',
+            'slug' => 'edit-seo',
+            'guard_name' => 'web'
+        ]);
+        
+        DB::table('permissions')->insert([
+            'name' => 'delete seo',
+            'slug' => 'delete-seo',
+            'guard_name' => 'web'
+        ]);
+        
+       
     }
 }

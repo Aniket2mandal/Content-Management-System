@@ -55,7 +55,7 @@ return [
         ],
         'user' => [
         'driver' => 'single',
-        'path' => storage_path('logs/laravel.log'),
+        'path' => storage_path('logs/user.log'),
         'level' => 'error',
     ],
 

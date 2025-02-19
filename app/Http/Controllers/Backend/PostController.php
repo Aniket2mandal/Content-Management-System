@@ -8,33 +8,59 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostAuthor;
 use App\Models\PostCategory;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
     public function index()
     {
+      
         // FOR POLICY
         $this->authorize('viewany', Post::class);
         // $post = Post::paginate(5);
         $post = Post::with('authors', 'categories')->paginate(5);
         return view('backend.post.index', compact('post'));
+     
     }
 
     //FOR CREATING POSTS
     public function create()
     {
+        try{
         $category = Category::where('Status', 1)->get();
         // dd($category);
         $author = Author::where('Status', 1)->get();
         return view('backend.post.create', compact('category', 'author'));
+        }catch (\Exception $exception) {
+            Log::channel('user')->error('User Error', [
+                'user_id' => auth()->id(),
+                'email' => auth()->user()->email ?? 'N/A',
+                'error_message' => $exception->getMessage(),
+                'error_line' => $exception->getLine(),
+                'error_file' => $exception->getFile(),
+                // 'stack_trace' => $exception->getTraceAsString(),
+            ]);
+    
+            return response()->view('backend.errors.error', [
+                'loggerdata' => [
+                    'user_id' => auth()->id(),
+                    'email' => auth()->user()->email ?? 'N/A',
+                    'error_message' => $exception->getMessage(),
+                    'error_line' => $exception->getLine(),
+                    'error_file' => $exception->getFile(),
+                    // 'stack_trace' => $exception->getTraceAsString(),
+                ]
+            ]);
+        }
     }
 
     public function store(Request $request)
     {
         // dd($request->all());
         // $this->authorize('create',Post::class);
-
+try{
         $request->validate([
             'Title' => 'required|string',
             'Description' => 'required|string',
@@ -68,12 +94,35 @@ class PostController extends Controller
         $post->authors()->sync($request->Author);
 
         return redirect()->route('post.index')->with('success', 'Post Created Successfully');
+    }catch (\Exception $exception) {
+        Log::channel('user')->error('User Error', [
+            'user_id' => auth()->id(),
+            'email' => auth()->user()->email ?? 'N/A',
+            'error_message' => $exception->getMessage(),
+            'error_line' => $exception->getLine(),
+            'error_file' => $exception->getFile(),
+            // 'stack_trace' => $exception->getTraceAsString(),
+        ]);
+
+        return response()->view('backend.errors.error', [
+            'loggerdata' => [
+                'user_id' => auth()->id(),
+                'email' => auth()->user()->email ?? 'N/A',
+                'error_message' => $exception->getMessage(),
+                'error_line' => $exception->getLine(),
+                'error_file' => $exception->getFile(),
+                // 'stack_trace' => $exception->getTraceAsString(),
+            ]
+        ]);
     }
+    }
+
 
 
     // FOR UPDATING POSTS
     public function edit($id)
     {
+        try{
         // dd($id);
         // dd(auth()->user()->permissions);
         $post = Post::find($id);
@@ -82,10 +131,32 @@ class PostController extends Controller
         // dd($category);
         $author = Author::where('Status', 1)->get();
         return view('backend.post.edit', compact('post', 'category', 'author'));
+        }catch (\Exception $exception) {
+            Log::channel('user')->error('User Error', [
+                'user_id' => auth()->id(),
+                'email' => auth()->user()->email ?? 'N/A',
+                'error_message' => $exception->getMessage(),
+                'error_line' => $exception->getLine(),
+                'error_file' => $exception->getFile(),
+                // 'stack_trace' => $exception->getTraceAsString(),
+            ]);
+    
+            return response()->view('backend.errors.error', [
+                'loggerdata' => [
+                    'user_id' => auth()->id(),
+                    'email' => auth()->user()->email ?? 'N/A',
+                    'error_message' => $exception->getMessage(),
+                    'error_line' => $exception->getLine(),
+                    'error_file' => $exception->getFile(),
+                    // 'stack_trace' => $exception->getTraceAsString(),
+                ]
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        try{
         // dd($request->all());
         $request->validate([
             'Title' => 'required|string',
@@ -140,12 +211,34 @@ class PostController extends Controller
         $post_category->save();
 
         return redirect()->route('post.index')->with('success', 'Post Updated Successfully');
+    }catch (\Exception $exception) {
+        Log::channel('user')->error('User Error', [
+            'user_id' => auth()->id(),
+            'email' => auth()->user()->email ?? 'N/A',
+            'error_message' => $exception->getMessage(),
+            'error_line' => $exception->getLine(),
+            'error_file' => $exception->getFile(),
+            // 'stack_trace' => $exception->getTraceAsString(),
+        ]);
+
+        return response()->view('backend.errors.error', [
+            'loggerdata' => [
+                'user_id' => auth()->id(),
+                'email' => auth()->user()->email ?? 'N/A',
+                'error_message' => $exception->getMessage(),
+                'error_line' => $exception->getLine(),
+                'error_file' => $exception->getFile(),
+                // 'stack_trace' => $exception->getTraceAsString(),
+            ]
+        ]);
+    }
     }
 
 
     // TO UPDATE THE STATUS OF POST
     public function status(Request $request, $id)
     {
+        try{
         // Log::info('Received request with status: ' . $request->Status);
         $request->validate([
             'Status' => 'integer',
@@ -161,12 +254,34 @@ class PostController extends Controller
             return response()->json(['success' => true]);
         }
         return response()->json(['success' => false], 404);
+    }catch (\Exception $exception) {
+        Log::channel('user')->error('User Error', [
+            'user_id' => auth()->id(),
+            'email' => auth()->user()->email ?? 'N/A',
+            'error_message' => $exception->getMessage(),
+            'error_line' => $exception->getLine(),
+            'error_file' => $exception->getFile(),
+            // 'stack_trace' => $exception->getTraceAsString(),
+        ]);
+
+        return response()->view('backend.errors.error', [
+            'loggerdata' => [
+                'user_id' => auth()->id(),
+                'email' => auth()->user()->email ?? 'N/A',
+                'error_message' => $exception->getMessage(),
+                'error_line' => $exception->getLine(),
+                'error_file' => $exception->getFile(),
+                // 'stack_trace' => $exception->getTraceAsString(),
+            ]
+        ]);
+    }
     }
 
 
 
     public function delete($id)
     {
+        try{
         //   dd($id);
         $post =  Post::find($id);
         // $this->authorize('delete',$post);
@@ -174,5 +289,26 @@ class PostController extends Controller
 
         return response()->json(['success' => true]);
         // return redirect()->route('post.index')->with('success', 'Post Deleted Successfully');
+    }catch (\Exception $exception) {
+        Log::channel('user')->error('User Error', [
+            'user_id' => auth()->id(),
+            'email' => auth()->user()->email ?? 'N/A',
+            'error_message' => $exception->getMessage(),
+            'error_line' => $exception->getLine(),
+            'error_file' => $exception->getFile(),
+            // 'stack_trace' => $exception->getTraceAsString(),
+        ]);
+
+        return response()->view('backend.errors.error', [
+            'loggerdata' => [
+                'user_id' => auth()->id(),
+                'email' => auth()->user()->email ?? 'N/A',
+                'error_message' => $exception->getMessage(),
+                'error_line' => $exception->getLine(),
+                'error_file' => $exception->getFile(),
+                // 'stack_trace' => $exception->getTraceAsString(),
+            ]
+        ]);
     }
+}
 }

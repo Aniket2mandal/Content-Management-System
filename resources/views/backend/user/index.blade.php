@@ -121,7 +121,11 @@
                         text: 'The user status has been updated.',
                         icon: 'success',
                         confirmButtonText: 'OK'
-                    });
+                    }).then(() => {
+                                location.reload();
+                                // Remove the post element from the DOM (you can select the post by its ID or class)
+                                // $('#post-' + postId).remove(); // Assuming each post has an id like "post-1", "post-2", etc.
+                            });
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);

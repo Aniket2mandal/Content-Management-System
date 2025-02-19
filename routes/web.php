@@ -16,10 +16,12 @@ use App\Http\Controllers\Backend\SeoController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -173,4 +175,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/slider/update/{id}', [SliderController::class, 'update'])->name('slider.update');
     Route::post('/slider/statusUpdate/{id}', [SliderController::class, 'statusUpdate'])->name('slider.statusUpdate');
     Route::get('/slider/delete/{id}', [SliderController::class, 'delete'])->name('slider.delete');
+
+
+// ERROR
+    Route::get('/error', [ErrorController::class, 'showError'])->name('logger.error');
 });

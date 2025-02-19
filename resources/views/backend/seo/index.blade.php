@@ -4,17 +4,18 @@
 <div class="card mt-4">
     <div class="card-header card-primary">
         <h3 class="card-title mt-4"> SEO </h3>
-
+        @can('create field', \App\Models\Seo::class)
         <div class="card-tools mt-4">
             <a href="{{ route('seo.fieldcreate') }}" class="btn btn-success">
                 create field <i class="fas fa-plus"></i>
             </a>
         </div>
+        @endcan
 
 
     </div>
 
-
+    @can('viewany', \App\Models\Seo::class)
     <div class="col-md mt-4">
         <!--begin::Quick Example-->
         <!--end::Header-->
@@ -61,9 +62,13 @@
                             @endif
                         </td>
                         <td>
+                        @can('edit seo', \App\Models\Seo::class)
                             <button type="submit" class="btn btn-primary">Save</button>
+                            @endcan
+                            @can('delete seo', \App\Models\Seo::class)
                             <button type="button" class="delete-btn btn btn-danger delete-field"
                                 data-id="{{ $seo->id }}">Delete</button>
+                                @endcan
                         </td>
                     </tr>
                 @endforeach
@@ -76,6 +81,7 @@
             {{ $seoFields->links('pagination::bootstrap-4') }}
         </div>
     </div>
+    @endcan
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function() {

@@ -109,7 +109,8 @@ if (!function_exists('saveTestimonials')) {
 
         // Add the new testimonial
         $newTestimonial['id'] = count($jsonData['testimonials']) + 1;
-        $jsonData['testimonials'][] = $newTestimonial;
+        // $jsonData['testimonials'][] = $newTestimonial;
+        array_unshift($jsonData['testimonials'], $newTestimonial);
 
         if (count($jsonData['testimonials']) > $limit) {
             // Remove the oldest testimonial(s)

@@ -11,7 +11,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::paginate(20);
+        $roles = Role::latest()->paginate(20);
         // $permission=$roles->permissions;
         return view('backend.role.index',compact('roles'));
     }
@@ -64,6 +64,8 @@ class RoleController extends Controller
         $role->slug = $request->Slug;
         if ($request->has('Permission') && !empty($request->Permission)) {
             $role->syncPermissions($request->Permission);
+        }else{
+            $role->syncPermissions([]);
         }
         $role->save();
         return redirect()->route('role.index')->with('success', $request->Name.' '.'Role Updated Successfully with permission');

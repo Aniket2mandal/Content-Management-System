@@ -11,7 +11,7 @@ class PartnerController extends Controller
 {
     public function index()
     {
-        $partnerdata = Partner::all();
+        $partnerdata = Partner::latest()->paginate(20);
         $partners = getLatestPartners(); // Fetch testimonials using helper function
         return view('backend.partner.index', compact('partners', 'partnerdata'));
     }

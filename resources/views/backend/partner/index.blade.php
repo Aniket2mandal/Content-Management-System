@@ -79,7 +79,7 @@
     </table>
     <!-- Pagination -->
     <div class="card-footer clearfix">
-
+    {{ $partnerdata->links('pagination::bootstrap-4') }}
     </div>
 </div>
 

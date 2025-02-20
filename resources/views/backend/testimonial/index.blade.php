@@ -77,7 +77,7 @@
     </table>
     <!-- Pagination -->
     <div class="card-footer clearfix">
-
+    {{ $testimonialdata->links('pagination::bootstrap-4') }}
     </div>
 </div>
 

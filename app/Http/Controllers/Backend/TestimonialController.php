@@ -11,7 +11,7 @@ class TestimonialController extends Controller
 {
     public function index()
     {
-        $testimonialdata = Testimonial::all();
+        $testimonialdata = Testimonial::latest()->paginate(20);
         $testimonials = getLatestTestimonials(); // Fetch testimonials using helper function
         return view('backend.testimonial.index', compact('testimonials', 'testimonialdata'));
     }

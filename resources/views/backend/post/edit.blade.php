@@ -71,7 +71,7 @@
 
                     @if(isset($post) && $post->image)
                     <div class="input-group mb-3 mt-2">
-                        <img src="{{ asset('images/' . $post->image) }}" alt="Old Image" style="max-height: 100px; max-width: 100px;">
+                        <img src="{{ asset('images/post/' . $post->image) }}"  style="max-height: 100px; max-width: 100px;">
                         <!-- <p>Current image</p> -->
                     </div>
                     @endif
@@ -113,7 +113,7 @@
                     <select class="form-control select2" id="Category" name="Category" required>
                         <option value="" selected>Select Category</option>
                         @foreach($category as $item)
-                        <option value="{{ $item->id }}" {{old('Category',$item->Title)?'selected':''}}>{{ $item->Title }}</option>
+                        <option value="{{ $item->id }}"  {{ $post->categories->contains('id', $item->id) ? 'selected' : '' }}>{{ $item->Title }}</option>
                         @endforeach
                     </select>
                     {{-- Error Message --}}
@@ -127,7 +127,7 @@
                     <select class="form-control select2" id="Author" name="Author" required>
                         <option value="" selected>Select Author</option>
                         @foreach($author as $item)
-                        <option value="{{ $item->id }}" {{old('Author',$item->Name)?'selected':''}}>{{ $item->Name }}</option>
+                        <option value="{{ $item->id }}"    {{ $post->authors->contains('id', $item->id) ? 'selected' : '' }}>{{ $item->Name }}</option>
                         @endforeach
                     </select>
                     {{-- Error Message --}}

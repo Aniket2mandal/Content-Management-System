@@ -13,7 +13,7 @@ class SeoController extends Controller
 {
     public function index()
     {
-        $seoFields = Seo::paginate(10);
+        $seoFields = Seo::latest()->paginate(10);
         return view('backend.seo.index', compact('seoFields'));
     }
     function create()

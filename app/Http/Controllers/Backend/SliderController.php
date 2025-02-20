@@ -10,7 +10,7 @@ class SliderController extends Controller
 {
     public function index()
     {
-        $sliderdata = Slider::all();
+        $sliderdata = Slider::latest()->paginate(20);
         $sliders = getLatestSliders(); // Fetch testimonials using helper function
         return view('backend.slider.index', compact('sliders', 'sliderdata'));
     }

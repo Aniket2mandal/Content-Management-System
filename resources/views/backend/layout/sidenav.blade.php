@@ -92,15 +92,17 @@
           </li> -->
 
           <li class="nav-item">
+            @can('viewany', \App\Models\User::class)
             <a href="#" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
               <i class="fas fa-users nav-icon"></i>
               <p>
                 User
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">3</span>
+                <!-- <span class="badge badge-info right">3</span> -->
               </p>
             </a>
+            @endcan
             <ul class="nav nav-treeview">
               @can('viewany', \App\Models\User::class)
               <li class="nav-item">
@@ -132,6 +134,7 @@
 
 
           <li class="nav-item">
+            @can('viewany', \App\Models\Post::class)
             <a href="#" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
               <i class="fas fa-list nav-icon"></i>
@@ -139,10 +142,11 @@
                 Post
                 <i class="fas fa-angle-left right"></i>
 
-                <span class="badge badge-info right">3</span>
+                <!-- <span class="badge badge-info right">3</span> -->
 
               </p>
             </a>
+            @endcan
             <ul class="nav nav-treeview">
               @can('viewany', \App\Models\Post::class)
               <li class="nav-item">
@@ -171,7 +175,7 @@
             </ul>
           </li>
 
-          
+          @can('viewany', \App\Models\Page::class)
           <li class="nav-item">
             <a href="{{ route('page.index') }}" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
@@ -183,23 +187,21 @@
             </a>
 
           </li>
-       
-      
+          @endcan
+
+          @can('viewany', \App\Models\Seo::class)
           <li class="nav-item">
             <a href="{{route('seo.index')}}" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->
               <i class="fas fa-chart-line"></i>
-
-
               <p>
                 SEO
                 <!-- <i class="fas fa-angle-left right"></i> -->
                 <!-- <span class="badge badge-info right">2</span> -->
               </p>
             </a>
-
           </li>
-
+          @endcan
           <li class="nav-item">
             <a href="{{route('testimonial.index')}}" class="nav-link">
               <!-- <use xlink:href="#person-sharp"></use> -->

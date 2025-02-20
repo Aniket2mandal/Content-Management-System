@@ -7,14 +7,16 @@ use App\Models\User;
 use App\Models\Userimage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $user = User::with('userimage')->where('email', '!=', 'super@gmail.com')->paginate(20);
+        $user = User::with('userimage')->where('email', '!=', 'super@gmail.com')->where('email','!=',auth()->user()->email)->latest()->paginate(20);
         return view('backend.user.index', compact('user'));
     }
 
@@ -72,19 +74,18 @@ class UserController extends Controller
         ]);
         // dd($request->Status);
         $user = User::find($id);
-
+        // dd($user->id);
         if ($user) {
             // Update the status field
             $user->Status = $request->Status;
             $user->save();  // Save the changes to the database
-    
+            return response()->json(['success' => true]);
             // Check if the status is being set to inactive
             if ($request->Status == 0) {  // Assuming 0 means inactive
-                auth()->logout(); // Log out the user
+                DB::table('sessions')->where('user_id', $user->id)->delete();
+                  // Log out the user
                 return response()->json(['success' => true, 'logout' => true]);
             }
-    
-            return response()->json(['success' => true]);
         }
     
         return response()->json(['success' => false], 404);
@@ -146,6 +147,7 @@ class UserController extends Controller
         $user->Email = $request->Email;
         if ($request->password) {
             $user->password = bcrypt($request->password);
+            DB::table('sessions')->where('user_id', $user->id)->delete();
         }
         if ($user->roles->isNotEmpty()) {
             // Remove the first role in the collection

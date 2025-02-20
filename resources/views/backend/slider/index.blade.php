@@ -86,7 +86,7 @@
     </table>
     <!-- Pagination -->
     <div class="card-footer clearfix">
-
+    {{ $sliderdata->links('pagination::bootstrap-4') }}
     </div>
 </div>
 

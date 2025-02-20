@@ -75,67 +75,67 @@ Route::middleware(['auth'])->group(function () {
 
 
     // CATEFORY
-    Route::get('/categoryhome', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('/categorycreate', [CategoryController::class, 'create'])->name('category.create');
-    Route::post('/categorystore', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/home', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
     Route::get('/categoryedit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::post('/categoryupdate/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::post('/category/update/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::post('/categorystatus/{id}', [CategoryController::class, 'status'])->name('category.status');
-    Route::get('/categorydelete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::get('/category/delete/{id}', [CategoryController::class, 'delete'])->name('category.delete');
 
     // POST
 
-    Route::get('/posthome', [PostController::class, 'index'])->name('post.index');
-    Route::get('/postcreate', [PostController::class, 'create'])->name('post.create');
-    Route::post('/poststore', [PostController::class, 'store'])->name('post.store');
-    Route::get('/postedit/{id}', [PostController::class, 'edit'])->name('post.edit');
-    Route::post('/postupdate/{id}', [PostController::class, 'update'])->name('post.update');
+    Route::get('/post/home', [PostController::class, 'index'])->name('post.index');
+    Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/post/store', [PostController::class, 'store'])->name('post.store');
+    Route::get('/post/edit/{id}', [PostController::class, 'edit'])->name('post.edit');
+    Route::post('/post/update/{id}', [PostController::class, 'update'])->name('post.update');
     Route::post('/poststatus/{id}', [PostController::class, 'status'])->name('post.status');
-    Route::get('/postdelete/{id}', [PostController::class, 'delete'])->name('post.delete');
+    Route::get('/post/delete/{id}', [PostController::class, 'delete'])->name('post.delete');
 
 
     // AUTHOR
-    Route::get('/authorhome', [AuthorController::class, 'index'])->name('author.index');
-    Route::get('/authorcreate', [AuthorController::class, 'create'])->name('author.create');
-    Route::post('/authorstore', [AuthorController::class, 'store'])->name('author.store');
-    Route::get('/authoredit/{id}', [AuthorController::class, 'edit'])->name('author.edit');
+    Route::get('/author/home', [AuthorController::class, 'index'])->name('author.index');
+    Route::get('/author/create', [AuthorController::class, 'create'])->name('author.create');
+    Route::post('/author/store', [AuthorController::class, 'store'])->name('author.store');
+    Route::get('/author/edit/{id}', [AuthorController::class, 'edit'])->name('author.edit');
     Route::post('/authorstatus/{id}', [AuthorController::class, 'status'])->name('author.status');
     // Route::post('/authorstatus/{id}', function ($id) {
     //     dd('Route reached');
     // });
-    Route::post('/authorupdate/{id}', [AuthorController::class, 'update'])->name('author.update');
-    Route::get('/authordelete/{id}', [AuthorController::class, 'delete'])->name('author.delete');
+    Route::post('/author/update/{id}', [AuthorController::class, 'update'])->name('author.update');
+    Route::get('/author/delete/{id}', [AuthorController::class, 'delete'])->name('author.delete');
 
 
     // ROLE
-    Route::get('/rolehome', [RoleController::class, 'index'])->name('role.index');
-    Route::get('/rolecreate', [RoleController::class, 'create'])->name('role.create');
-    Route::post('/rolestore', [RoleController::class, 'store'])->name('role.store');
-    Route::get('/roleedit/{id}', [RoleController::class, 'edit'])->name('role.edit');
-    Route::put('/roleupdate/{id}', [RoleController::class, 'update'])->name('role.update');
-    Route::get('/roledelete/{id}', [RoleController::class, 'delete'])->name('role.delete');
+    Route::get('/role/home', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
+    Route::get('/role/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::get('/role/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
 
     // PERMISSION
-    Route::get('/permissionhome', [PermissionController::class, 'index'])->name('permission.index');
+    Route::get('/permission/home', [PermissionController::class, 'index'])->name('permission.index');
     Route::get('/permissioncreate', [PermissionController::class, 'create'])->name('permission.create');
     Route::post('/permissionstore', [PermissionController::class, 'store'])->name('permission.store');
 
     // USER
-    Route::get('/userhome', [UserController::class, 'index'])->name('user.index');
-    Route::get('/usercreate', [UserController::class, 'create'])->name('user.create');
-    Route::post('/userstore', [UserController::class, 'store'])->name('user.store');
-    Route::get('/useredit/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/userupdate/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::get('/user/home', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::post('/userstatus/{id}', [UserController::class, 'status'])->name('user.status');
-    Route::get('/userdelete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 
     // PAGES
-    Route::get('/pagehome', [PageController::class, 'index'])->name('page.index');
-    Route::get('/pagecreate', [PageController::class, 'create'])->name('page.create');
-    Route::post('/pagestore', [PageController::class, 'store'])->name('page.store');
-    Route::get('/pageedit/{id}', [PageController::class, 'edit'])->name('page.edit');
-    Route::put('/pageupdate/{id}', [PageController::class, 'update'])->name('page.update');
-    Route::get('/pagedelete/{id}', [PageController::class, 'delete'])->name('page.delete');
+    Route::get('/page/home', [PageController::class, 'index'])->name('page.index');
+    Route::get('/page/create', [PageController::class, 'create'])->name('page.create');
+    Route::post('/page/store', [PageController::class, 'store'])->name('page.store');
+    Route::get('/page/edit/{id}', [PageController::class, 'edit'])->name('page.edit');
+    Route::put('/page/update/{id}', [PageController::class, 'update'])->name('page.update');
+    Route::get('/page/delete/{id}', [PageController::class, 'delete'])->name('page.delete');
     Route::post('/pagestatus/{id}', [PageController::class, 'status'])->name('page.status');
 
     // SEO

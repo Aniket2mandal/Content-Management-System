@@ -129,7 +129,7 @@
                     console.log("yess it is");
                     $.ajax({
                         method: 'GET',
-                        url: '/categorydelete/' + postId,
+                        url: '/category/delete/' + postId,
 
                         success: function(response) {
 

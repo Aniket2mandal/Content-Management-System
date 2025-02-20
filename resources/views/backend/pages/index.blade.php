@@ -153,7 +153,7 @@
                     console.log("yess it is");
                     $.ajax({
                         method: 'GET',
-                        url: '/pagedelete/' + postId,
+                        url: '/page/delete/' + postId,
 
                         success: function(response) {
 
@@ -190,7 +190,7 @@
             var pageId = $(this).data('id'); // Get the page ID
 
             $.ajax({
-                url: '/pageedit/' + pageId, // Fetch the page data
+                url: '/page/edit/' + pageId, // Fetch the page data
                 type: 'GET',
                 success: function(response) {
                     // Update form fields with the existing page data

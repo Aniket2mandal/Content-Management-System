@@ -127,7 +127,7 @@
                     console.log("yess it is");
                     $.ajax({
                         method: 'GET',
-                        url: '/authordelete/' + postId,
+                        url: '/author/delete/' + postId,
 
                         success: function(response) {
 

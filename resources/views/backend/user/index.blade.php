@@ -155,7 +155,7 @@
                     console.log("yess it is");
                     $.ajax({
                         method: 'GET',
-                        url: '/userdelete/' + postId,
+                        url: '/user/delete/' + postId,
 
                         success: function(response) {
 

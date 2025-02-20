@@ -85,7 +85,7 @@
                     console.log("yess it is");
                     $.ajax({
                         method: 'GET',
-                        url: '/roledelete/' + postId,
+                        url: '/role/delete/' + postId,
 
                         success: function(response) {
 

@@ -111,7 +111,6 @@
     <!--end::Quick Example-->
 </div>
 <script>
-
     function previewImage(event) {
         var reader = new FileReader();
         reader.onload = function() {

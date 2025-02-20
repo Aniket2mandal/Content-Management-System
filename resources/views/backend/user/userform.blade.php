@@ -46,12 +46,16 @@
     <div class="text-danger">{{ $message }}</div>
     @enderror
     @endif
-    {!! Form::file('image', ['class' => 'form-control', 'id' => 'Image']) !!}
+    {!! Form::file('image', ['class' => 'form-control', 'id' => 'Image','onchange'=>'previewImage(event)']) !!}
     <div class="input-group mb-3 mt-2">
         @if(isset($user) && $user->userimage && $user->userimage->image)
-        <img src="{{ asset('images/user/' . $user->userimage->image) }}" alt="No Image"style="max-height: 100px; max-width: 100px;">
+        <img src="{{ asset('images/user/' . $user->userimage->image) }}" alt="No Image" style="max-height: 100px; max-width: 100px;">
         @endif
     </div>
+    <!-- Image Preview -->
+    <div class="mt-3" id="imagePreviewContainer" style="position: relative; display: none;">
+        <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="width: 100px; border: 1px solid #ddd; padding: 5px;">
+        </div>
     {{-- Error Message --}}
     @error('image')
     <div class="text-danger">{{ $message }}</div>

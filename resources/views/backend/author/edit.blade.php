@@ -70,6 +70,12 @@
                 <div class="input-group mb-3">
                     <input type="file" class="form-control" id="inputGroupFile02" name="image" onchange="previewImage(event)" />
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                    @if(isset($author) && $author->image)
+                    <div class="input-group mb-3 mt-2">
+                        <img src="{{ asset('images/author/' . $author->image) }}"  style="max-height: 100px; max-width: 100px;">
+                        <!-- <p>Current image</p> -->
+                    </div>
+                    @endif
                     {{-- Error Message --}}
                     @error('image')
                     <div class="text-danger">{{ $message }}</div>

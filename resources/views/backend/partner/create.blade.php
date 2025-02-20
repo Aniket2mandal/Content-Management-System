@@ -29,4 +29,27 @@
     </div>
     <!--end::Quick Example-->
 </div>
+
+<script>
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            var previewContainer = document.getElementById('imagePreviewContainer');
+            var closeButton = document.querySelector('#imagePreviewContainer .btn-close');
+            
+            // Set the image source
+            output.src = reader.result;
+            
+            // Show the preview container
+            previewContainer.style.display = 'block';
+            
+            // Show the close button
+            closeButton.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+</script>
 @endsection

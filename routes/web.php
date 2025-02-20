@@ -17,10 +17,12 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\Frontend\HeaderController;
 use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -59,6 +61,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/welcome', function () {
+//     return view('frontend.layout.app');
+// });
+
+Route::get('/front/home', [HeaderController::class, 'index'])->name('front.home');
+
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
@@ -68,8 +76,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     // USER
-    Route::get('/userhome', [UserController::class, 'index'])->name('user.index');
-    Route::get('/usercreate', [UserController::class, 'create'])->name('user.create');
+    // Route::get('/userhome', [UserController::class, 'index'])->name('user.index');
+    // Route::get('/usercreate', [UserController::class, 'create'])->name('user.create');
 
 
 
@@ -180,3 +188,10 @@ Route::middleware(['auth'])->group(function () {
 // ERROR
     Route::get('/error', [ErrorController::class, 'showError'])->name('logger.error');
 });
+
+
+
+
+// FRONTEND
+
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

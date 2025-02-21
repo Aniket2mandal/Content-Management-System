@@ -77,7 +77,7 @@
     <div class="wrap-logo container">
         <!-- Logo desktop -->
         <div class="logo">
-            <a href="index.html"><img src="{{asset('imagesfrontend/icons/logo-01.png')}}" alt="LOGO"></a>
+            <a href="{{route('front.home')}}"><img src="{{asset('imagesfrontend/icons/logo-01.png')}}" alt="LOGO"></a>
         </div>
 
         <!-- Banner -->
@@ -99,12 +99,12 @@
 
                 <ul class="main-menu">
                     <li class="main-menu-active">
-                        <a href="index.html">Home</a>
-                        <ul class="sub-menu">
+                        <a href="{{route('front.home')}}">Home</a>
+                        <!-- <ul class="sub-menu">
                             <li><a href="index.html">Homepage v1</a></li>
                             <li><a href="home-02.html">Homepage v2</a></li>
                             <li><a href="home-03.html">Homepage v3</a></li>
-                        </ul>
+                        </ul> -->
                     </li>
 
                     <li class="mega-menu-item">
@@ -117,9 +117,10 @@
                     </li>
 
                     <!-- Categories Loop -->
-                    @foreach($categories->take(4) as $category)
+    
+            @foreach($categories->take(4) as $category)
                     <li class="mega-menu-item">
-                        <a href="#">{{ $category->Title }}</a>
+                        <a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a>
                     </li>
                     @endforeach
 
@@ -129,7 +130,7 @@
                         <a href="#">More</a>
                         <ul class="sub-menu">
                             @foreach($categories->skip(4) as $category)
-                            <li><a href="#">{{ $category->Title }}</a></li>
+                            <li><a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a></li>
                             @endforeach
                         </ul>
                     </li>

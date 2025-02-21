@@ -18,10 +18,14 @@ use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\Frontend\HeaderController;
+use App\Http\Controllers\Frontend\PostdetailController;
+use App\Http\Controllers\Frontend\PostlistController;
 use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -66,6 +70,9 @@ Route::get('/', function () {
 // });
 
 Route::get('/front/home', [HeaderController::class, 'index'])->name('front.home');
+Route::get('/front/postlist/{id}',[PostlistController::class,'index'])->name('front.postlist');
+Route::get('/front/postdetail/{id}',[PostdetailController::class,'index'])->name('front.postdetail');
+
 
 Auth::routes();
 

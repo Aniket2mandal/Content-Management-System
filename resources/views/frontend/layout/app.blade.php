@@ -33,8 +33,9 @@
     @include('frontend.layout.header')
     <!-- Headline -->
 
-    @yield('content')
-
+    <main>
+        @yield('content') <!-- This is where content from indexa.blade.php should appear -->
+    </main>
 
 
     <!-- Footer -->

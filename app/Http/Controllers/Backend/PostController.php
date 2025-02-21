@@ -60,7 +60,7 @@ class PostController extends Controller
     {
         // dd($request->all());
         // $this->authorize('create',Post::class);
-try{
+
         $request->validate([
             'Title' => 'required|string',
             'Description' => 'required|string',
@@ -94,27 +94,7 @@ try{
         $post->authors()->sync($request->Author);
 
         return redirect()->route('post.index')->with('success', 'Post Created Successfully');
-    }catch (\Exception $exception) {
-        Log::channel('user')->error('User Error', [
-            'user_id' => auth()->id(),
-            'email' => auth()->user()->email ?? 'N/A',
-            'error_message' => $exception->getMessage(),
-            'error_line' => $exception->getLine(),
-            'error_file' => $exception->getFile(),
-            // 'stack_trace' => $exception->getTraceAsString(),
-        ]);
 
-        return response()->view('backend.errors.error', [
-            'loggerdata' => [
-                'user_id' => auth()->id(),
-                'email' => auth()->user()->email ?? 'N/A',
-                'error_message' => $exception->getMessage(),
-                'error_line' => $exception->getLine(),
-                'error_file' => $exception->getFile(),
-                // 'stack_trace' => $exception->getTraceAsString(),
-            ]
-        ]);
-    }
     }
 
 

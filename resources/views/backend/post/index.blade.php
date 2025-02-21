@@ -45,8 +45,8 @@
                 <tr class="align-middle">
                     <td>{{$i++}}</td>
                     <td>{{$posts->Title}}</td>
-                    <td>{{$posts->Description}}</td>
-                    <td>{{$posts->Summary}}</td>
+                    <td>{{ Str::limit($posts->Description, 50) }}</td>
+                    <td>{{Str::limit($posts->Summary,50)}}</td>
                     <td>@if ($posts && $posts->image)
                         <img src="{{ asset('images/post/' . $posts->image) }}" alt="Post Image" width="80" height="80">
                         @else

@@ -10,13 +10,7 @@
                 <div class="p-b-20">
                     <!-- <h4 class="f1-m-2 cl12">Categories</h4> -->
                     <ul>
-
-                        @if($categories)
-                        <li><a href="" style="color:grey;font-size: 15px">Category>{{ $categories->Title }}</a></li>
-                        @else
-                        <li>Category not found</li>
-                        @endif
-
+                        <li><a href="" style="color:grey;font-size: 15px">Home>Latest Post</a></li>
                     </ul>
                 </div>
             </div>
@@ -25,10 +19,11 @@
             <div class="col-md-8 col-lg-20 ">
                 <div class="p-b-20">
                     <!-- Loop through each category -->
-                    <h2 class="f1-m-2 cl12 mb-5 font-weight-bold" style="color: black; font-size:35px">{{ $categories->Title }}</h2>
+                    <h2 class="f1-m-2 cl12 mb-5 font-weight-bold" style="color: black; font-size:35px">Latest Post</h2>
 
                     <!-- Latest Posts -->
-                    @foreach($posts as $post) <!-- Loop through the posts for the current category -->
+                    @foreach($posts as $post)
+                    <!-- Loop through the posts for the current category -->
                     <div class="m-b-30 d-flex align-items-start">
                         <div class="wrap-pic-w hov1 trans-03 mr-3">
                             <a href="{{route('front.postdetail',$post->id)}}">
@@ -46,7 +41,9 @@
                                 </a>
                             </h5>
                             <span class="cl8">
-                                <a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">{{ $categories->Title }}</a>
+                                @foreach($post->categories as $category)
+                                <a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">{{ $category->Title }}</a>
+                                @endforeach
                                 <span class="f1-s-3 m-rl-3"> - </span>
                                 <span class="f1-s-3">{{ $post->created_at->format('M d, Y') }}</span>
                             </span>
@@ -58,7 +55,6 @@
                         </div>
                     </div>
                     @endforeach
-                  
 
                     <!-- Pagination -->
                     <div class="card-footer clearfix">

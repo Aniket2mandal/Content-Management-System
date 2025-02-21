@@ -152,7 +152,7 @@
 									@foreach($category->posts as $post)
 									<div class="col-sm-6 p-r-25 p-r-15-sr991">
 										<div class="m-b-30">
-											<a href="" class="wrap-pic-w hov1 trans-03">
+											<a href="{{route('front.postdetail',$post->id)}}" class="wrap-pic-w hov1 trans-03">
 												@if($post->image)
 												<img src="{{ asset('images/post/'.$post->image) }}" alt="IMG">
 												@else
@@ -161,20 +161,20 @@
 											</a>
 											<div class="p-t-20">
 												<h5 class="p-b-5">
-													<a href="" class="f1-m-3 cl2 hov-cl10 trans-03">
+													<a href="{{route('front.postdetail',$post->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
 														{{ $post->Title }}
 													</a>
 												</h5>
 												<span class="cl8">
-													<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+													<a href="{{route('front.postdetail',$post->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">
 														{{ $category->Title }}
 													</a>
 													<span class="f1-s-3 m-rl-3"> - </span>
 													<span class="f1-s-3">{{ $post->created_at->format('M d, Y') }}</span>
 												</span>
 												<p class="f1-s-3">
-													<a href="" class="f1-s-3 cl2 hov-cl10 trans-03">
-														{{  Str::limit($post->Description, 100) }}
+													<a href="{{route('front.postdetail',$post->id)}}" class="f1-s-3 cl2 hov-cl10 trans-03">
+														{{ Str::limit($post->Description, 100) }}
 													</a>
 												</p>
 											</div>
@@ -203,7 +203,7 @@
 							<div class="row">
 								<div class="col-sm-12 p-r-25 p-r-15-sr991">
 									<div class="m-b-30">
-										<a href="" class="wrap-pic-w hov1 trans-03">
+										<a href="{{route('front.postdetail',$post->id)}}" class="wrap-pic-w hov1 trans-03">
 											@if($latestPost->image)
 											<img src="{{ asset('images/post/'.$latestPost->image) }}" alt="IMG">
 											@else
@@ -212,12 +212,12 @@
 										</a>
 										<div class="p-t-20">
 											<h5 class="p-b-5">
-												<a href="" class="f1-m-3 cl2 hov-cl10 trans-03">
+												<a href="{{route('front.postdetail',$post->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
 													{{ $latestPost->Title }}
 												</a>
 											</h5>
 											<span class="cl8">
-												<a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
+												<a href="{{route('front.postdetail',$post->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">
 													@foreach($latestPost->categories as $category)
 													{{ $category->Title }}
 													@endforeach
@@ -234,6 +234,11 @@
 					</div>
 				</div>
 				@endif
+				<h5 class="f1-s-3">
+					<a href="{{route('front.latestpostlist')}}" class="f1-s-3 cl2 hov-cl10 trans-03">
+						View All > ><!-- Displaying first 100 chars of description -->
+					</a>
+				</h5>
 			</div>
 		</div>
 	</div>

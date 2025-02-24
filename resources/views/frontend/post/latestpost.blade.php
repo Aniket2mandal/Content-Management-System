@@ -1,69 +1,85 @@
 @extends('frontend.layout.app')
 
 @section('content')
-<!-- Post Listing Page -->
 <section class="bg0 p-t-70">
     <div class="container">
-        <div class="justify-content-center">
-            <!-- Sidebar (optional) -->
-            <div class="col-md-4 col-lg-4 mb-4">
-                <div class="p-b-20">
-                    <!-- <h4 class="f1-m-2 cl12">Categories</h4> -->
-                    <ul>
-                        <li><a href="" style="color:grey;font-size: 15px">Home>Latest Post</a></li>
-                    </ul>
-                </div>
+        <!-- Breadcrumb -->
+        <div class="headline bg0 flex-wr-sb-c p-rl-20 p-tb-8">
+            <div class="f2-s-1 p-r-30 m-tb-6">
+                <a href="{{ route('front.home') }}" class="text-muted text-decoration-none">
+                    Home
+                </a>
+                <span class="mx-2"> </span>
+                <a href="{{route('front.latestpostlist')}}" class="text-muted text-decoration-none">
+                    Latest Post
+                </a>
             </div>
 
-            <!-- Main Content (Post Listing) -->
-            <div class="col-md-8 col-lg-20 ">
-                <div class="p-b-20">
-                    <!-- Loop through each category -->
-                    <h2 class="f1-m-2 cl12 mb-5 font-weight-bold" style="color: black; font-size:35px">Latest Post</h2>
+            <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
+                <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
+                <button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+                    <i class="zmdi zmdi-search"></i>
+                </button>
+            </div>
+        </div>
 
-                    <!-- Latest Posts -->
-                    @foreach($posts as $post)
-                    <!-- Loop through the posts for the current category -->
-                    <div class="m-b-30 d-flex align-items-start">
-                        <div class="wrap-pic-w hov1 trans-03 mr-3">
-                            <a href="{{route('front.postdetail',$post->id)}}">
-                                @if($post->image)
-                                <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" class="img-fluid rounded" style="width: 300px; height: 300px; object-fit: cover;">
-                                @else
-                                <i class="fa fa-image" style="font-size: 50px;width: 300px; height: 300px; object-fit: cover; color: gray;"></i>
-                                @endif
+        <!-- Main Content (Post Listing) -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="f1-m-2 cl12 mb-4 font-weight-bold text-dark" style="font-size: 35px;">
+                    Latest Posts
+                </h2>
+            </div>
+
+            @foreach($posts as $post)
+            <div class="col-md-6 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <a href="{{ route('front.postdetail', $post->id) }}" class="d-block">
+                        @if($post->image)
+                            <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 300px; object-fit: cover;">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
+                                <i class="fa fa-image" style="font-size: 50px;"></i>
+                            </div>
+                        @endif
+                    </a>
+
+                    <div class="card-body p-3">
+                        <h5 class="card-title">
+                            <a href="{{ route('front.postdetail', $post->id) }}" class="text-dark hov-cl10 trans-03">
+                                {{ $post->Title }}
                             </a>
-                        </div>
-                        <div class="p-t-20">
-                            <h5 class="p-b-5">
-                                <a href="" class="f1-m-3 cl2 hov-cl10 trans-03">
-                                    {{ $post->Title }}
-                                </a>
-                            </h5>
-                            <span class="cl8">
-                                @foreach($post->categories as $category)
-                                <a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">{{ $category->Title }}</a>
-                                @endforeach
-                                <span class="f1-s-3 m-rl-3"> - </span>
-                                <span class="f1-s-3">{{ $post->created_at->format('M d, Y') }}</span>
-                            </span>
-                            <p class="f1-s-3">
-                                <a href="" class="f1-s-3 cl2 hov-cl10 trans-03">
-                                    {{ Str::limit($post->Description, 100) }} <!-- Displaying first 100 chars of description -->
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                    @endforeach
+                        </h5>
 
-                    <!-- Pagination -->
-                    <div class="card-footer clearfix">
-                        {{ $posts->links('pagination::bootstrap-4') }}
+                        <span class="text-muted small">
+                            @foreach($post->categories as $category)
+                                <a href="{{route('front.postlist', $category->id)}}" class="text-secondary">{{ $category->Title }}</a>
+                                <span class="mx-2">•</span>
+                            @endforeach
+                            <span>{{ $post->created_at->format('M d, Y') }}</span>
+                        </span>
+
+                        <p class="mt-2 text-muted">
+                            {{ Str::limit($post->Description, 100) }}
+                        </p>
+
+                        <span class="text-muted small">
+                            <strong>Authors:</strong>
+                            @foreach($post->authors as $author)
+                                <a href="{{ route('front.authorpost', $author->id) }}" class="text-primary">{{ $author->Name }}</a>
+                                @if(!$loop->last), @endif
+                            @endforeach
+                        </span>
                     </div>
                 </div>
             </div>
+            @endforeach
+        </div>
 
-
-
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ $posts->links('pagination::bootstrap-4') }}
+        </div>
+    </div>
 </section>
 @endsection

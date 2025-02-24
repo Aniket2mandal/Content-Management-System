@@ -108,7 +108,7 @@
                     </li>
 
                     <li class="mega-menu-item">
-                        <a href="category-01.html">About Us</a>
+                        <a href="#">About Us</a>
                         <ul class="sub-menu">
                           @foreach($pages as $page)
                             <li><a href="#">{{ $page->Page_title }}</a></li>
@@ -118,7 +118,7 @@
 
                     <!-- Categories Loop -->
     
-            @foreach($categories->take(4) as $category)
+                  @foreach($categories->take(4) as $category)
                     <li class="mega-menu-item">
                         <a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a>
                     </li>

@@ -90,10 +90,8 @@
                         </a>
                         @endcan
 
-
                         @can('delete',App\Models\Post::class)
                         <button id="delete" data-id="{{ $posts->id }}" class="delete-btn btn btn-danger btn-sm"><i class="fas fa-trash"></i> <b>Delete</b></button>
-
                         @endcan
                     </td>
                 </tr>

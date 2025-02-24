@@ -104,6 +104,22 @@
        
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#Category').select2({
+        
+        });
+       
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#Author').select2({
+        
+        });
+       
+    });
+</script>
 
 <!-- Select2 JavaScript -->
 <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>

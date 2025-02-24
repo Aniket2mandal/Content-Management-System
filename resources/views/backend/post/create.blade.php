@@ -22,8 +22,7 @@
                         type="text"
                         class="form-control"
                         id="title"
-                        name="Title"
-                        />
+                        name="Title" />
                 </div>
 
                 <!-- Slug Field (Required) -->
@@ -65,50 +64,49 @@
                 </div>
 
                 <div class="form-group ">
-                <label for="status">Status:</label><br>
-                <!-- Toggle switch (default checked for Active) -->
-                <input type="hidden" name="Status" value="0">
-                <input type="checkbox" name="Status" id="Status" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status') ? 'checked' : '' }}>
-                <small class="form-text text-muted">Switch to set the status to active or inactive</small>
-            </div>
+                    <label for="status">Status:</label><br>
+                    <!-- Toggle switch (default checked for Active) -->
+                    <input type="hidden" name="Status" value="0">
+                    <input type="checkbox" name="Status" id="Status" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status') ? 'checked' : '' }}>
+                    <small class="form-text text-muted">Switch to set the status to active or inactive</small>
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Category</label>
+                    <select class="form-control select2" id="Category" name="Category[]" multiple="multiple">
+                        <!-- <option value="" selected>Select Category</option> -->
+                        @foreach($category as $item)
+                        <option value="{{ $item->id }}">{{ $item->Title }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-                    <div class="mb-3 ">
-                        <label for="status" class="form-label">Category</label>
-                        <select class="form-control select2" id="Status" name="Category" >
-                            <option value="" selected>Select Category</option>
-                            @foreach($category as $item)
-                            <option value="{{ $item->id }}">{{ $item->Title }}</option>
-                            @endforeach
+                <div class="mb-3 ">
+                    <label for="status" class="form-label">Author</label>
+                    <select class="form-control select2" id="Author" name="Author[]"multiple="multiple">
+                        <!-- <option value="" selected>Select Author</option> -->
+                        @foreach($author as $item)
+                        <option value="{{ $item->id }}">{{ $item->Name }}</option>
+                        @endforeach
 
-                        </select>
-                    </div>
-                    <div class="mb-3 ">
-                        <label for="status" class="form-label">Author</label>
-                        <select class="form-control select2" id="Status" name="Author" >
-                            <option value="" selected>Select Author</option>
-                            @foreach($author as $item)
-                            <option value="{{ $item->id }}">{{ $item->Name }}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
+                    </select>
                 </div>
             </div>
-            <!--end::Body-->
-
-            <!--begin::Footer-->
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('post.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a>
-            </div>
-            <div class="card-footer">
-
-            </div>
-            <!--end::Footer-->
-        </form>
-        <!--end::Form-->
     </div>
-    <!--end::Quick Example-->
+    <!--end::Body-->
+
+    <!--begin::Footer-->
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{{ route('post.index') }}" class="btn btn-danger" id="cancelButton">Cancel</a>
+    </div>
+    <div class="card-footer">
+
+    </div>
+    <!--end::Footer-->
+    </form>
+    <!--end::Form-->
+</div>
+<!--end::Quick Example-->
 </div>
 <script>
     function previewImage(event) {
@@ -117,26 +115,26 @@
             var output = document.getElementById('imagePreview');
             var previewContainer = document.getElementById('imagePreviewContainer');
             var closeButton = document.querySelector('#imagePreviewContainer .btn-close');
-            
+
             // Set the image source
             output.src = reader.result;
-            
+
             // Show the preview container
             previewContainer.style.display = 'block';
-            
+
             // Show the close button
             closeButton.style.display = 'block';
         };
         reader.readAsDataURL(event.target.files[0]);
     }
 
-    function removeImage(){
-        var output=document.getElementById('imagePreview');
-        var outputContainer=document.getElementById('imagePreviewContainer');
-        var closeButton=document.querySelector('#imagePreviewContainer .btn-close');
-        output.src='#';
-        outputContainer.style.display='none';
-        closeButton.style.display='none';
+    function removeImage() {
+        var output = document.getElementById('imagePreview');
+        var outputContainer = document.getElementById('imagePreviewContainer');
+        var closeButton = document.querySelector('#imagePreviewContainer .btn-close');
+        output.src = '#';
+        outputContainer.style.display = 'none';
+        closeButton.style.display = 'none';
     }
 </script>
 @endsection

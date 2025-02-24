@@ -28,32 +28,12 @@ class PostController extends Controller
     //FOR CREATING POSTS
     public function create()
     {
-        try{
+     
         $category = Category::where('Status', 1)->get();
         // dd($category);
         $author = Author::where('Status', 1)->get();
         return view('backend.post.create', compact('category', 'author'));
-        }catch (\Exception $exception) {
-            Log::channel('user')->error('User Error', [
-                'user_id' => auth()->id(),
-                'email' => auth()->user()->email ?? 'N/A',
-                'error_message' => $exception->getMessage(),
-                'error_line' => $exception->getLine(),
-                'error_file' => $exception->getFile(),
-                // 'stack_trace' => $exception->getTraceAsString(),
-            ]);
-    
-            return response()->view('backend.errors.error', [
-                'loggerdata' => [
-                    'user_id' => auth()->id(),
-                    'email' => auth()->user()->email ?? 'N/A',
-                    'error_message' => $exception->getMessage(),
-                    'error_line' => $exception->getLine(),
-                    'error_file' => $exception->getFile(),
-                    // 'stack_trace' => $exception->getTraceAsString(),
-                ]
-            ]);
-        }
+        
     }
 
     public function store(Request $request)
@@ -67,8 +47,8 @@ class PostController extends Controller
             'Summary' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'Status' => 'integer',
-            'Category' => 'required|string',
-            'Author' => 'required|integer',
+            'Category' => 'required|array',
+            'Author' => 'required|array',
 
         ]);
         // dd($request->file('image'));
@@ -124,8 +104,8 @@ class PostController extends Controller
             'Summary' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'Status' => 'integer',
-            'Category' => 'required|string',
-            'Author' => 'required|integer',
+            'Category' => 'required|array',
+            'Author' => 'required|array',
 
         ]);
         $post = Post::find($id);
@@ -150,25 +130,28 @@ class PostController extends Controller
         $post->Summary = \strip_tags($request->Summary);
         $post->Status = $request->Status;
         $post->image = $imageName;
-        $post->save();
-
+       
+// FOR POST CATEGORY
+$post->categories()->sync($request->input('Category'));
         // FOR POST AUTHOR 
-        $post_author = PostAuthor::where('post_id', $post->id)->first();
-        if (!$post_author) {
-            $post_author = new PostAuthor();
-        }
-        $post_author->post_id = $post->id;
-        $post_author->author_id = $request->Author;
-        $post_author->save();
+        $post->authors()->sync($request->input('Author'));
+        $post->save();
+        // $post_author = PostAuthor::where('post_id', $post->id)->first();
+        // if (!$post_author) {
+        //     $post_author = new PostAuthor();
+        // }
+        // $post_author->post_id = $post->id;
+        // $post_author->author_id = $request->Author;
+        // $post_author->save();
 
         // FOR POST CATEGORY
-        $post_category = PostCategory::where('post_id', $post->id)->first();
-        if (!$post_category) {
-            $post_category = new PostCategory();
-        }
-        $post_category->post_id = $post->id;
-        $post_category->category_id = $request->Category;
-        $post_category->save();
+        // $post_category = PostCategory::where('post_id', $post->id)->first();
+        // if (!$post_category) {
+        //     $post_category = new PostCategory();
+        // }
+        // $post_category->post_id = $post->id;
+        // $post_category->category_id = $request->Category;
+        // $post_category->save();
 
         return redirect()->route('post.index')->with('success', 'Post Updated Successfully');
     

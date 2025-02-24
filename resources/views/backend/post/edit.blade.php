@@ -110,8 +110,8 @@
 
                 <div class="mb-3 col-md-4">
                     <label for="status" class="form-label">Category</label>
-                    <select class="form-control select2" id="Category" name="Category" required>
-                        <option value="" selected>Select Category</option>
+                    <select class="form-control select2" id="Category" name="Category[]" multiple="multiple">
+                        <!-- <option value="" selected>Select Category</option> -->
                         @foreach($category as $item)
                         <option value="{{ $item->id }}"  {{ $post->categories->contains('id', $item->id) ? 'selected' : '' }}>{{ $item->Title }}</option>
                         @endforeach
@@ -124,10 +124,10 @@
 
                 <div class="mb-3 col-md-4">
                     <label for="status" class="form-label">Author</label>
-                    <select class="form-control select2" id="Author" name="Author" required>
-                        <option value="" selected>Select Author</option>
+                    <select class="form-control select2" id="Author" name="Author[]" multiple="multiple">
+                        <!-- <option value="" selected>Select Author</option> -->
                         @foreach($author as $item)
-                        <option value="{{ $item->id }}"    {{ $post->authors->contains('id', $item->id) ? 'selected' : '' }}>{{ $item->Name }}</option>
+                        <option value="{{ $item->id }}" {{ $post->authors->contains('id', $item->id) ? 'selected' : '' }}>{{ $item->Name }}</option>
                         @endforeach
                     </select>
                     {{-- Error Message --}}

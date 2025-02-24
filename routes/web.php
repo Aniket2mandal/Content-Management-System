@@ -73,7 +73,8 @@ Route::get('/front/home', [HeaderController::class, 'index'])->name('front.home'
 Route::get('/front/postlist/{id}',[PostlistController::class,'index'])->name('front.postlist');
 Route::get('/front/latestpostlist',[PostlistController::class,'latestpost'])->name('front.latestpostlist');
 Route::get('/front/postdetail/{id}',[PostdetailController::class,'index'])->name('front.postdetail');
-
+Route::get('/front/author/post/{id}', [PostlistController::class, 'authorpost'])->name('front.authorpost');
+// Route::get('/front/authorlist',[AuthorlistController::class,'index'])->name('front.auhtordetail');
 
 
 Auth::routes();

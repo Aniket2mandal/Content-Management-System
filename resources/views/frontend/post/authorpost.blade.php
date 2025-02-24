@@ -6,15 +6,13 @@
         <!-- Breadcrumb -->
         <div class="headline bg0 flex-wr-sb-c p-rl-20 p-tb-8">
             <div class="f2-s-1 p-r-30 m-tb-6">
-                <a href="{{ route('front.home') }}" class="breadcrumb-item f1-s-3 cl9">
+                <a href="{{ route('front.home') }}" class="text-muted text-decoration-none">
                     Home
                 </a>
-
-                @if(isset($categories))
-                    <a href="{{route('front.postlist', $categories->id)}}" class="breadcrumb-item f1-s-3 cl9">
-                        {{ $categories->Title }}
-                    </a>
-                @endif
+                <span class="mx-2"> </span>
+                <a href="{{ route('front.authorpost', $authors->id) }}" class="text-muted text-decoration-none">
+                    {{ $authors->Name }}
+                </a>
             </div>
 
             <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
@@ -29,12 +27,12 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 class="f1-m-2 cl12 mb-4 font-weight-bold text-dark" style="font-size: 35px;">
-                    {{ $categories->Title ?? 'Posts' }}
+                    Posts by {{ $authors->Name }}
                 </h2>
             </div>
 
-            @foreach($posts as $post) <!-- Loop through posts -->
-            <div class="col-md-6 mb-4"> <!-- Adjust column width for better layout -->
+            @foreach($posts as $post)
+            <div class="col-md-6 mb-4">
                 <div class="card border-0 shadow-sm">
                     <a href="{{ route('front.postdetail', $post->id) }}" class="d-block">
                         @if($post->image)
@@ -54,8 +52,10 @@
                         </h5>
 
                         <span class="text-muted small">
-                            <a href="#" class="text-secondary">{{ $categories->Title ?? 'Uncategorized' }}</a>
-                            <span class="mx-2">•</span>
+                            @foreach($post->categories as $category)
+                                <a href="{{route('front.postlist', $category->id)}}" class="text-secondary">{{ $category->Title }}</a>
+                                <span class="mx-2">•</span>
+                            @endforeach
                             <span>{{ $post->created_at->format('M d, Y') }}</span>
                         </span>
 

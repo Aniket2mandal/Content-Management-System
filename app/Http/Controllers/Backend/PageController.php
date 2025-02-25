@@ -22,15 +22,17 @@ class PageController extends Controller
 
     public function store(Request $request)
     {
-       
+        Log::info('Form Data:', $request->all());
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string',
+            'slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:pages,Page_slug',
             'Status' => 'integer',
             'summary' => 'required|string',
             'Description' => 'required|string'
         ]);
-        Log::info('Form Data:', $request->all());
+        
+        // dd($request->Description)
+        // Log::info('Form Data:', $request->all());
         $page = new Page;
         $page->Page_title = $request->title;
         $page->Page_slug = $request->slug;
@@ -52,7 +54,7 @@ class PageController extends Controller
     public function update(Request $request,$id){
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string',
+            'slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:pages,Page_slug',
             'Status' => 'integer',
             'summary' => 'required|string',
             'Description' => 'required|string'

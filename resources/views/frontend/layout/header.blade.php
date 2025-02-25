@@ -20,7 +20,7 @@
                         About
                     </a>
 
-                    <a href="#" class="left-topbar-item">
+                    <a href="{{route('front.contactus')}}" class="left-topbar-item">
                         Contact
                     </a>
 
@@ -111,7 +111,13 @@
                         <a href="#">About Us</a>
                         <ul class="sub-menu">
                           @foreach($pages as $page)
-                            <li><a href="#">{{ $page->Page_title }}</a></li>
+                          @if($page->Page_title=='Contact page' )
+                            <li><a href="{{route('front.contactus')}}">{{ $page->Page_title }}</a></li>
+                        @elseif($page->Page_title=='About Page')
+                        <li><a href="{{route('front.aboutus')}}">{{ $page->Page_title }}</a></li>
+                        @else
+                        <li><a href="#">{{ $page->Page_title }}</a></li>
+                        @endif
                             @endforeach
                         </ul>
                     </li>

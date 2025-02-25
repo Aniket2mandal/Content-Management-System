@@ -24,6 +24,8 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
     <!--===============================================================================================-->
+    <!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 
 <body class="animsition">
@@ -71,6 +73,19 @@
     <!--===============================================================================================-->
     <script src="js/main.js"></script>
 
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.min.js"></script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 </body>
 
 </html>

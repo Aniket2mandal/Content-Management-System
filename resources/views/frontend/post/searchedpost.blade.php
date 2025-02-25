@@ -10,37 +10,35 @@
                 <a href="{{ route('front.home') }}" class="text-secondary text-decoration-none">
                     Home
                 </a>
-                @foreach($posts as $post)
-                @foreach($post->categories as $category)
+           
+                @foreach($posts->categories as $category)
                 <span class="mx-2"> </span>
                 <a href="{{route('front.postlist', $category->id)}}" class="text-muted text-decoration-none">{{ $category->Title }}</a>
                 <span class="mx-2"> </span>
-                <a href="{{ route('front.postdetail', $post->id) }}" class="text-muted text-decoration-none">{{ $post->Title }}</a>
+                <a href="{{ route('front.postdetail', $posts->id) }}" class="text-muted text-decoration-none">{{ $posts->Title }}</a>
                 @endforeach
-                @endforeach
+       
             </div>
 
-            <form action="{{ route('front.postsearch') }}" method="GET">
             <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
                 <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-                <button type="submit" class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+                <button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
                     <i class="zmdi zmdi-search"></i>
                 </button>
             </div>
-        </form>
         </div>
 
         <!-- Main Content (Post Listing) -->
         <div class="row">
             <div class="col-md-12">
 
-                @foreach($posts as $post)
-                @foreach($post->categories as $category)
+         
+                @foreach($posts->categories as $category)
                 <!-- Post Image -->
                 <div class="mb-4">
                     <div class="rounded shadow-sm">
-                        @if($post->image)
-                        <img src="{{ asset('images/post/'.$post->image) }}"
+                        @if($posts->image)
+                        <img src="{{ asset('images/post/'.$posts->image) }}"
                             alt="IMG"
                             class="img-fluid w-100"
                             style="height: 500px; object-fit: contain; max-width: 100%; border-radius: 8px;">
@@ -56,7 +54,7 @@
 
                 <!-- Post Title -->
                 <h3 class="fw-bold text-primary">
-                    {{ $post->Title }}
+                    {{ $posts->Title }}
                 </h3>
 
                 <!-- Post Meta -->
@@ -65,13 +63,13 @@
                         {{ $category->Title }}
                     </a>
                     <span class="mx-2">•</span>
-                    <span>{{ $post->created_at->format('M d, Y') }}</span>
+                    <span>{{ $posts->created_at->format('M d, Y') }}</span>
                 </p>
 
                 <!-- Authors -->
                 <p class="text-muted small">
                     <strong>Authors:</strong>
-                    @foreach($post->authors as $author)
+                    @foreach($posts->authors as $author)
                     <a href="{{ route('front.authorpost', $author->id) }}" class="text-decoration-none text-primary">
                         {{ $author->Name }}
                     </a>
@@ -82,13 +80,13 @@
                 <!-- Post Description -->
                 <p class="text-dark">
                     <a href="#" class="text-dark text-decoration-none">
-                        {{ $post->Description }}
+                        {{ $posts->Description }}
                     </a>
                 </p>
 
                 <hr class="my-4">
                 @endforeach
-                @endforeach
+            
             </div>
         </div>
 

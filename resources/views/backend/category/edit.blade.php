@@ -72,13 +72,26 @@
     </div>
     <!--end::Quick Example-->
 </div>
-@endsection
 
-@section('scripts')
+
 <!-- Include TinyMCE -->
 
 
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+$('#title').on('input', function() {
+var title = $(this).val();
+// Convert title to lowercase and replace spaces with dashes
+var slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+// Remove dashes from the start and end of the slug
+slug = slug.replace(/^-+/, '').replace(/-+$/, '');
+// Set the generated slug as the value of the slug input
+$('#slug').val(slug);
+});
+});
+</script>
 <script>
     // Initialize TinyMCE editor
     tinymce.init({
@@ -90,4 +103,9 @@
 
 </script>
 @endsection
+
+
+
+
+
 

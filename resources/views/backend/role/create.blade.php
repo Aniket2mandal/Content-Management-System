@@ -31,4 +31,19 @@
     <!--end::Quick Example-->
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+$('#Name').on('input', function() {
+var title = $(this).val();
+// Convert title to lowercase and replace spaces with dashes
+var slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+// Remove dashes from the start and end of the slug
+slug = slug.replace(/^-+/, '').replace(/-+$/, '');
+// Set the generated slug as the value of the slug input
+$('#Slug').val(slug);
+});
+});
+</script>
+
 @endsection

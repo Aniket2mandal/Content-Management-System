@@ -17,6 +17,8 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\Frontend\AboutusController;
+use App\Http\Controllers\Frontend\ContactusController;
 use App\Http\Controllers\Frontend\HeaderController;
 use App\Http\Controllers\Frontend\PostdetailController;
 use App\Http\Controllers\Frontend\PostlistController;
@@ -24,6 +26,8 @@ use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -73,7 +77,21 @@ Route::get('/front/home', [HeaderController::class, 'index'])->name('front.home'
 Route::get('/front/postlist/{id}',[PostlistController::class,'index'])->name('front.postlist');
 Route::get('/front/latestpostlist',[PostlistController::class,'latestpost'])->name('front.latestpostlist');
 Route::get('/front/postdetail/{id}',[PostdetailController::class,'index'])->name('front.postdetail');
+
+Route::get('/front/search',[PostdetailController::class,'search'])->name('front.postsearch');
+
 Route::get('/front/author/post/{id}', [PostlistController::class, 'authorpost'])->name('front.authorpost');
+
+// ROUTES FOR CONTACT US FORM
+Route::get('/front/contactus', [ContactusController::class, 'index'])->name('front.contactus');
+Route::post('/front/contactus/store', [ContactusController::class, 'store'])->name('front.contactstore');
+
+// ROUTES FOR ABOUT US PAGE
+Route::get('/front/aboutus', [AboutusController::class, 'index'])->name('front.aboutus');
+
+
+
+
 // Route::get('/front/authorlist',[AuthorlistController::class,'index'])->name('front.auhtordetail');
 
 

@@ -13,14 +13,22 @@
                 <a href="{{ route('front.authorpost', $authors->id) }}" class="text-muted text-decoration-none">
                     {{ $authors->Name }}
                 </a>
+                <span class="mx-2"> </span>
+                @if ($authors && $authors->image)
+                <img src="{{ asset('images/author/' . $authors->image) }}" class="rounded-circle img-fluid" alt="Author Image" width="50" height="50">
+                @else
+                <img src="{{ asset('adminlte/img/avatar.png') }}" class="rounded-circle img-fluid" alt="User Image" width="80" height="80">
+                @endif
             </div>
 
+            <form action="{{ route('front.postsearch') }}" method="GET">
             <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
                 <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-                <button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+                <button type="submit" class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
                     <i class="zmdi zmdi-search"></i>
                 </button>
             </div>
+        </form>
         </div>
 
         <!-- Main Content (Post Listing) -->
@@ -36,11 +44,11 @@
                 <div class="card border-0 shadow-sm">
                     <a href="{{ route('front.postdetail', $post->id) }}" class="d-block">
                         @if($post->image)
-                            <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 300px; object-fit: cover;">
+                        <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 300px; object-fit: cover;">
                         @else
-                            <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
-                                <i class="fa fa-image" style="font-size: 50px;"></i>
-                            </div>
+                        <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
+                            <i class="fa fa-image" style="font-size: 50px;"></i>
+                        </div>
                         @endif
                     </a>
 
@@ -53,8 +61,8 @@
 
                         <span class="text-muted small">
                             @foreach($post->categories as $category)
-                                <a href="{{route('front.postlist', $category->id)}}" class="text-secondary">{{ $category->Title }}</a>
-                                <span class="mx-2">•</span>
+                            <a href="{{route('front.postlist', $category->id)}}" class="text-secondary">{{ $category->Title }}</a>
+                            <span class="mx-2">•</span>
                             @endforeach
                             <span>{{ $post->created_at->format('M d, Y') }}</span>
                         </span>
@@ -66,8 +74,8 @@
                         <span class="text-muted small">
                             <strong>Authors:</strong>
                             @foreach($post->authors as $author)
-                                <a href="{{ route('front.authorpost', $author->id) }}" class="text-primary">{{ $author->Name }}</a>
-                                @if(!$loop->last), @endif
+                            <a href="{{ route('front.authorpost', $author->id) }}" class="text-primary">{{ $author->Name }}</a>
+                            @if(!$loop->last), @endif
                             @endforeach
                         </span>
                     </div>

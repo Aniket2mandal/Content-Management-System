@@ -23,7 +23,7 @@ class CategoryController extends Controller
 //    dd($request->all());
     $request->validate([
         'Title' => 'required|string',
-        'Slug' => 'required|string',
+        'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:categories,Slug',
         'Description' => 'string',
         'Status' => 'integer', 
     ]);
@@ -54,7 +54,7 @@ public function update(Request $request, $id)
     
     $request->validate([
         'Title' => 'required|string',
-        'Slug' => 'required|string',
+        'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:categories,Slug',
         'Description' => 'required|string',
         'Status' => 'integer', 
     ]);

@@ -133,129 +133,138 @@
 
 
 <section class="bg0 p-t-70">
-	<div class="container">
-		<div class="row justify-content-center">
-			<!-- Movie Category (Left Side) -->
-			<div class="col-md-8 col-lg-8">
-				<div class="p-b-20">
-					<!-- Category-wise Posts -->
-					@foreach($categories->take(1) as $category)
-					<div class="tab01 p-b-20">
-						<div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
-							<h3 class="f1-m-2 cl12 tab01-title">
-								{{ $category->Title }}
-							</h3>
-						</div>
-						<div class="tab-content p-t-35">
-							<div class="tab-pane fade show active">
-								<div class="row">
-									@foreach($category->posts->take(4) as $post)
-									<div class="col-sm-6 p-r-25 p-r-15-sr991">
-										<div class="m-b-30">
-											<a href="{{route('front.postdetail',$post->id)}}" class="wrap-pic-w hov1 trans-03">
-												@if($post->image)
-												<img src="{{ asset('images/post/'.$post->image) }}"style="width: 200px; height: 200px; object-fit: cover; alt="IMG">
-												@else
-												<i class="fa fa-image" style="font-size: 50px;width: 200px; height: 200px; object-fit: cover; color: gray;"></i>
-												@endif
-											</a>
-											<div class="p-t-20">
-												<h5 class="p-b-5">
-													<a href="{{route('front.postdetail',$post->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
-														{{ $post->Title }}
-													</a>
-												</h5>
-												<!-- Post Meta -->
-												<p class="text-muted small">
-													<a href="{{ route('front.postlist', $category->id) }}" class="text-secondary text-decoration-none">
-														{{ $category->Title }}
-													</a>
-													<span class="mx-2">•</span>
-													<span>{{ $post->created_at->format('M d, Y') }}</span>
-												</p>
-												<!-- Authors -->
-												<p class="text-muted small">
-													<strong>Authors:</strong>
-													@foreach($post->authors as $author)
-													<a href="{{ route('front.authorpost', $author->id) }}" class="text-decoration-none text-primary">
-														{{ $author->Name }}
-													</a>
-													@if(!$loop->last), @endif
-													@endforeach
-												</p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Movie Category (Left Side) -->
+            <div class="col-md-8 col-lg-8">
+                <div class="p-b-20">
+                    <!-- Category-wise Posts -->
+                    @foreach($categories->take(1) as $category)
+                    <div class="tab01 p-b-20">
+                        <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
+                            <h3 class="f1-m-2 cl12 tab01-title">
+                                {{ $category->Title }}
+                            </h3>
+                        </div>
+                        <div class="tab-content p-t-35">
+                            <div class="tab-pane fade show active">
+                                <div class="row">
+                                    @foreach($category->posts->take(4) as $post)
+                                    <div class="col-sm-6 p-r-25 p-r-15-sr991">
+                                        <div class="m-b-30">
+                                            <a href="{{route('front.postdetail',$post->id)}}" class="wrap-pic-w hov1 trans-03">
+                                                @if($post->image)
+                                                <img src="{{ asset('images/post/'.$post->image) }}" style="width: 200px; height: 200px; object-fit: cover;" alt="IMG">
+                                                @else
+                                                <i class="fa fa-image" style="font-size: 50px; width:200px; height:200px; object-fit: cover; color: gray;"></i>
+                                                @endif
+                                            </a>
+                                            <div class="p-t-20">
+                                                <h5 class="p-b-5">
+                                                    <a href="{{route('front.postdetail',$post->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                                        {{ $post->Title }}
+                                                    </a>
+                                                </h5>
+                                                <!-- Post Meta -->
+                                                <p class="text-muted small">
+                                                    <a href="{{ route('front.postlist', $category->id) }}" class="text-secondary text-decoration-none">
+                                                        {{ $category->Title }}
+                                                    </a>
+                                                    <span class="mx-2">•</span>
+                                                    <span>{{ $post->created_at->format('M d, Y') }}</span>
+                                                </p>
+                                                <!-- Authors -->
+                                                <p class="text-muted small">
+                                                    <strong>Authors:</strong>
+                                                    @foreach($post->authors as $author)
+                                                    <a href="{{ route('front.authorpost', $author->id) }}" class="text-decoration-none text-primary">
+                                                        {{ $author->Name }}
+                                                    </a>
+                                                    @if(!$loop->last), @endif
+                                                    @endforeach
+                                                </p>
 
-												</p>
-												<p class="f1-s-3">
-													<a href="{{route('front.postdetail',$post->id)}}" class="f1-s-3 cl2 hov-cl10 trans-03">
-														{{ Str::limit($post->Description, 100) }}
-													</a>
-												</p>
-											</div>
-										</div>
-									</div>
-									@endforeach
-								</div>
-							</div>
-						</div>
-					</div>
-					@endforeach
-				</div>
-			</div>
-	
-			<!-- Latest Post Section (Right Side) -->
-			<div class="col-md-4 col-lg-4">
-				@if($latestPost)
-				<div class="tab01 p-b-20">
-					<div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
-						<h3 class="f1-m-2 cl12 tab01-title">
-							Latest Post
-						</h3>
-					</div>
-					<div class="tab-content p-t-35">
-						<div class="tab-pane fade show active">
-							<div class="row">
-								<div class="col-sm-12 p-r-25 p-r-15-sr991">
-									<div class="m-b-30">
-										<a href="{{route('front.postdetail',$latestPost->id)}}" class="wrap-pic-w hov1 trans-03">
-											@if($latestPost->image)
-											<img src="{{ asset('images/post/'.$latestPost->image) }}" alt="IMG">
-											@else
-											<i class="fa fa-image" style="font-size: 50px;width: 300px; height: 300px; object-fit: cover; color: gray;"></i>
-											@endif
-										</a>
-										<div class="p-t-20">
-											<h5 class="p-b-5">
-												<a href="{{route('front.postdetail',$latestPost->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
-													{{ $latestPost->Title }}
-												</a>
-											</h5>
-											<span class="cl8">
+                                                </p>
+                                                <p class="f1-s-3">
+                                                    <a href="{{route('front.postdetail',$post->id)}}" class="f1-s-3 cl2 hov-cl10 trans-03">
+                                                        {{ Str::limit($post->Description, 100) }}
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
 
-												@foreach($latestPost->categories as $category)
-												<a href="{{route('front.postlist',$category->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">
-													{{ $category->Title }}
-													@endforeach
-												</a>
-												<span class="f1-s-3 m-rl-3"> - </span>
-												<span class="f1-s-3">{{ $latestPost->created_at->format('M d, Y') }}</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				@endif
-				<h5 class="f1-s-3">
-					<a href="{{route('front.latestpostlist')}}" class="f1-s-3 cl2 hov-cl10 trans-03">
-						View All > ><!-- Displaying first 100 chars of description -->
-					</a>
-				</h5>
-			</div>
+            <!-- Latest Post Section (Right Side) -->
+             
+            <div class="col-md-4 col-lg-4">
+            <form action="{{ route('front.postsearch') }}" method="GET">
+                        <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
+                            <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
+                            <button type="submit" class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                @if($latestPost)
+                <div class="tab01 p-b-20">
+                    <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
+                        <h3 class="f1-m-2 cl12 tab01-title">
+                            Latest Post
+                        </h3>
+                    </div>
+                    <div class="tab-content p-t-35">
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-sm-12 p-r-25 p-r-15-sr991">
+                                    <div class="m-b-30">
+                                        <a href="{{route('front.postdetail',$latestPost->id)}}" class="wrap-pic-w hov1 trans-03">
+                                            @if($latestPost->image)
+                                            <img src="{{ asset('images/post/'.$latestPost->image) }}" alt="IMG">
+                                            @else
+                                            <i class="fa fa-image" style="font-size: 50px;width: 300px; height: 300px; object-fit: cover; color: gray;"></i>
+                                            @endif
+                                        </a>
+                                        <div class="p-t-20">
+                                            <h5 class="p-b-5">
+                                                <a href="{{route('front.postdetail',$latestPost->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                                    {{ $latestPost->Title }}
+                                                </a>
+                                            </h5>
+                                            <span class="cl8">
 
-		</div>
-	</div>
+                                                @foreach($latestPost->categories as $category)
+                                                <a href="{{route('front.postlist',$category->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                                    {{ $category->Title }}
+                                                    @endforeach
+                                                </a>
+                                                <span class="f1-s-3 m-rl-3"> - </span>
+                                                <span class="f1-s-3">{{ $latestPost->created_at->format('M d, Y') }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                <h5 class="f1-s-3">
+                    <a href="{{route('front.latestpostlist')}}" class="f1-s-3 cl2 hov-cl10 trans-03">
+                        View All > ><!-- Displaying first 100 chars of description -->
+                    </a>
+                </h5>
+            </div>
+
+        </div>
+    </div>
 </section>
 
 <!-- SECOND CATEGORY -->
@@ -274,7 +283,7 @@
 
                     <div class="flex-wr-sb-s p-t-35">
                         <div class="size-w-6 w-full-sr575">
-                            <!-- First Post -->  
+                            <!-- First Post -->
                             @if($category->posts->isNotEmpty())
                             @php $firstPost = $category->posts->first(); @endphp
                             <div class="m-b-30">
@@ -319,7 +328,7 @@
                             <div class="m-b-30">
                                 <a href="{{ route('front.postdetail', $post->id) }}" class="wrap-pic-w hov1 trans-03">
                                     @if($post->image)
-                                    <img src="{{ asset('images/post/'.$post->image) }}" style=" width: 150px; height: 100px; object-fit: cover;"alt="IMG">
+                                    <img src="{{ asset('images/post/'.$post->image) }}" style=" width: 150px; height: 100px; object-fit: cover;" alt="IMG">
                                     @else
                                     <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 150px; object-fit: cover; color: gray;"></i>
                                     @endif
@@ -354,42 +363,31 @@
 
             <!-- Right Side: Latest Post -->
             <div class="col-md-4 col-lg-4">
-                @if($latestPost)
+                @if($categorieslist)
                 <div class="tab01 p-b-20">
                     <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
                         <h3 class="f1-m-2 cl12 tab01-title">
-                            Latest Post
+                            Latest Category
                         </h3>
                     </div>
                     <div class="tab-content p-t-35">
                         <div class="tab-pane fade show active">
                             <div class="row">
                                 <div class="col-sm-12 p-r-25 p-r-15-sr991">
-                                    <div class="m-b-30">
-                                        <a href="{{route('front.postdetail', $latestPost->id)}}" class="wrap-pic-w hov1 trans-03">
-                                            @if($latestPost->image)
-                                            <img src="{{ asset('images/post/'.$latestPost->image) }}" alt="IMG">
-                                            @else
-                                            <i class="fa fa-image" style="font-size: 50px;width: 300px; height: 300px; object-fit: cover; color: gray;"></i>
-                                            @endif
-                                        </a>
-                                        <div class="p-t-20">
-                                            <h5 class="p-b-5">
-                                                <a href="{{route('front.postdetail', $latestPost->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
-                                                    {{ $latestPost->Title }}
-                                                </a>
-                                            </h5>
-                                            <span class="cl8">
-                                                @foreach($latestPost->categories as $category)
-                                                <a href="{{route('front.postlist', $category->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">
-                                                    {{ $category->Title }}
-                                                </a>
-                                                @endforeach
-                                                <span class="f1-s-3 m-rl-3"> - </span>
-                                                <span class="f1-s-3">{{ $latestPost->created_at->format('M d, Y') }}</span>
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th>Category Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($categorieslist->take(5) as $category)
+                                            <tr>
+                                                <td><a href="{{ route('front.postlist', $category->id) }}" class="text-muted text-decoration-none"> {{ $category->Title }}</a></td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -397,9 +395,9 @@
                 </div>
                 @endif
                 <h5 class="f1-s-3">
-                    <a href="{{route('front.latestpostlist')}}" class="f1-s-3 cl2 hov-cl10 trans-03">
-                        View All > > <!-- Displaying first 100 chars of description -->
-                    </a>
+                    <!-- <a href="{{route('front.latestpostlist')}}" class="f1-s-3 cl2 hov-cl10 trans-03">
+                        View All > > 
+                    </a> -->
                 </h5>
             </div>
         </div>
@@ -413,10 +411,10 @@
 <section class="post bg0 p-t-85">
     <div class="container">
         <div class="row justify-content-center">
-		<div class="p-b-25 m-r--10 m-r-0-sr991">
-            <!-- Dynamic Category -->
-            @foreach($categories->skip(2)->take(1) as $category) <!-- Skip the first 2 categories -->
-          
+            <div class="p-b-25 m-r--10 m-r-0-sr991">
+                <!-- Dynamic Category -->
+                @foreach($categories->skip(2)->take(1) as $category) <!-- Skip the first 2 categories -->
+
                 <div class="how2 how2-cl5 flex-s-c m-r-10 m-r-0-sr991">
                     <h3 class="f1-m-2 cl17 tab01-title">
                         {{ $category->Title }}
@@ -464,7 +462,7 @@
                     </div>
 
                     <!-- Remaining Posts (Only if more than 2 exist) -->
-              
+
                     <div class="col-sm-12">
                         <div class="row">
                             @foreach($category->posts->skip(2)->take(2) as $post)
@@ -503,9 +501,9 @@
                         </div>
                     </div>
                 </div>
-           
-            @endforeach
-			</div>
+
+                @endforeach
+            </div>
         </div>
     </div>
 </section>
@@ -514,175 +512,175 @@
 <section class="post bg0 p-t-85">
     <div class="container">
         <div class="row justify-content-center">
-    <!-- First Column (Business) -->
-    <div class="col-sm-6 p-r-25 p-r-15-sr991 p-b-25">
-        @php $category = $categories->skip(3)->take(1)->first(); @endphp
-        @if($category)
-        <div class="how2 how2-cl2 flex-sb-c m-b-35">
-            <h3 class="f1-m-2 cl13 tab01-title">
-                {{ $category->Title }}
-            </h3>
-
-            <a href="{{ route('front.postlist', $category->id) }}" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
-                View all
-                <i class="fs-12 m-l-5 fa fa-caret-right"></i>
-            </a>
-        </div>
-
-        <!-- Main Item post -->	
-        @if($category->posts->isNotEmpty())
-        <div class="m-b-30">
-            @php $firstPost = $category->posts->first(); @endphp
-            <a href="{{ route('front.postdetail', $firstPost->id) }}" class="wrap-pic-w hov1 trans-03">
-                @if($firstPost->image)
-                <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;" alt="IMG">
-                @else
-                <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 200px; object-fit: cover; color: gray;"></i>
-                @endif
-            </a>
-
-            <div class="p-t-20">
-                <h5 class="p-b-5">
-                    <a href="{{ route('front.postdetail', $firstPost->id) }}" class="f1-m-3 cl2 hov-cl10 trans-03">
-                        {{ $firstPost->Title }}
-                    </a>
-                </h5>
-
-                <span class="cl8">
-                    <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+            <!-- First Column (Business) -->
+            <div class="col-sm-6 p-r-25 p-r-15-sr991 p-b-25">
+                @php $category = $categories->skip(3)->take(1)->first(); @endphp
+                @if($category)
+                <div class="how2 how2-cl2 flex-sb-c m-b-35">
+                    <h3 class="f1-m-2 cl13 tab01-title">
                         {{ $category->Title }}
+                    </h3>
+
+                    <a href="{{ route('front.postlist', $category->id) }}" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
+                        View all
+                        <i class="fs-12 m-l-5 fa fa-caret-right"></i>
+                    </a>
+                </div>
+
+                <!-- Main Item post -->
+                @if($category->posts->isNotEmpty())
+                <div class="m-b-30">
+                    @php $firstPost = $category->posts->first(); @endphp
+                    <a href="{{ route('front.postdetail', $firstPost->id) }}" class="wrap-pic-w hov1 trans-03">
+                        @if($firstPost->image)
+                        <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;" alt="IMG">
+                        @else
+                        <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 200px; object-fit: cover; color: gray;"></i>
+                        @endif
                     </a>
 
-                    <span class="f1-s-3 m-rl-3">-</span>
+                    <div class="p-t-20">
+                        <h5 class="p-b-5">
+                            <a href="{{ route('front.postdetail', $firstPost->id) }}" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                {{ $firstPost->Title }}
+                            </a>
+                        </h5>
 
-                    <span class="f1-s-3">
-                        {{ $firstPost->created_at->format('M d, Y') }}
-                    </span>
-                </span>
+                        <span class="cl8">
+                            <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                {{ $category->Title }}
+                            </a>
+
+                            <span class="f1-s-3 m-rl-3">-</span>
+
+                            <span class="f1-s-3">
+                                {{ $firstPost->created_at->format('M d, Y') }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                @endif
+
+                <!-- Loop through remaining posts in the category -->
+                @foreach($category->posts->skip(1)->take(4) as $post) <!-- Skipping the first post -->
+                <div class="flex-wr-sb-s m-b-30">
+                    <a href="{{ route('front.postdetail', $post->id) }}" class="size-w-1 wrap-pic-w hov1 trans-03">
+                        @if($post->image)
+                        <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG">
+                        @else
+                        <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 150px; object-fit: cover; color: gray;"></i>
+                        @endif
+                    </a>
+
+                    <div class="size-w-2">
+                        <h5 class="p-b-5">
+                            <a href="{{ route('front.postdetail', $post->id) }}" class="f1-s-5 cl3 hov-cl10 trans-03">
+                                {{ $post->Title }}
+                            </a>
+                        </h5>
+
+                        <span class="cl8">
+                            <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
+                                {{ $category->Title }}
+                            </a>
+
+                            <span class="f1-s-3 m-rl-3">-</span>
+
+                            <span class="f1-s-3">
+                                {{ $post->created_at->format('M d, Y') }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                @endforeach
+                @endif
+            </div>
+
+            <!-- Second Column (Technology) -->
+            <div class="col-sm-6 p-r-25 p-r-15-sr991 p-b-25">
+                @php $category = $categories->skip(4)->take(1)->first(); @endphp
+                @if($category)
+                <div class="how2 how2-cl6 flex-sb-c m-b-35">
+                    <h3 class="f1-m-2 cl18 tab01-title">
+                        {{ $category->Title }}
+                    </h3>
+
+                    <a href="{{ route('front.postlist', $category->id) }}" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
+                        View all
+                        <i class="fs-12 m-l-5 fa fa-caret-right"></i>
+                    </a>
+                </div>
+
+                <!-- Main Item post -->
+                @if($category->posts->isNotEmpty())
+                <div class="m-b-30">
+                    @php $firstPost = $category->posts->first(); @endphp
+                    <a href="{{ route('front.postdetail', $firstPost->id) }}" class="wrap-pic-w hov1 trans-03">
+                        @if($firstPost->image)
+                        <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;" alt="IMG">
+                        @else
+                        <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 200px; object-fit: cover; color: gray;"></i>
+                        @endif
+                    </a>
+
+                    <div class="p-t-20">
+                        <h5 class="p-b-5">
+                            <a href="{{ route('front.postdetail', $firstPost->id) }}" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                {{ $firstPost->Title }}
+                            </a>
+                        </h5>
+
+                        <span class="cl8">
+                            <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                {{ $category->Title }}
+                            </a>
+
+                            <span class="f1-s-3 m-rl-3">-</span>
+
+                            <span class="f1-s-3">
+                                {{ $firstPost->created_at->format('M d, Y') }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                @endif
+
+                <!-- Loop through remaining posts in the category -->
+                @foreach($category->posts->skip(1)->take(4) as $post) <!-- Skipping the first post -->
+                <div class="flex-wr-sb-s m-b-30">
+                    <a href="{{ route('front.postdetail', $post->id) }}" class="size-w-1 wrap-pic-w hov1 trans-03">
+                        @if($post->image)
+                        <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG">
+                        @else
+                        <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 150px; object-fit: cover; color: gray;"></i>
+                        @endif
+                    </a>
+
+                    <div class="size-w-2">
+                        <h5 class="p-b-5">
+                            <a href="{{ route('front.postdetail', $post->id) }}" class="f1-s-5 cl3 hov-cl10 trans-03">
+                                {{ $post->Title }}
+                            </a>
+                        </h5>
+
+                        <span class="cl8">
+                            <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
+                                {{ $category->Title }}
+                            </a>
+
+                            <span class="f1-s-3 m-rl-3">-</span>
+
+                            <span class="f1-s-3">
+                                {{ $post->created_at->format('M d, Y') }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                @endforeach
+                @endif
             </div>
         </div>
-        @endif
-
-        <!-- Loop through remaining posts in the category -->
-        @foreach($category->posts->skip(1)->take(4) as $post) <!-- Skipping the first post -->
-        <div class="flex-wr-sb-s m-b-30">
-            <a href="{{ route('front.postdetail', $post->id) }}" class="size-w-1 wrap-pic-w hov1 trans-03">
-                @if($post->image)
-                <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG">
-                @else
-                <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 150px; object-fit: cover; color: gray;"></i>
-                @endif
-            </a>
-
-            <div class="size-w-2">
-                <h5 class="p-b-5">
-                    <a href="{{ route('front.postdetail', $post->id) }}" class="f1-s-5 cl3 hov-cl10 trans-03">
-                        {{ $post->Title }}
-                    </a>
-                </h5>
-
-                <span class="cl8">
-                    <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
-                        {{ $category->Title }}
-                    </a>
-
-                    <span class="f1-s-3 m-rl-3">-</span>
-
-                    <span class="f1-s-3">
-                        {{ $post->created_at->format('M d, Y') }}
-                    </span>
-                </span>
-            </div>
-        </div>
-        @endforeach
-        @endif
     </div>
-
-    <!-- Second Column (Technology) -->
-    <div class="col-sm-6 p-r-25 p-r-15-sr991 p-b-25">
-        @php $category = $categories->skip(4)->take(1)->first(); @endphp
-        @if($category)
-        <div class="how2 how2-cl6 flex-sb-c m-b-35">
-            <h3 class="f1-m-2 cl18 tab01-title">
-                {{ $category->Title }}
-            </h3>
-
-            <a href="{{ route('front.postlist', $category->id) }}" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
-                View all
-                <i class="fs-12 m-l-5 fa fa-caret-right"></i>
-            </a>
-        </div>
-
-        <!-- Main Item post -->	
-        @if($category->posts->isNotEmpty())
-        <div class="m-b-30">
-            @php $firstPost = $category->posts->first(); @endphp
-            <a href="{{ route('front.postdetail', $firstPost->id) }}" class="wrap-pic-w hov1 trans-03">
-                @if($firstPost->image)
-                <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;"alt="IMG">
-                @else
-                <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 200px; object-fit: cover; color: gray;"></i>
-                @endif
-            </a>
-
-            <div class="p-t-20">
-                <h5 class="p-b-5">
-                    <a href="{{ route('front.postdetail', $firstPost->id) }}" class="f1-m-3 cl2 hov-cl10 trans-03">
-                        {{ $firstPost->Title }}
-                    </a>
-                </h5>
-
-                <span class="cl8">
-                    <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
-                        {{ $category->Title }}
-                    </a>
-
-                    <span class="f1-s-3 m-rl-3">-</span>
-
-                    <span class="f1-s-3">
-                        {{ $firstPost->created_at->format('M d, Y') }}
-                    </span>
-                </span>
-            </div>
-        </div>
-        @endif
-
-        <!-- Loop through remaining posts in the category -->
-        @foreach($category->posts->skip(1)->take(4) as $post) <!-- Skipping the first post -->
-        <div class="flex-wr-sb-s m-b-30">
-            <a href="{{ route('front.postdetail', $post->id) }}" class="size-w-1 wrap-pic-w hov1 trans-03">
-                @if($post->image)
-                <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG">
-                @else
-                <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 150px; object-fit: cover; color: gray;"></i>
-                @endif
-            </a>
-
-            <div class="size-w-2">
-                <h5 class="p-b-5">
-                    <a href="{{ route('front.postdetail', $post->id) }}" class="f1-s-5 cl3 hov-cl10 trans-03">
-                        {{ $post->Title }}
-                    </a>
-                </h5>
-
-                <span class="cl8">
-                    <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
-                        {{ $category->Title }}
-                    </a>
-
-                    <span class="f1-s-3 m-rl-3">-</span>
-
-                    <span class="f1-s-3">
-                        {{ $post->created_at->format('M d, Y') }}
-                    </span>
-                </span>
-            </div>
-        </div>
-        @endforeach
-        @endif
-    </div>
-</div>
-</div>
 </section>
 
 @endsection

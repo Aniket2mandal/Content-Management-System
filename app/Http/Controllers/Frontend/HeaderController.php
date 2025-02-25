@@ -16,10 +16,12 @@ class HeaderController extends Controller
         // Fetch active categories
         $categories = Category::with(['posts' => function($query) {
             $query->where('Status', 1)->latest(); // Fetch only active posts
-        },'posts.authors'])->has('posts')->get();
+        },'posts.authors'])->has('posts')->where('Status',1)->get();
     
         // // Fetch the latest post
         $latestPost = Post::where('Status', 1)->latest()->first();
-        return view('frontend.index',compact('categories','latestPost'));
+        $categorieslist=Category::where('Status',1)->latest()->get();
+        // dd($categorieslist);
+        return view('frontend.index',compact('categories','latestPost','categorieslist'));
     }
 }

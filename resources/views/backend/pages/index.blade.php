@@ -46,7 +46,7 @@
                     <td>{{$page->Page_title}}</td>
                     <td>{{$page->Page_slug}}</td>
                     <td>{{$page->Page_summary}}</td>
-                    <td>{{$page->Page_description}}</td>
+                    <td> {{ Str::limit($page->Page_escription, 100) }}</td>
                     <td>
 
                         <div class="form-group ">
@@ -104,6 +104,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+
+
+        $('#title').on('input', function() {
+        var title = $(this).val();
+        // Convert title to lowercase and replace spaces with dashes
+        var slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        // Remove dashes from the start and end of the slug
+        slug = slug.replace(/^-+/, '').replace(/-+$/, '');
+        // Set the generated slug as the value of the slug input
+        $('#slug').val(slug);
+    });
+
         $('.Status').change(function() {
             var postId = $(this).data('id');
             var Status = $(this).prop('checked') ? '1' : '0';
@@ -194,7 +206,7 @@
                 type: 'GET',
                 success: function(response) {
                     // Update form fields with the existing page data
-                    $('#eventcreateForm').attr('action', '/pageupdate/' + pageId); // Change the action to the update route
+                    $('#eventcreateForm').attr('action', '/page/update/' + pageId); // Change the action to the update route
                     $('#eventcreateForm').attr('method', 'PUT'); // Change the method to PUT for update
 
                     $('#title').val(response.data.Page_title);
@@ -231,7 +243,7 @@
             $('#eventcreateForm')[0].reset(); // This will reset the form fields to their default (blank) state.
 
             // Reset the action and method for creating a new page
-            $('#eventcreateForm').attr('action', '/page.store'); // Set the form action to the create route
+            $('#eventcreateForm').attr('action', '/page/store'); // Set the form action to the create route
             $('#eventcreateForm').attr('method', 'POST'); // Set the method to POST for creating a new page
 
             // Clear any error messages (if applicable)
@@ -248,7 +260,9 @@
             e.preventDefault();
             // Clear the form fields
             var formData = $(this).serialize(); // Serialize the form data
-
+            console.log($(this).attr('action'));
+            console.log($(this).attr('method'));
+            console.log(formData);
             $.ajax({
                 url: $(this).attr('action'), // Dynamically use the form's action (create or update)
                 method: $(this).attr('method'), // Use the correct HTTP method (POST or PUT)

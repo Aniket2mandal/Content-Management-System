@@ -27,7 +27,7 @@ class RoleController extends Controller
         // dd($request->all());
         $request->validate([
             'Name' => 'required|string',
-            'Slug' => 'required|string',
+            'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:roles,slug',
             'Permission'=>'nullable|array'
         ]);
         // dd($request->Permission);
@@ -56,7 +56,7 @@ class RoleController extends Controller
         
         $request->validate([
             'Name' => 'required|string',
-            'Slug' => 'required|string',
+            'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:roles,slug',
             'Permission'=>'nullable|array'
         ]);
         $role = Role::find($id);

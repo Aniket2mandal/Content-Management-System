@@ -267,6 +267,8 @@
     </div>
 </section>
 
+
+
 <!-- SECOND CATEGORY -->
 <section class="post bg0 p-t-85">
     <div class="container">
@@ -407,7 +409,6 @@
 
 
 <!-- THIRD CATEGORY -->
-
 <section class="post bg0 p-t-85">
     <div class="container">
         <div class="row justify-content-center">
@@ -507,6 +508,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- FOURTH CATEGORY -->
 <section class="post bg0 p-t-85">
@@ -682,5 +684,68 @@
         </div>
     </div>
 </section>
+
+
+
+<!-- TESTIMONIAL -->
+<section class="bg0 p-t-110 p-b-25">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8 p-b-80">
+            <div class="how2 how2-cl2 flex-sb-c m-b-35">
+                    <h3 class="f1-m-2 cl13 tab01-title">
+                      Testimonial
+                    </h3>
+
+                    <!-- <a href="{{ route('front.postlist', $category->id) }}" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
+                        View all
+                        <i class="fs-12 m-l-5 fa fa-caret-right"></i>
+                    </a> -->
+                </div>
+                <div class="row">
+                    
+                    @foreach($testimonials['testimonials'] as $testimonial)
+                        @if($testimonial['published'] == 1) <!-- Only display published testimonials -->
+                            <div class="col-sm-6 p-r-25 p-r-15-sr991">
+                 
+                                <div class="p-b-53">
+                                    
+                                    <a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
+                                        <!-- Circular image -->
+                                         @if($testimonial['image'])
+                                        <img src="{{ asset('storage/' . $testimonial['image']) }}" style="width:300px;height:300px" alt="Testimonial Image" class="testimonial-image">
+                                        @else
+                                        <img src="fa fa-image" alt="Testimonial Image" class="testimonial-image">
+                                        @endif
+                                    </a>
+
+                                    <div class="flex-col-s-c p-t-16">
+                                        <h5 class="p-b-5 txt-center">
+                                            <a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
+                                                {{ $testimonial['name'] }}
+                                            </a>
+                                        </h5>
+
+                                    
+
+                                        <p class="f1-s-11 cl6 txt-center p-b-16">
+                                            {{ $testimonial['message'] }}
+                                        </p>
+
+                                        <a href="blog-detail-01.html" class="f1-s-1 cl9 hov-cl10 trans-03">
+                                            Read More
+                                            <i class="m-l-2 fa fa-long-arrow-alt-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 @endsection

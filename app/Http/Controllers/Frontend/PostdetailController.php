@@ -42,7 +42,7 @@ class PostdetailController extends Controller
         // Get the first post based on the search query, allowing partial matching using LIKE
         $posts = Post::where('Title', $query)
                     ->with(['categories', 'authors']) // Eager load categories and authors
-                    ->get(); // Fetch only one post matching the search query
+                    ->paginate(4); // Fetch only one post matching the search query
     
                     // dd($posts);
         // If no post is found, return an appropriate message or redirect
@@ -50,7 +50,7 @@ class PostdetailController extends Controller
             return redirect()->route('front.home')->with('message', 'No post found matching your search.');
         }
     
-        // Pass the post to the view
+        // Pass the post to the viewroute
         return view('frontend.post.searchedpost', compact('posts'));
     }
     

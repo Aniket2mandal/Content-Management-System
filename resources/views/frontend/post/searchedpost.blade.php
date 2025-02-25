@@ -80,8 +80,10 @@
             @endforeach
         </div>
 
-        <!-- Pagination -->
-     
+          <!-- Pagination -->
+          <div class="d-flex justify-content-center mt-4">
+            {{ $posts->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 </section>
 @endsection

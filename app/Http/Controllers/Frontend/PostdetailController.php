@@ -42,7 +42,7 @@ class PostdetailController extends Controller
         // Get the first post based on the search query, allowing partial matching using LIKE
         $posts = Post::where('Title', $query)
                     ->with(['categories', 'authors']) // Eager load categories and authors
-                    ->first(); // Fetch only one post matching the search query
+                    ->get(); // Fetch only one post matching the search query
     
                     // dd($posts);
         // If no post is found, return an appropriate message or redirect

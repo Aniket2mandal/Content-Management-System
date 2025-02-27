@@ -19,7 +19,7 @@ class PostlistController extends Controller
         }
         $posts = $categories->posts()->where('Status', 1)->latest()->paginate(4);
         // dd($posts);
-        return view('frontend.post.postindex', compact('categories', 'posts'));
+        return view('frontend.post.postlist', compact('categories', 'posts'));
     }
 
     public function latestpost()

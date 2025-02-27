@@ -511,6 +511,11 @@ if (!function_exists('updateSlidersStatus')) {
                 $found = true;
                 break;
             }
+            // elseif($slider['db_id'] == $newSlider['db_id'] && $newSlider['published'] == 1){
+            //     $jsonData['sliders'][$key]=$newSlider['published']; 
+            //     $found = true;
+            //     break;
+            // }
         }
         file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
         return $found;

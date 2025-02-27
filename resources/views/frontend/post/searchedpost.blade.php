@@ -49,7 +49,7 @@
                         </h5>
 
                         <span class="text-muted small">
-                            <a href="#" class="text-secondary">
+                            <a href="{{route('front.postlist',$post->categories->first()->id)}}" class="text-secondary">
                                 @if($post->categories->isNotEmpty())
                                     {{ $post->categories->first()->Title }}
                                 @else

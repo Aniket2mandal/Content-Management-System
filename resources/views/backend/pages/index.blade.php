@@ -217,8 +217,10 @@
 
                     if (response.data.Page_status == 1) {
                         $('#createEventModal #Status').prop('checked', true); // If status is 1, check the box
+                        $('#eventcreateForm #Status').val(1);
                     } else {
                         $('#createEventModal #Status').prop('checked', false); // If status is 0, uncheck the box
+                        $('#eventcreateForm #Status').val(0);
                     }
 
                     // No need to refresh the toggle, just ensure it visually reflects the state

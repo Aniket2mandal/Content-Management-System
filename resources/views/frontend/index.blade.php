@@ -131,7 +131,58 @@
 
 <!-- Post -->
 
+<!-- SLIDER -->
+<div class="container">
+    <div class="bg0 flex-wr-sb-c p-rl-20 p-tb-8">
+        <div class="f2-s-1 p-r-30 size-w-0 m-tb-6 flex-wr-s-c">
+            <span class="text-uppercase cl2 p-r-8">
+                Trending Now:
+            </span>
 
+            <span class="dis-inline-block cl6 slide100-txt pos-relative size-w-0" data-in="fadeInDown" data-out="fadeOutDown">
+                @foreach($sliders['sliders'] as $slider)
+                @if($slider['published'] == 1)
+                <span class="dis-inline-block slide100-txt-item animated visible-false">
+                    {{$slider['name']}}
+                </span>
+
+                <span class="dis-inline-block slide100-txt-item animated visible-false">
+                    {{$slider['url']}}
+                </span>
+
+                @endif
+                @endforeach
+            </span>
+
+        </div>
+
+        <div class="f2-s-1 p-r-30 size-w-0 m-tb-6 flex-wr-s-c">
+            <span class="dis-inline-block cl6 slide100-txt pos-relative size-w-0" data-in="fadeInDown" data-out="fadeOutDown">
+                @foreach($sliders['sliders'] as $slider)
+                @if($slider['published'] == 1)
+                <span class="dis-inline-block slide100-txt-item animated visible-false">
+
+                    <div class="banner-header">
+                        <a href="https://themewagon.com/themes/free-bootstrap-4-html5-news-website-template-magnews2/">
+
+                            @if($slider['image'])
+                            <img src="{{ asset('storage/' . $slider['image']) }}" style="width:450px;height:100px; object-fit:cover" alt="IMG">
+                            @else
+                            <img src="{{asset('imagesfrontend/banner-01.jpg')}}" alt="IMG">
+                            @endif
+
+                        </a>
+                    </div>
+                </span>
+                @endif
+                @endforeach
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<!-- FIRST CATEGORY -->
 <section class="bg0 p-t-70">
     <div class="container">
         <div class="row justify-content-center">
@@ -203,16 +254,16 @@
             </div>
 
             <!-- Latest Post Section (Right Side) -->
-             
+
             <div class="col-md-4 col-lg-4">
-            <form action="{{ route('front.postsearch') }}" method="GET">
-                        <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
-                            <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-                            <button type="submit" class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
-                                <i class="zmdi zmdi-search"></i>
-                            </button>
-                        </div>
-                    </form>
+                <form action="{{ route('front.postsearch') }}" method="GET">
+                    <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
+                        <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
+                        <button type="submit" class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+                            <i class="zmdi zmdi-search"></i>
+                        </button>
+                    </div>
+                </form>
                 @if($latestPost)
                 <div class="tab01 p-b-20">
                     <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
@@ -688,62 +739,39 @@
 
 
 <!-- TESTIMONIAL -->
-<section class="bg0 p-t-110 p-b-25">
+<section class="bg0 p-t-70">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8 p-b-80">
-            <div class="how2 how2-cl2 flex-sb-c m-b-35">
-                    <h3 class="f1-m-2 cl13 tab01-title">
-                      Testimonial
-                    </h3>
 
-                    <!-- <a href="{{ route('front.postlist', $category->id) }}" class="tab01-link f1-s-1 cl9 hov-cl10 trans-03">
-                        View all
-                        <i class="fs-12 m-l-5 fa fa-caret-right"></i>
-                    </a> -->
-                </div>
-                <div class="row">
-                    
-                    @foreach($testimonials['testimonials'] as $testimonial)
-                        @if($testimonial['published'] == 1) <!-- Only display published testimonials -->
-                            <div class="col-sm-6 p-r-25 p-r-15-sr991">
-                 
-                                <div class="p-b-53">
-                                    
-                                    <a href="blog-detail-01.html" class="wrap-pic-w hov1 trans-03">
-                                        <!-- Circular image -->
-                                         @if($testimonial['image'])
-                                        <img src="{{ asset('storage/' . $testimonial['image']) }}" style="width:300px;height:300px" alt="Testimonial Image" class="testimonial-image">
-                                        @else
-                                        <img src="fa fa-image" alt="Testimonial Image" class="testimonial-image">
-                                        @endif
-                                    </a>
-
-                                    <div class="flex-col-s-c p-t-16">
-                                        <h5 class="p-b-5 txt-center">
-                                            <a href="blog-detail-01.html" class="f1-m-3 cl2 hov-cl10 trans-03">
-                                                {{ $testimonial['name'] }}
-                                            </a>
-                                        </h5>
-
-                                    
-
-                                        <p class="f1-s-11 cl6 txt-center p-b-16">
-                                            {{ $testimonial['message'] }}
-                                        </p>
-
-                                        <a href="blog-detail-01.html" class="f1-s-1 cl9 hov-cl10 trans-03">
-                                            Read More
-                                            <i class="m-l-2 fa fa-long-arrow-alt-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+        <div class="how2 how2-cl5 flex-s-c m-r-10 m-r-0-sr991">
+            <h3 class="f1-m-2 cl17 tab01-title">
+                Testimonials
+            </h3>
+        </div>
+        <!-- Main Content (Testimonial Listing) -->
+        <div class="row">
+            @foreach($testimonials['testimonials'] as $testimonial)
+            @if($testimonial['published'] == 1) <!-- Only display published testimonials -->
+            <div class="col-md-6 mb-4"> <!-- Adjust column width for better layout -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-3 text-center">
+                        <!-- Testimonial Image -->
+                        <div class="mb-3">
+                            @if($testimonial['image'])
+                            <img src="{{ asset('storage/' . $testimonial['image']) }}" class="card-img-top rounded-top" alt="Testimonial Image" style="width:300px;height:300px;">
+                            @else
+                            <img src="fa fa-image" alt="Testimonial Image" style="width:300px;height:300px;">
+                            @endif
+                        </div>
+                        <!-- Testimonial Content -->
+                        <h5 class="card-title">{{ $testimonial['name'] }}</h5>
+                        <p class="card-text text-muted">{{ Str::limit($testimonial['message'], 100) }}</p>
+                    </div>
                 </div>
             </div>
+            @endif
+            @endforeach
         </div>
+        <!-- Pagination (if necessary) -->
     </div>
 </section>
 

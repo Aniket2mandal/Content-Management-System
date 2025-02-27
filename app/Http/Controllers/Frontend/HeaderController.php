@@ -24,6 +24,7 @@ class HeaderController extends Controller
         $categorieslist = Category::where('Status', 1)->latest()->get();
         // dd($categorieslist);
 
+
         // Path to the JSON file
         $folderPath = storage_path('app/public/cache');
         $filePath = $folderPath . '/testimonial.json';
@@ -40,6 +41,26 @@ class HeaderController extends Controller
             $testimonials = [];
         }
 // dd($testimonials);
-        return view('frontend.index', compact('categories', 'latestPost', 'categorieslist','testimonials'));
+
+
+// FOR SLIDER
+$foldersliderPath = storage_path('app/public/cache');
+$filesliderPath = $foldersliderPath . '/slider.json';
+$jsonsliderPath = $filesliderPath;
+
+// Check if the file exists
+if (file_exists($jsonsliderPath)) {
+    // Get the content of the JSON file
+    $jsonsliderContent = file_get_contents($jsonsliderPath);
+
+    // Decode the JSON data
+    $sliders = json_decode($jsonsliderContent, true);
+} else {
+    $sliders = [];
+}
+// dd($sliders);
+        return view('frontend.index', compact('categories', 'latestPost', 'categorieslist','testimonials','sliders'));
     }
+
+    
 }

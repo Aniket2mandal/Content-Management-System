@@ -52,13 +52,18 @@ class PageController extends Controller
     }
 
     public function update(Request $request,$id){
+    //     die("Controller method reached!"); // If this does not show, the request is not reaching this function.
+    // print_r("controller reached");
+     Log::info('Form Data:', $request->all());
+
         $request->validate([
             'title' => 'required|string',
-            'slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:pages,Page_slug',
+            'slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:pages,Page_slug,' . $id,
             'Status' => 'integer',
             'summary' => 'required|string',
             'Description' => 'required|string'
         ]);
+        Log::info('Form Data:', $request->all());
         $page = Page::find($id);
         $page->Page_title = $request->title;
         $page->Page_slug = $request->slug;
@@ -66,6 +71,7 @@ class PageController extends Controller
         $page->Page_summary = $request->summary;
         $page->Page_description = \strip_tags($request->Description);
         $page->save();
+        return response()->json(['success' => true,'data'=>$page]);
     }
 
 

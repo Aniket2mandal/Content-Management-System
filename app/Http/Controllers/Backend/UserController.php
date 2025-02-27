@@ -68,7 +68,6 @@ class UserController extends Controller
 
     public function status(Request $request, $id)
     {
-
         $request->validate([
             'Status' => 'integer',
         ]);

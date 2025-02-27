@@ -56,7 +56,7 @@ class RoleController extends Controller
         
         $request->validate([
             'Name' => 'required|string',
-            'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:roles,slug',
+            'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:roles,slug,'. $id,
             'Permission'=>'nullable|array'
         ]);
         $role = Role::find($id);

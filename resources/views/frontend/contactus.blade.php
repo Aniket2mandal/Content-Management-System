@@ -40,25 +40,25 @@
                 <div class="p-r-10 p-r-0-sr991">
                     <form action="{{route('front.contactstore')}}" method="POST">
                         @csrf
-                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" name="name" placeholder="Name*">
+                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text"     value="{{ old('name') }}"  name="name" placeholder="Name*">
                         {{-- Error Message --}}
                         @error('name')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="email" name="email" placeholder="Email*">
+                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="email"     value="{{ old('email') }}"  name="email" placeholder="Email*">
                         {{-- Error Message --}}
                         @error('email')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" name="website" placeholder="Website">
+                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text"     value="{{ old('website') }}"  name="website" placeholder="Website">
                         {{-- Error Message --}}
                         @error('website')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <textarea class="bo-1-rad-3 bocl13 size-a-15 f1-s-13 cl5 plh6 p-rl-18 p-tb-14 m-b-20" name="msg" placeholder="Your Message"></textarea>
+                        <textarea class="bo-1-rad-3 bocl13 size-a-15 f1-s-13 cl5 plh6 p-rl-18 p-tb-14 m-b-20"      name="msg" placeholder="Your Message">{{ old('msg') }}</textarea>
                         {{-- Error Message --}}
                         @error('msg')
                         <div class="text-danger">{{ $message }}</div>

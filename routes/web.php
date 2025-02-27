@@ -25,7 +25,9 @@ use App\Http\Controllers\Frontend\PostlistController;
 use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -89,7 +91,8 @@ Route::post('/front/contactus/store', [ContactusController::class, 'store'])->na
 // ROUTES FOR ABOUT US PAGE
 Route::get('/front/aboutus', [AboutusController::class, 'index'])->name('front.aboutus');
 
-
+// ROUTE FOR TESTIMONIAL
+Route::get('/front/testimonial', [HeaderController::class, 'testimonial'])->name('front.testimonial');
 
 
 // Route::get('/front/authorlist',[AuthorlistController::class,'index'])->name('front.auhtordetail');

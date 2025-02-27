@@ -54,7 +54,7 @@ public function update(Request $request, $id)
     
     $request->validate([
         'Title' => 'required|string',
-        'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:categories,Slug',
+        'Slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:categories,Slug,'.$id,
         'Description' => 'required|string',
         'Status' => 'integer', 
     ]);

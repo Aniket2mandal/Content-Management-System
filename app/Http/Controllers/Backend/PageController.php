@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use HTMLPurifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -28,17 +29,21 @@ class PageController extends Controller
             'slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:pages,Page_slug',
             'Status' => 'integer',
             'summary' => 'required|string',
-            'Description' => 'required|string'
+            'Description' => 'required'
         ]);
         
         // dd($request->Description)
         // Log::info('Form Data:', $request->all());
+
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->Description);
+        // $cleanSummary = $purifier->purify($request->Summary);
         $page = new Page;
         $page->Page_title = $request->title;
         $page->Page_slug = $request->slug;
         $page->Page_status = $request->Status;
         $page->Page_summary = $request->summary;
-        $page->Page_description = \strip_tags($request->Description);
+        $page->Page_description =  $cleanDescription ;
         $page->save();
 
         return response()->json(['success' => true]);
@@ -60,16 +65,18 @@ class PageController extends Controller
             'title' => 'required|string',
             'slug' => 'required|string|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/|unique:pages,Page_slug,' . $id,
             'Status' => 'integer',
-            'summary' => 'required|string',
+            'summary' => 'required',
             'Description' => 'required|string'
         ]);
         Log::info('Form Data:', $request->all());
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->Description);
         $page = Page::find($id);
         $page->Page_title = $request->title;
         $page->Page_slug = $request->slug;
         $page->Page_status = $request->Status;
         $page->Page_summary = $request->summary;
-        $page->Page_description = \strip_tags($request->Description);
+        $page->Page_description =  $cleanDescription ;
         $page->save();
         return response()->json(['success' => true,'data'=>$page]);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Author;
+use HTMLPurifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -35,9 +36,11 @@ class AuthorController extends Controller
         } else {
             $imageName = null;
         }
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->Description);
         $author = new Author;
         $author->Name = $request->Name;
-        $author->Description = \strip_tags($request->Description);
+        $author->Description = $cleanDescription;
         $author->Status = $request->Status;
         $author->image = $imageName;
         $author->save();
@@ -64,9 +67,11 @@ class AuthorController extends Controller
         } else {
             $imageName = null;
         }
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->Description);
         $author = Author::find($id);
         $author->Name = $request->Name;
-        $author->Description = \strip_tags($request->Description);
+        $author->Description = $cleanDescription;
         $author->Status = $request->Status;
         $author->image = $imageName;
         $author->save();

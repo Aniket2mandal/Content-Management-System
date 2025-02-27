@@ -41,7 +41,7 @@
 					<div class="p-r-10 p-r-0-sr991">
                  
 						<p class="f1-s-11 cl6 p-b-25">
-						{{ $pages->Page_description }}
+						{!! $pages->Page_description !!}
 						</p>
                   
 					</div>

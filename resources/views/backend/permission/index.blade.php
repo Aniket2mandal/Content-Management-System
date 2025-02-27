@@ -14,7 +14,7 @@
     </div>
 
     <div class="card-body">
-        <table class="table table-bordered table-striped mt-4">
+    <table class="table table-bordered table-striped mt-4" style="table-layout: fixed;">
             <thead class="table table-dark">
                 <tr class="table">
                     <th>S.N</th>

@@ -82,7 +82,7 @@
                 <!-- Post Description -->
                 <p class="text-dark">
                     <a href="#" class="text-dark text-decoration-none">
-                        {{ $post->Description }}
+                        {!! $post->Description !!}
                     </a>
                 </p>
 

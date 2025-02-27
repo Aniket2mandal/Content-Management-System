@@ -30,7 +30,7 @@
                 @foreach($author as $authors)
                 <tr class="align-middle" id="post-{{ $authors->id }}">
                     <td>{{ $authors->Name }}</td>
-                    <td>{{ $authors->Description }}</td>
+                    <td>{!! $authors->Description !!}</td>
                     <td>
                         <!-- @if($authors->Status == 1)
                         <span class="badge bg-success">Active</span>

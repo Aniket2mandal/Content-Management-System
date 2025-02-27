@@ -25,8 +25,6 @@
 
         <!-- Main Content (Post Listing) -->
         <div class="row">
-     
-
             <!-- Loop through posts -->
             @foreach($posts as $post)
             <div class="col-md-6 mb-4">
@@ -61,7 +59,7 @@
                         </span>
 
                         <p class="mt-2 text-muted">
-                            {{ Str::limit($post->Description, 100) }}
+                        {!! Str::limit(strip_tags($post->Description), 100) !!}
                         </p>
 
                         <span class="text-muted small">

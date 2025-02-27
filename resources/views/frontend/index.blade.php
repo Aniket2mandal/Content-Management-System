@@ -238,7 +238,7 @@
                                                 </p>
                                                 <p class="f1-s-3">
                                                     <a href="{{route('front.postdetail',$post->id)}}" class="f1-s-3 cl2 hov-cl10 trans-03">
-                                                        {{ Str::limit($post->Description, 100) }}
+                                                    {!! Str::limit(strip_tags($post->Description), 100) !!}
                                                     </a>
                                                 </p>
                                             </div>
@@ -368,7 +368,7 @@
                                     </span>
 
                                     <p class="f1-s-1 cl6 p-t-18">
-                                        {{ Str::limit($firstPost->Description, 100) }}
+                                        {!! Str::limit($firstPost->Description, 100) !!}
                                     </p>
                                 </div>
                             </div>
@@ -764,7 +764,8 @@
                         </div>
                         <!-- Testimonial Content -->
                         <h5 class="card-title">{{ $testimonial['name'] }}</h5>
-                        <p class="card-text text-muted">{{ Str::limit($testimonial['message'], 100) }}</p>
+                        <p class="card-text text-muted">{!! Str::limit(strip_tags($testimonial['message']), 100) !!}</p>
+                      
                     </div>
                 </div>
             </div>

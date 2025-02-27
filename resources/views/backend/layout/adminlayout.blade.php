@@ -99,7 +99,7 @@
     <script>
     $(document).ready(function() {
         $('#Permission').select2({
-        
+      
         });
        
     });
@@ -117,7 +117,6 @@
         $('#Author').select2({
         
         });
-       
     });
 </script>
 

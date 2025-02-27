@@ -42,7 +42,7 @@
                     <!-- Blog Detail -->
                     <div class="p-b-70">
                         <p class="f1-s-11 cl6 p-b-25">
-                            {{ $singlepost->Description }}
+                            {!! $singlepost->Description !!}
                         </p>
                     </div>
                 </div>

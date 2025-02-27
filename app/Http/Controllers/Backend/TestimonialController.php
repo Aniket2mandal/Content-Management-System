@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
+use HTMLPurifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -37,9 +38,12 @@ class TestimonialController extends Controller
         } else {
             $imagePath = null;
         }
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->message);
+        
         $testimonial = new Testimonial;
         $testimonial->name = $request->name;
-        $testimonial->message = \strip_tags($request->message);
+        $testimonial->message = $cleanDescription;
         $testimonial->image = $imagePath;
         $testimonial->published = $request->Status;
         $testimonial->save();
@@ -54,7 +58,7 @@ class TestimonialController extends Controller
                 $newTestimonial = [
                     'db_id' => $testimonialdata->id,  // Corrected from $testimonial->id to $testimonialdata->id
                     'name' => $testimonialdata->name,
-                    'message' => \strip_tags($testimonialdata->message),
+                    'message' => $cleanDescription,
                     'image' => $testimonialdata->image,  // Adjust based on how your images are stored
                     'published' => $testimonialdata->published ?? 0,
                 ];
@@ -96,10 +100,12 @@ class TestimonialController extends Controller
             $imagePath = null; // If no image is uploaded, keep it null
         }
 
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->message);
         $testimonial = Testimonial::find($id);
         // dd($testimonial);
         $testimonial->name = $request->name;
-        $testimonial->message = \strip_tags($request->message);
+        $testimonial->message = $cleanDescription;
         $testimonial->image = $imagePath;
         $testimonial->published = $request->Status;
         $testimonial->save();
@@ -110,7 +116,7 @@ class TestimonialController extends Controller
             $newTestimonial = [
                 'db_id' => $testimonial->id,  // Corrected from $testimonial->id to $testimonialdata->id
                 'name' => $testimonial->name,
-                'message' => \strip_tags($testimonial->message),
+                'message' => $cleanDescription,
                 'image' => $testimonial->image,  // Adjust based on how your images are stored
                 'published' => $testimonial->published ?? 0,
             ];

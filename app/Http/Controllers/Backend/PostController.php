@@ -9,6 +9,9 @@ use App\Models\Post;
 use App\Models\PostAuthor;
 use App\Models\PostCategory;
 use Exception;
+use HTMLPurifier;
+use HTMLPurifier_Config;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -43,12 +46,12 @@ class PostController extends Controller
 
         $request->validate([
             'Title' => 'required|string',
-            'Description' => 'required|string',
-            'Summary' => 'required|string',
+            'Description' => 'required',
+            'Summary' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'Status' => 'integer',
             'Category' => 'required|array',
-            'Author' => 'required|array',
+            'Author' => 'array',
 
         ]);
         // dd($request->file('image'));
@@ -58,11 +61,14 @@ class PostController extends Controller
         } else {
             $imageName = null;
         }
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->Description);
+        $cleanSummary = $purifier->purify($request->Summary);
 
         $post = new Post();
         $post->Title = $request->Title;
-        $post->Description = \strip_tags($request->Description);
-        $post->Summary = \strip_tags($request->Summary);
+        $post->Description = $cleanDescription;
+        $post->Summary =  $cleanSummary;
         $post->Status = $request->Status;
         $post->image = $imageName;
         $post->save();
@@ -100,16 +106,20 @@ class PostController extends Controller
         // dd($request->all());
         $request->validate([
             'Title' => 'required|string',
-            'Description' => 'required|string',
-            'Summary' => 'required|string',
+            'Description' => 'required',
+            'Summary' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'Status' => 'integer',
             'Category' => 'required|array',
-            'Author' => 'required|array',
+            'Author' => 'array',
 
         ]);
-        $post = Post::find($id);
 
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->Description);
+        $cleanSummary = $purifier->purify($request->Summary);
+        // dd($cleanDescription);
+        $post = Post::find($id);
         // CHECK THE USER IS AUTHORIZE OR NOT BEFOR EDITING POST
         //  $this->authorize('edit',$post);
 
@@ -126,8 +136,8 @@ class PostController extends Controller
             return redirect()->route('post.index')->with('error', 'Post Not Found');
         }
         $post->Title = $request->Title;
-        $post->Description = \strip_tags($request->Description);
-        $post->Summary = \strip_tags($request->Summary);
+        $post->Description = $cleanDescription ;
+        $post->Summary =  $cleanSummary;
         $post->Status = $request->Status;
         $post->image = $imageName;
        

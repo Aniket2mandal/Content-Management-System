@@ -46,7 +46,7 @@
                     <td>{{$page->Page_title}}</td>
                     <td>{{$page->Page_slug}}</td>
                     <td>{{$page->Page_summary}}</td>
-                    <td> {{ Str::limit($page->Page_escription, 100) }}</td>
+                    <td> {!! Str::limit($page->Page_description, 50) !!}</td>
                     <td>
 
                         <div class="form-group ">
@@ -107,14 +107,14 @@
 
 
         $('#title').on('input', function() {
-        var title = $(this).val();
-        // Convert title to lowercase and replace spaces with dashes
-        var slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-        // Remove dashes from the start and end of the slug
-        slug = slug.replace(/^-+/, '').replace(/-+$/, '');
-        // Set the generated slug as the value of the slug input
-        $('#slug').val(slug);
-    });
+            var title = $(this).val();
+            // Convert title to lowercase and replace spaces with dashes
+            var slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            // Remove dashes from the start and end of the slug
+            slug = slug.replace(/^-+/, '').replace(/-+$/, '');
+            // Set the generated slug as the value of the slug input
+            $('#slug').val(slug);
+        });
 
         $('.Status').change(function() {
             var postId = $(this).data('id');

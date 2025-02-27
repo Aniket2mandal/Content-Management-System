@@ -68,8 +68,7 @@
                         </span>
 
                         <p class="mt-2 text-muted">
-                            {{ Str::limit($post->Description, 100) }}
-                        </p>
+                        {!! Str::limit(strip_tags($post->Description), 100) !!}                        </p>
 
                         <span class="text-muted small">
                             <strong>Authors:</strong>

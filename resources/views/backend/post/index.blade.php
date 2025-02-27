@@ -22,82 +22,82 @@
     @can('viewany', \App\Models\Post::class)
 
     <div class="card-body ">
-        <table class="table table-bordered table-striped mt-4">
-            <thead class="table table-dark">
-                <tr class=" table">
-                    <!-- <th style="width: 10px"></th> -->
-                    <th>S.N.</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Summary</th>
-                    <th>Image</th>
-                    <th>Category</th>
-                    <th>Author</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                $i=1;
-                @endphp
-                @foreach($post as $posts)
-                <tr class="align-middle">
-                    <td>{{$i++}}</td>
-                    <td>{{$posts->Title}}</td>
-                    <td>{{ Str::limit($posts->Description, 50) }}</td>
-                    <td>{{Str::limit($posts->Summary,50)}}</td>
-                    <td>@if ($posts && $posts->image)
-                        <img src="{{ asset('images/post/' . $posts->image) }}" alt="Post Image" width="80" height="80">
-                        @else
-                        <img src="{{ asset('adminlte/img/avatar.png')  }}" class="img-circle" alt="User Image" width="80" height="80">
-                        @endif
-                    </td>
-                    <td>
-                        @if ($posts->categories->isNotEmpty()) <!-- Check if there are authors -->
-                        @foreach($posts->categories as $category)
-                        {{ $category->Title }}
-                        @endforeach
-                        @else
-                        No Category
-                        @endif
-                    </td>
-                    <td>
-                        @if ($posts->authors->isNotEmpty()) <!-- Check if there are authors -->
-                        @foreach($posts->authors as $author)
-                        {{ $author->Name }}
-                        @endforeach
-                        @else
-                        No Author
-                        @endif
-                    </td>
-                    <td>
-                        @can('changeStatus',App\Models\Post::class)
-                        <div class="form-group ">
-                            <!-- Toggle switch (default checked for Active) -->
-                            <input type="hidden" name="Status" class="Status" value="0">
-                            <input type="checkbox" name="Status" class="Status" data-id="{{$posts->id}}" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status',$posts->Status) ? 'checked' : '' }}>
-                            <!-- <small class="form-text text-muted">Switch to set the status to active or inactive</small> -->
-                        </div>
-                        @endcan
-                    </td>
-
-                    <td class="">
-
-                        @can('edit',App\Models\Post::class)
-                        <a href="{{route('post.edit',$posts->id)}}" class="btn btn-primary btn-sm me-2 ">
-                            <i class="fas fa-pencil-alt"></i> <b>Edit</b>
-                        </a>
-                        @endcan
-
-                        @can('delete',App\Models\Post::class)
-                        <button id="delete" data-id="{{ $posts->id }}" class="delete-btn btn btn-danger btn-sm"><i class="fas fa-trash"></i> <b>Delete</b></button>
-                        @endcan
-                    </td>
-                </tr>
+    <table class="table table-bordered table-striped mt-4" style="table-layout: fixed;">
+    <thead class="table table-dark">
+        <tr class="table">
+            <th>S.N.</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Summary</th>
+            <th>Image</th>
+            <th>Category</th>
+            <th>Author</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @php
+        $i = 1;
+        @endphp
+        @foreach($post as $posts)
+        <tr class="align-middle">
+            <td>{{$i++}}</td>
+            <td>{{$posts->Title}}</td>
+            <td class="text-wrap" style="word-wrap: break-word; white-space: normal;">{!! Str::limit($posts->Description, 50) !!}</td>
+            <td class="text-wrap" style="word-wrap: break-word; white-space: normal;">{!! str::limit($posts->Summary,50) !!}</td>
+            <td>
+                @if ($posts && $posts->image)
+                <img src="{{ asset('images/post/' . $posts->image) }}" alt="Post Image" width="80" height="80">
+                @else
+                <img src="{{ asset('adminlte/img/avatar.png') }}" class="img-circle" alt="User Image" width="80" height="80">
+                @endif
+            </td>
+            <td>
+                @if ($posts->categories->isNotEmpty())
+                @foreach($posts->categories as $category)
+                {{ $category->Title }}
                 @endforeach
-            </tbody>
-        </table>
+                @else
+                No Category
+                @endif
+            </td>
+            <td>
+                @if ($posts->authors->isNotEmpty())
+                @foreach($posts->authors as $author)
+                {{ $author->Name }}
+                @endforeach
+                @else
+                No Author
+                @endif
+            </td>
+            <td>
+                @can('changeStatus',App\Models\Post::class)
+                <div class="form-group">
+                    <input type="hidden" name="Status" class="Status" value="0">
+                    <input type="checkbox" name="Status" class="Status" data-id="{{$posts->id}}" data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" value="1" {{ old('Status',$posts->Status) ? 'checked' : '' }}>
+                </div>
+                @endcan
+            </td>
+
+            <td class="">
+                @can('edit',App\Models\Post::class)
+                <a href="{{route('post.edit',$posts->id)}}" class="btn btn-primary btn-sm me-2 ">
+                    <i class="fas fa-pencil-alt"></i> <b>Edit</b>
+                </a>
+                @endcan
+
+                @can('delete',App\Models\Post::class)
+                <button id="delete" data-id="{{ $posts->id }}" class="delete-btn btn btn-danger btn-sm">
+                    <i class="fas fa-trash"></i> <b>Delete</b>
+                </button>
+                @endcan
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
         <!-- Pagination -->
         <div class="card-footer clearfix">
             {{ $post->links('pagination::bootstrap-4') }}

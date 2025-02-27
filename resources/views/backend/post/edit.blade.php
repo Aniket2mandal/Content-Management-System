@@ -50,7 +50,7 @@
                     <label for="summary" class="form-label">Summary</label>
                     <textarea
                         class="form-control"
-                        id="Summary"
+                        id="Description"
                         name="Summary"
                         rows="5"
                         value=''>{{ $post->Summary }}</textarea>
@@ -64,14 +64,14 @@
                     <label for="status" class="form-label">Status</label>
                    <button type="button" class="btn btn-success" id="Status">Active</button>
                 </div> -->
-              
+
                 <div class="input-group mb-3">
                     <input type="file" class="form-control" id="inputGroupFile02" name="image" onchange="previewImage(event)" />
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
 
                     @if(isset($post) && $post->image)
                     <div class="input-group mb-3 mt-2">
-                        <img src="{{ asset('images/post/' . $post->image) }}"  style="max-height: 100px; max-width: 100px;">
+                        <img src="{{ asset('images/post/' . $post->image) }}" style="max-height: 100px; max-width: 100px;">
                         <!-- <p>Current image</p> -->
                     </div>
                     @endif
@@ -113,7 +113,7 @@
                     <select class="form-control select2" id="Category" name="Category[]" multiple="multiple">
                         <!-- <option value="" selected>Select Category</option> -->
                         @foreach($category as $item)
-                        <option value="{{ $item->id }}"  {{ $post->categories->contains('id', $item->id) ? 'selected' : '' }}>{{ $item->Title }}</option>
+                        <option value="{{ $item->id }}" {{ $post->categories->contains('id', $item->id) ? 'selected' : '' }}>{{ $item->Title }}</option>
                         @endforeach
                     </select>
                     {{-- Error Message --}}

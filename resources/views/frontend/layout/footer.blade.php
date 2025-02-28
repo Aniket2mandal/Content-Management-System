@@ -136,11 +136,18 @@
         <div class="container size-h-4 flex-c-c p-tb-15">
             <span class="f1-s-1 cl0 txt-center">
 
+            @if($copyrightlink && $copyrighttitle)
                 <a href="#" class="f1-s-1 cl10 hov-link1"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>
                         document.write(new Date().getFullYear());
                     </script> All rights reserved | by <a href="{{$copyrightlink->value}}" target="_blank">{{$copyrighttitle->value}}</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                     @else
+                     <a href="#" class="f1-s-1 cl10 hov-link1"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>
+                        document.write(new Date().getFullYear());
+                    </script> All rights reserved | by <a href="" target="_blank"></a>
+                    @endif
             </span>
         </div>
     </div>

@@ -76,10 +76,10 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HeaderController::class, 'index'])->name('front.home');
-Route::get('/post/list/{id}',[PostlistController::class,'index'])->name('front.postlist');
-Route::get('/post/latest',[PostlistController::class,'latestpost'])->name('front.latestpostlist');
-Route::get('/post/detail/{id}',[PostdetailController::class,'index'])->name('front.postdetail');
-Route::get('/post/search',[PostdetailController::class,'search'])->name('front.postsearch');
+Route::get('/post/list/{id}', [PostlistController::class, 'index'])->name('front.postlist');
+Route::get('/post/latest', [PostlistController::class, 'latestpost'])->name('front.latestpostlist');
+Route::get('/post/detail/{id}', [PostdetailController::class, 'index'])->name('front.postdetail');
+Route::get('/post/search', [PostdetailController::class, 'search'])->name('front.postsearch');
 Route::get('/post/author/{id}', [PostlistController::class, 'authorpost'])->name('front.authorpost');
 // ROUTES FOR CONTACT US FORM
 Route::get('/contactus', [ContactusController::class, 'index'])->name('front.contactus');
@@ -170,8 +170,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/seo/index', [SeoController::class, 'index'])->name('seo.index');
     Route::get('/seofield/create', [SeoController::class, 'create'])->name('seo.fieldcreate');
     Route::post('/seofield/store', [SeoController::class, 'store'])->name('seo.fieldstore');
-    Route::get('seofield/edit/{id}',[SeoController::class,'fieldedit'])->name('seo.fieldedit');
-    Route::post('seofield/update',[SeoController::class,'fieldupdate'])->name('seo.fieldupdate');
+    Route::get('seofield/edit/{id}', [SeoController::class, 'fieldedit'])->name('seo.fieldedit');
+    Route::post('seofield/update', [SeoController::class, 'fieldupdate'])->name('seo.fieldupdate');
     Route::put('/seo/update', [SeoController::class, 'update'])->name('seo.update');
     Route::get('seo/delete/{id}', [SeoController::class, 'delete'])->name('seo.delete');
 
@@ -205,7 +205,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/slider/delete/{id}', [SliderController::class, 'delete'])->name('slider.delete');
 
 
-// ERROR
+    // ERROR
     Route::get('/error', [ErrorController::class, 'showError'])->name('logger.error');
 });
 

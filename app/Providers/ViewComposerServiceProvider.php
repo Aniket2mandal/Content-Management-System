@@ -42,11 +42,17 @@ class ViewComposerServiceProvider extends ServiceProvider
             $latestPosts = Post::latest()->take(3)->get();
             $seodescription=Seo::where('name','description')->first();
             $seophone=Seo::where('name','number')->first();
+            $facebook=Seo::where('name','facebook')->first();
+            $copyrightlink=Seo::where('name','copyright_link')->first();
+            $copyrighttitle=Seo::where('name','copyright_title')->first();
              // Fetch latest 3 posts
             $view->with([
                 'latestPosts'=>$latestPosts,
                 'seodescription'=>$seodescription,
                 'seophone'=>$seophone,
+                'facebook'=>$facebook,
+                'copyrightlink'=>$copyrightlink,
+                'copyrighttitle'=>$copyrighttitle
         ]);
         });
     

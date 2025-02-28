@@ -89,8 +89,8 @@ class PostController extends Controller
         
         // dd($id);
         // dd(auth()->user()->permissions);
-        $post = Post::with('authors','categories')->where('Status',1)->find($id);
-
+        $post = Post::with('authors','categories')->find($id);
+// dd($post);
         $category = Category::where('Status', 1)->get();
         // dd($category);
         $author = Author::where('Status', 1)->get();

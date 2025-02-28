@@ -1,4 +1,3 @@
-
 <!-- Header -->
 <header>
     <!-- Header desktop -->
@@ -108,14 +107,12 @@
                         <li>
                             <a href="#">More</a>
                             <ul class="sub-menu">
-                                @if($categories->count() > 4)
-                                        @foreach($categories->skip(4) as $category)
-                                        <li><a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a></li>
-                                        @endforeach
-                                        @endif
-                                    </ul>
-                                </li>
-                             
+                              
+                                @foreach($categories->skip(4) as $category)
+                                <li><a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a></li>
+                                @endforeach
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>

@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-4 p-b-20">
                     <div class="size-h-3 flex-s-c">
-                        <a href="index.html">
+                        <a href="{{route('front.home')}}">
                             <img class="max-s-full" src="{{asset('imagesfrontend/icons/logo-02.png')}}" alt="LOGO">
                         </a>
                     </div>
@@ -15,18 +15,19 @@
                             {{ $seodescription->value }}
                         </p>
                         <p class="f1-s-1 cl11 p-b-16">
-                            Any questions? Call us on   {{ $seophone->value }}
+                            Any questions? Call us on {{ $seophone->value }}
                         </p>
                         @else
                         <p class="f1-s-1 cl11 p-b-16">
-                          
+
                         </p>
                         @endif
                         <div class="p-t-15">
-                            <a href="#" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
+                            @if($facebook)
+                            <a href="{{$facebook->value}}" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
                                 <span class="fab fa-facebook-f"></span>
                             </a>
-
+                            @endif
                             <a href="#" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
                                 <span class="fab fa-twitter"></span>
                             </a>
@@ -78,11 +79,11 @@
                         </li>
                         @else
                         <h6 class="p-b-5">
-                                    <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03">
-                                        No Post
-                                    </a>
-                                </h6>
-                                @endif
+                            <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03">
+                                No Post
+                            </a>
+                        </h6>
+                        @endif
                         @endforeach
                     </ul>
                 </div>
@@ -138,7 +139,7 @@
                 <a href="#" class="f1-s-1 cl10 hov-link1"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>
                         document.write(new Date().getFullYear());
-                    </script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    </script> All rights reserved | by <a href="{{$copyrightlink->value}}" target="_blank">{{$copyrighttitle->value}}</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </span>
         </div>

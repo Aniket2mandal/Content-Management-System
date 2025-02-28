@@ -15,7 +15,7 @@
                 </a>
                 <span class="mx-2"> </span>
                 @if ($authors && $authors->image)
-                <img src="{{ asset('images/author/' . $authors->image) }}" class="rounded-circle img-fluid" alt="Author Image" width="50" height="50">
+                <img src="{{ asset('images/author/' . $authors->image) }}" class="rounded-circle" alt="Author Image" width="50" height="50">
                 @else
                 <img src="{{ asset('adminlte/img/avatar.png') }}" class="rounded-circle img-fluid" alt="User Image" width="80" height="80">
                 @endif

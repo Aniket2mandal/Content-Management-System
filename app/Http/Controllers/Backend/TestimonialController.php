@@ -149,9 +149,10 @@ class TestimonialController extends Controller
             'Status' => 'integer',
         ]);
         $purifier = new HTMLPurifier();
-        $cleanDescription = $purifier->purify($request->message);
+       
 
         $testimonial = Testimonial::find($id);
+        $cleanDescription = $purifier->purify($testimonial->message);
         // dd($testimonial);
         // Update the status field
         $testimonial->published = $request->Status;

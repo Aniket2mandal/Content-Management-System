@@ -70,7 +70,7 @@
                 <div class="col-md-12">
 
                     <!-- Post Description -->
-                    <p class="text-dark">
+                    <p class="text-dark ">
                         <a href="#" class="text-dark text-decoration-none">
                             {!! $post->Description !!}
                         </a>
@@ -80,6 +80,8 @@
                     @endforeach
                 </div>
             </div>
+
+          
 
             <!-- Pagination -->
             <div class="d-flex justify-content-center mt-4">

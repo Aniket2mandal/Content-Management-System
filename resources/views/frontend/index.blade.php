@@ -163,7 +163,7 @@
                             @if($slider['image'])
                             <img src="{{ asset('storage/' . $slider['image']) }}" style="width:450px;height:100px; object-fit:cover" alt="IMG">
                             @else
-                            <img src="{{asset('imagesfrontend/banner-01.jpg')}}" alt="IMG">
+                            <img src="" alt="IMG">
                             @endif
 
                         </a>
@@ -461,9 +461,8 @@
 </section>
 
 
-
 <!-- THIRD CATEGORY -->
-<section class="post bg0 p-t-85">
+<section class="post bg0 p-t-85 ">
     <div class="container">
         <div class="row justify-content-center">
             <div class="p-b-25 m-r--10 m-r-0-sr991">
@@ -842,7 +841,7 @@
                         </div>
                         <!-- Testimonial Content -->
                         <h3 class="f1-l-2 cl2 p-b-16 p-t-20 respon2">{{ $testimonial['name'] }}</h3>
-                        <p class="card-text text-muted">{!! Str::limit(strip_tags($testimonial['message']), 200) !!}</p>
+                        <p class="card-text text-muted">{!! Str::limit(strip_tags($testimonial['message']), 100) !!}</p>
 
                     </div>
                 </div>

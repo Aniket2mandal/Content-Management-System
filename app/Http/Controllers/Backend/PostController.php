@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\PostAuthor;
-use App\Models\PostCategory;
 use Exception;
 use HTMLPurifier;
 use HTMLPurifier_Config;

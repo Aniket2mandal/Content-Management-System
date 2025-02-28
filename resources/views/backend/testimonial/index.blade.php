@@ -103,7 +103,7 @@
                     // SweetAlert2 success popup
                     Swal.fire({
                         title: 'Success!',
-                        text: 'The user status has been updated.',
+                        text: 'The testimonial status has been updated.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
@@ -143,7 +143,7 @@
                             // SweetAlert2 success popup
                             Swal.fire({
                                 title: 'Success!',
-                                text: 'The user deleted sucessfully.',
+                                text: 'The testimonial deleted sucessfully.',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {
@@ -156,7 +156,7 @@
                             // Handle any errors
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'An error occurred while deleting the user.',
+                                text: 'An error occurred while deleting the testimonial.',
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });

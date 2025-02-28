@@ -26,41 +26,50 @@ class HeaderController extends Controller
 
 
         // Path to the JSON file
-        $folderPath = storage_path('app/public/cache');
-        $filePath = $folderPath . '/testimonial.json';
-        $jsonPath = $filePath;
-      
-        // Check if the file exists
-        if (file_exists($jsonPath)) {
-            // Get the content of the JSON file
-            $jsonContent = file_get_contents($jsonPath);
-
-            // Decode the JSON data
-            $testimonials = json_decode($jsonContent, true);
-        } else {
-            $testimonials = [];
-        }
-// dd($testimonials);
-
-
-// FOR SLIDER
-$foldersliderPath = storage_path('app/public/cache');
-$filesliderPath = $foldersliderPath . '/slider.json';
-$jsonsliderPath = $filesliderPath;
+$folderPath = storage_path('app/public/cache');
+$filePath = $folderPath . '/testimonial.json';
 
 // Check if the file exists
-if (file_exists($jsonsliderPath)) {
+if (file_exists($filePath)) {
     // Get the content of the JSON file
-    $jsonsliderContent = file_get_contents($jsonsliderPath);
+    $jsonContent = file_get_contents($filePath);
 
     // Decode the JSON data
-    $sliders = json_decode($jsonsliderContent, true);
-} else {
-    $sliders = [];
-}
-// dd($sliders);
-        return view('frontend.index', compact('categories', 'latestPost', 'categorieslist','testimonials','sliders'));
-    }
+    $testimonialData = json_decode($jsonContent, true);
 
-    
+    // Ensure testimonials exist
+    if (isset($testimonialData['testimonials']) && is_array($testimonialData['testimonials'])) {
+        // Get the latest 2 testimonials
+        $testimonials = array_slice($testimonialData['testimonials'], 0, 2);
+        // dd($testimonials);
+    } else {
+        $testimonials = [];
+    }
+} else {
+    $testimonials = [];
+}
+
+// dd($testimonials); // Debug the result
+
+        // dd($testimonials);
+
+
+        // FOR SLIDER
+        $foldersliderPath = storage_path('app/public/cache');
+        $filesliderPath = $foldersliderPath . '/slider.json';
+        $jsonsliderPath = $filesliderPath;
+
+        // Check if the file exists
+        if (file_exists($jsonsliderPath)) {
+            // Get the content of the JSON file
+            $jsonsliderContent = file_get_contents($jsonsliderPath);
+
+            // Decode the JSON data
+            $sliders = json_decode($jsonsliderContent, true);
+        } else {
+            $sliders = [];
+        }
+        // dd($sliders);
+        return view('frontend.index', compact('categories', 'latestPost', 'categorieslist', 'testimonials', 'sliders'));
+    }
 }

@@ -145,11 +145,6 @@
                 <span class="dis-inline-block slide100-txt-item animated visible-false">
                     {{$slider['name']}}
                 </span>
-
-                <span class="dis-inline-block slide100-txt-item animated visible-false">
-                    {{$slider['url']}}
-                </span>
-
                 @endif
                 @endforeach
             </span>
@@ -163,7 +158,7 @@
                 <span class="dis-inline-block slide100-txt-item animated visible-false">
 
                     <div class="banner-header">
-                        <a href="https://themewagon.com/themes/free-bootstrap-4-html5-news-website-template-magnews2/">
+                        <a href={{$slider['url']}}>
 
                             @if($slider['image'])
                             <img src="{{ asset('storage/' . $slider['image']) }}" style="width:450px;height:100px; object-fit:cover" alt="IMG">
@@ -211,34 +206,32 @@
                                                 @endif
                                             </a>
                                             <div class="p-t-20">
-                                                <h5 class="p-b-5">
+                                                <h3 class="p-b-5">
                                                     <a href="{{route('front.postdetail',$post->id)}}" class="f1-m-3 cl2 hov-cl10 trans-03">
                                                         {{ $post->Title }}
                                                     </a>
-                                                </h5>
+                                                </h3>
                                                 <!-- Post Meta -->
-                                                <p class="text-muted small">
-                                                    <a href="{{ route('front.postlist', $category->id) }}" class="text-secondary text-decoration-none">
-                                                        {{ $category->Title }}
-                                                    </a>
-                                                    <span class="mx-2">•</span>
-                                                    <span>{{ $post->created_at->format('M d, Y') }}</span>
-                                                </p>
-                                                <!-- Authors -->
-                                                <p class="text-muted small">
-                                                    <strong>Authors:</strong>
-                                                    @foreach($post->authors as $author)
-                                                    <a href="{{ route('front.authorpost', $author->id) }}" class="text-decoration-none text-primary">
-                                                        {{ $author->Name }}
-                                                    </a>
-                                                    @if(!$loop->last), @endif
-                                                    @endforeach
-                                                </p>
+                                                <span class="text-muted small fixed-span">
 
-                                                </p>
-                                                <p class="f1-s-3">
+                                                    <a href="{{route('front.postlist', $category->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">{{ $category->Title }}</a>
+                                                    <span class="mx-2"> </span>
+                                                    @if($post->authors->isNotEmpty())
+                                                    @foreach($post->authors->take(2) as $author)
+                                                    <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                                        by {{ $author->Name  }}
+                                                    </a>
+                                                    @endforeach
+                                                    @else
+                                                    <span class="text-muted">No Authors</span>
+                                                    @endif
+                                                    <span class="m-rl-3">-</span>
+                                                    <span>{{ $post->created_at->format('M d, Y') }}</span>
+                                                </span>
+
+                                                <p class="f1-s-3 w-50">
                                                     <a href="{{route('front.postdetail',$post->id)}}" class="f1-s-3 cl2 hov-cl10 trans-03">
-                                                    {!! Str::limit(strip_tags($post->Description), 100) !!}
+                                                        {!! Str::limit(strip_tags($post->Summary), 100) !!}
                                                     </a>
                                                 </p>
                                             </div>
@@ -319,7 +312,6 @@
 </section>
 
 
-
 <!-- SECOND CATEGORY -->
 <section class="post bg0 p-t-85">
     <div class="container">
@@ -344,7 +336,7 @@
                                     @if($firstPost->image)
                                     <img src="{{ asset('images/post/'.$firstPost->image) }}" alt="IMG">
                                     @else
-                                    <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 200px; object-fit: cover; color: gray;"></i>
+                                    <i class="fa fa-image" style="font-size: 200px; object-fit: cover; color: gray;"></i>
                                     @endif
                                 </a>
 
@@ -355,7 +347,7 @@
                                         </a>
                                     </h5>
 
-                                    <span class="cl8">
+                                    <span class="text-muted small fixed-span">
                                         <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
                                             {{ $category->Title }}
                                         </a>
@@ -394,10 +386,21 @@
                                         </a>
                                     </h5>
 
-                                    <span class="cl8">
+                                    <span class="text-muted small fixed-span">
                                         <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
                                             {{ $category->Title }}
                                         </a>
+
+                                        <span class="mx-1"> </span>
+                                        @if($post->authors->isNotEmpty())
+                                        @foreach($post->authors->take(2) as $author)
+                                        <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                            by {{ $author->Name  }}
+                                        </a>
+                                        @endforeach
+                                        @else
+                                        <span class="text-muted">No Authors</span>
+                                        @endif
 
                                         <span class="f1-s-3 m-rl-3">-</span>
 
@@ -466,7 +469,7 @@
             <div class="p-b-25 m-r--10 m-r-0-sr991">
                 <!-- Dynamic Category -->
                 @foreach($categories->skip(2)->take(1) as $category) <!-- Skip the first 2 categories -->
-
+                @if($category)
                 <div class="how2 how2-cl5 flex-s-c m-r-10 m-r-0-sr991">
                     <h3 class="f1-m-2 cl17 tab01-title">
                         {{ $category->Title }}
@@ -485,7 +488,7 @@
                                         @if($post->image)
                                         <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" style="width: 150px; height: 150px; ">
                                         @else
-                                        <i class="fa fa-image" style="font-size: 50px; width: 100%; height: 100px; color: gray;"></i>
+                                        <i class="fa fa-image" style="font-size: 150px; color: gray;"></i>
                                         @endif
                                     </a>
 
@@ -497,10 +500,22 @@
                                             </a>
                                         </h5>
 
-                                        <span class="cl8">
+                                        <span class="text-muted small fixed-span">
                                             <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
                                                 {{ $category->Title }}
                                             </a>
+
+                                            <span class="mx-1"> </span>
+                                            @if($post->authors->isNotEmpty())
+                                            @foreach($post->authors->take(2) as $author)
+                                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                                by {{ $author->Name  }}
+                                            </a>
+                                            @endforeach
+                                            @else
+                                            <span class="text-muted">No Authors</span>
+                                            @endif
+
                                             <span class="f1-s-3 m-rl-3">-</span>
                                             <span class="f1-s-3">
                                                 {{ $post->created_at->format('M d, Y') }}
@@ -518,6 +533,7 @@
                     <div class="col-sm-12">
                         <div class="row">
                             @foreach($category->posts->skip(2)->take(2) as $post)
+                            @if($post)
                             <div class="col-md-6 p-r-25 p-r-15-sr991 m-b-30">
                                 <div class="d-flex align-items-center">
                                     <!-- Image Section -->
@@ -537,10 +553,21 @@
                                             </a>
                                         </h5>
 
-                                        <span class="cl8">
+                                        <span class="text-muted small fixed-span">
                                             <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
                                                 {{ $category->Title }}
                                             </a>
+                                            <span class="mx-1"> </span>
+                                            @if($post->authors->isNotEmpty())
+                                            @foreach($post->authors->take(2) as $author)
+                                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                                by {{ $author->Name  }}
+                                            </a>
+                                            @endforeach
+                                            @else
+                                            <span class="text-muted">No Authors</span>
+                                            @endif
+
                                             <span class="f1-s-3 m-rl-3">-</span>
                                             <span class="f1-s-3">
                                                 {{ $post->created_at->format('M d, Y') }}
@@ -549,11 +576,20 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
+                            <span class="f1-s-3">
+                                No Posts
+                            </span>
+                            @endif
                             @endforeach
                         </div>
                     </div>
                 </div>
-
+                @else
+                <span class="f1-s-3">
+                    No Category
+                </span>
+                @endif
                 @endforeach
             </div>
         </div>
@@ -588,7 +624,8 @@
                         @if($firstPost->image)
                         <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;" alt="IMG">
                         @else
-                        <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 200px; object-fit: cover; color: gray;"></i>
+
+                        <i class="fa fa-image" style="font-size: 300px; object-fit: cover; color: gray;"></i>
                         @endif
                     </a>
 
@@ -599,11 +636,20 @@
                             </a>
                         </h5>
 
-                        <span class="cl8">
+                        <span class="text-muted small fixed-span">
                             <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
                                 {{ $category->Title }}
                             </a>
-
+                            <span class="mx-1"> </span>
+                            @if($post->authors->isNotEmpty())
+                            @foreach($post->authors->take(2) as $author)
+                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                by {{ $author->Name  }}
+                            </a>
+                            @endforeach
+                            @else
+                            <span class="text-muted">No Authors</span>
+                            @endif
                             <span class="f1-s-3 m-rl-3">-</span>
 
                             <span class="f1-s-3">
@@ -632,10 +678,20 @@
                             </a>
                         </h5>
 
-                        <span class="cl8">
+                        <span class="text-muted small fixed-span">
                             <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
                                 {{ $category->Title }}
                             </a>
+                            <span class="mx-1"> </span>
+                            @if($post->authors->isNotEmpty())
+                            @foreach($post->authors->take(2) as $author)
+                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                by {{ $author->Name  }}
+                            </a>
+                            @endforeach
+                            @else
+                            <span class="text-muted">No Authors</span>
+                            @endif
 
                             <span class="f1-s-3 m-rl-3">-</span>
 
@@ -683,10 +739,20 @@
                             </a>
                         </h5>
 
-                        <span class="cl8">
+                        <span class="text-muted small fixed-span">
                             <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
                                 {{ $category->Title }}
                             </a>
+                            <span class="mx-1"> </span>
+                            @if($post->authors->isNotEmpty())
+                            @foreach($post->authors->take(2) as $author)
+                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                by {{ $author->Name  }}
+                            </a>
+                            @endforeach
+                            @else
+                            <span class="text-muted">No Authors</span>
+                            @endif
 
                             <span class="f1-s-3 m-rl-3">-</span>
 
@@ -716,10 +782,21 @@
                             </a>
                         </h5>
 
-                        <span class="cl8">
+                        <span class="text-muted small fixed-span">
                             <a href="{{ route('front.postlist', $category->id) }}" class="f1-s-6 cl8 hov-cl10 trans-03">
                                 {{ $category->Title }}
                             </a>
+
+                            <span class="mx-1"> </span>
+                            @if($post->authors->isNotEmpty())
+                            @foreach($post->authors->take(2) as $author)
+                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                by {{ $author->Name  }}
+                            </a>
+                            @endforeach
+                            @else
+                            <span class="text-muted">No Authors</span>
+                            @endif
 
                             <span class="f1-s-3 m-rl-3">-</span>
 
@@ -749,7 +826,8 @@
         </div>
         <!-- Main Content (Testimonial Listing) -->
         <div class="row">
-            @foreach($testimonials['testimonials'] as $testimonial)
+            @if($testimonials)
+            @foreach($testimonials as $testimonial)
             @if($testimonial['published'] == 1) <!-- Only display published testimonials -->
             <div class="col-md-6 mb-4"> <!-- Adjust column width for better layout -->
                 <div class="card border-0 shadow-sm">
@@ -759,18 +837,19 @@
                             @if($testimonial['image'])
                             <img src="{{ asset('storage/' . $testimonial['image']) }}" class="card-img-top rounded-top" alt="Testimonial Image" style="width:300px;height:300px;">
                             @else
-                            <img src="fa fa-image" alt="Testimonial Image" style="width:300px;height:300px;">
+                            <i class="fa fa-image" style="font-size: 300px;"></i>
                             @endif
                         </div>
                         <!-- Testimonial Content -->
-                        <h5 class="card-title">{{ $testimonial['name'] }}</h5>
-                        <p class="card-text text-muted">{!! Str::limit(strip_tags($testimonial['message']), 100) !!}</p>
-                      
+                        <h3 class="f1-l-2 cl2 p-b-16 p-t-20 respon2">{{ $testimonial['name'] }}</h3>
+                        <p class="card-text text-muted">{!! Str::limit(strip_tags($testimonial['message']), 200) !!}</p>
+
                     </div>
                 </div>
             </div>
             @endif
             @endforeach
+            @endif
         </div>
         <!-- Pagination (if necessary) -->
     </div>

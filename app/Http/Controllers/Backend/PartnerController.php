@@ -75,6 +75,9 @@ class PartnerController extends Controller
 
         $newPartner = [
             'db_id' => $id,
+            'name' => $partner->name,
+            'url' => $partner->url,
+            'image' => $partner->image,
             'published' => $request->Status
         ];
         // dd($newPartner);

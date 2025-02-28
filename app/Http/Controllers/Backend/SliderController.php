@@ -74,6 +74,9 @@ class SliderController extends Controller
         $slider->save();
         $newSlider = [
             'db_id' => $id,
+            'name' => $slider->name,
+            'url' => $slider->url,
+            'image' => $slider->image,
             'published' => $request->Status
         ];
 

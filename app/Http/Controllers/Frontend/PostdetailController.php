@@ -33,14 +33,14 @@ class PostdetailController extends Controller
     {
         // Validate the search query
         $request->validate([
-            'search' => 'nullable|string|min:3', // Make search term optional and ensure at least 3 characters
+            'search' => 'nullable|string|min:2', // Make search term optional and ensure at least 3 characters
         ]);
     
         // If no search query, return an empty result or some default data
         $query = $request->input('search', '');
     
         // Get the first post based on the search query, allowing partial matching using LIKE
-        $posts = Post::where('Title', $query)
+        $posts = Post::where('Title', 'LIKE', "%{$query}%")
                     ->with(['categories', 'authors']) // Eager load categories and authors
                     ->paginate(4); // Fetch only one post matching the search query
     

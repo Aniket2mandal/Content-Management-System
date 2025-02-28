@@ -6,12 +6,14 @@
         <!-- Breadcrumb -->
         <div class="headline bg0 flex-wr-sb-c p-rl-20 p-tb-8">
             <div class="f2-s-1 p-r-30 m-tb-6">
+                @if($posts && $posts->isNotEmpty())
                 <a href="{{ route('front.home') }}" class="breadcrumb-item f1-s-3 cl9">
                     Home
                 </a>
                 <span class="breadcrumb-item f1-s-3 cl9">
-                Post
-            </span>
+                    Post
+                </span>
+                @endif
             </div>
             <form action="{{ route('front.postsearch') }}" method="GET">
                 <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
@@ -26,60 +28,72 @@
         <!-- Main Content (Post Listing) -->
         <div class="row">
             <!-- Loop through posts -->
+            @if($posts && $posts->isNotEmpty())
             @foreach($posts as $post)
             <div class="col-md-6 mb-4">
                 <div class="card border-0 shadow-sm">
                     <a href="{{ route('front.postdetail', $post->id) }}" class="d-block">
                         @if($post->image)
-                            <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 300px; object-fit: cover;">
+                        <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 300px; object-fit: cover;">
                         @else
-                            <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
-                                <i class="fa fa-image" style="font-size: 50px;"></i>
-                            </div>
+                        <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
+                            <i class="fa fa-image" style="font-size: 50px;"></i>
+                        </div>
                         @endif
                     </a>
 
                     <div class="card-body p-3">
-                        <h5 class="card-title">
+                        <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
                             <a href="{{ route('front.postdetail', $post->id) }}" class="text-dark hov-cl10 trans-03">
                                 {{ $post->Title }}
                             </a>
-                        </h5>
+                        </h3>
 
                         <span class="text-muted small">
-                            <a href="{{route('front.postlist',$post->categories->first()->id)}}" class="text-secondary">
+                            <a href="{{route('front.postlist',$post->categories->first()->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">
                                 @if($post->categories->isNotEmpty())
-                                    {{ $post->categories->first()->Title }}
+                                {{ $post->categories->first()->Title }}
                                 @else
-                                    Uncategorized
+                                Uncategorized
                                 @endif
                             </a>
-                            <span class="mx-2">•</span>
-                            <span>{{ $post->created_at->format('M d, Y') }}</span>
+
                         </span>
-
-                        <p class="mt-2 text-muted">
-                        {!! Str::limit(strip_tags($post->Description), 100) !!}
-                        </p>
-
                         <span class="text-muted small">
-                            <strong>Authors:</strong>
+                            <span class="mx-2"> </span>
                             @if($post->authors->isNotEmpty())
-                                @foreach($post->authors as $author)
-                                    <a href="{{ route('front.authorpost', $author->id) }}" class="text-primary">{{ $author->Name }}</a>@if(!$loop->last), @endif
-                                @endforeach
+                            @foreach($post->authors as $author)
+                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                by {{ $author->Name  }}
+                            </a>
+                            @endforeach
                             @else
-                                <span class="text-muted">No Authors</span>
+                            <span class="text-muted">No Authors</span>
                             @endif
                         </span>
+                        <span class="m-rl-3">-</span>
+                        <span>{{ $post->created_at->format('M d, Y') }}</span>
+
+                        <p class="mt-2 text-muted">
+                            {!! Str::limit(strip_tags($post->Summary), 100) !!}
+                        </p>
                     </div>
                 </div>
             </div>
             @endforeach
+            @else
+            <div style="text-align: center; width: 100%;">
+    <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
+        <a href="" class="text-dark hov-cl10 trans-03">
+            Not Found !
+        </a>
+    </h3>
+</div>
+            @endif
         </div>
 
-          <!-- Pagination -->
-          <div class="d-flex justify-content-center mt-4">
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
             {{ $posts->links('pagination::bootstrap-4') }}
         </div>
     </div>

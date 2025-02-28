@@ -67,32 +67,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('/welcome', function () {
 //     return view('frontend.layout.app');
 // });
 
-Route::get('/front/home', [HeaderController::class, 'index'])->name('front.home');
-Route::get('/front/postlist/{id}',[PostlistController::class,'index'])->name('front.postlist');
-Route::get('/front/latestpostlist',[PostlistController::class,'latestpost'])->name('front.latestpostlist');
-Route::get('/front/postdetail/{id}',[PostdetailController::class,'index'])->name('front.postdetail');
-
-Route::get('/front/search',[PostdetailController::class,'search'])->name('front.postsearch');
-
-Route::get('/front/author/post/{id}', [PostlistController::class, 'authorpost'])->name('front.authorpost');
-
+Route::get('/', [HeaderController::class, 'index'])->name('front.home');
+Route::get('/post/list/{id}',[PostlistController::class,'index'])->name('front.postlist');
+Route::get('/post/latest',[PostlistController::class,'latestpost'])->name('front.latestpostlist');
+Route::get('/post/detail/{id}',[PostdetailController::class,'index'])->name('front.postdetail');
+Route::get('/post/search',[PostdetailController::class,'search'])->name('front.postsearch');
+Route::get('/post/author/{id}', [PostlistController::class, 'authorpost'])->name('front.authorpost');
 // ROUTES FOR CONTACT US FORM
-Route::get('/front/contactus', [ContactusController::class, 'index'])->name('front.contactus');
-Route::post('/front/contactus/store', [ContactusController::class, 'store'])->name('front.contactstore');
-
+Route::get('/contactus', [ContactusController::class, 'index'])->name('front.contactus');
+Route::post('/contactus/store', [ContactusController::class, 'store'])->name('front.contactstore');
 // ROUTES FOR ABOUT US PAGE
-Route::get('/front/aboutus', [AboutusController::class, 'index'])->name('front.aboutus');
-
+Route::get('/aboutus', [AboutusController::class, 'index'])->name('front.aboutus');
 // ROUTE FOR TESTIMONIAL
-Route::get('/front/testimonial', [HeaderController::class, 'testimonial'])->name('front.testimonial');
+Route::get('/testimonial', [HeaderController::class, 'testimonial'])->name('front.testimonial');
 
 
 // Route::get('/front/authorlist',[AuthorlistController::class,'index'])->name('front.auhtordetail');
@@ -104,12 +99,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
-    // USER
-    // Route::get('/userhome', [UserController::class, 'index'])->name('user.index');
-    // Route::get('/usercreate', [UserController::class, 'create'])->name('user.create');
-
 
 
 

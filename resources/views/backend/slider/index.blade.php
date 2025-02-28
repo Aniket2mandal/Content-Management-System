@@ -112,7 +112,7 @@
                     // SweetAlert2 success popup
                     Swal.fire({
                         title: 'Success!',
-                        text: 'The partner status has been updated.',
+                        text: 'The slider status has been updated.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
@@ -165,7 +165,7 @@
                             // Handle any errors
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'An error occurred while deleting the user.',
+                                text: 'An error occurred while deleting the slider.',
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });

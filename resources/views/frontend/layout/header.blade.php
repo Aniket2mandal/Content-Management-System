@@ -1,3 +1,5 @@
+
+<!-- Header -->
 <header>
     <!-- Header desktop -->
     <div class="container-menu-desktop">
@@ -24,11 +26,11 @@
                         Contact
                     </a>
 
-                    <a href="#" class="left-topbar-item">
+                    <a href="{{ route('register') }}" class="left-topbar-item">
                         Sign up
                     </a>
 
-                    <a href="#" class="left-topbar-item">
+                    <a href="{{ route('login') }}" class="left-topbar-item">
                         Log in
                     </a>
                 </div>
@@ -57,92 +59,66 @@
             </div>
         </div>
 
-        <!-- Header Mobile -->
-        <div class="wrap-header-mobile">
-            <!-- Logo mobile -->
-            <div class="logo-mobile">
-                <a href="index.html"><img src="{{asset('imagesfrontend/icons/logo-01.png')}}" alt="IMG-LOGO"></a>
+        <!-- Logo and Banner -->
+        <div class="wrap-logo container">
+            <!-- Logo desktop -->
+            <div class="logo">
+                <a href="{{route('front.home')}}"><img src="{{asset('imagesfrontend/icons/logo-01.png')}}" alt="LOGO"></a>
             </div>
 
-            <!-- Button show menu -->
-            <div class="btn-show-menu-mobile hamburger hamburger--squeeze m-r--8">
-                <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Logo and Banner -->
-    <div class="wrap-logo container">
-        <!-- Logo desktop -->
-        <div class="logo">
-            <a href="{{route('front.home')}}"><img src="{{asset('imagesfrontend/icons/logo-01.png')}}" alt="LOGO"></a>
-        </div>
-
-        <!-- Banner -->
-        <div class="banner-header">
-            <a href="https://themewagon.com/themes/free-bootstrap-4-html5-news-website-template-magnews2/">
-                <img src="{{asset('imagesfrontend/banner-01.jpg')}}" alt="IMG">
-            </a>
-        </div>
-    </div>
-
-    <!-- Main Navigation -->
-    <div class="wrap-main-nav">
-        <div class="main-nav">
-            <!-- Menu desktop -->
-            <nav class="menu-desktop">
-                <a class="logo-stick" href="index.html">
-                    <img src="{{asset('imagesfrontend/icons/logo-01.png')}}" alt="LOGO">
+            <!-- Banner -->
+            <div class="banner-header">
+                <a href="https://themewagon.com/themes/free-bootstrap-4-html5-news-website-template-magnews2/">
+                    <img src="{{asset('imagesfrontend/banner-01.jpg')}}" alt="IMG">
                 </a>
+            </div>
+        </div>
 
-                <ul class="main-menu">
-                    <li class="main-menu-active">
-                        <a href="{{route('front.home')}}">Home</a>
-                        <!-- <ul class="sub-menu">
-                            <li><a href="index.html">Homepage v1</a></li>
-                            <li><a href="home-02.html">Homepage v2</a></li>
-                            <li><a href="home-03.html">Homepage v3</a></li>
-                        </ul> -->
-                    </li>
+        <!-- Menu Mobile -->
 
-                    <li class="mega-menu-item">
-                        <a href="#">About Us</a>
-                        <ul class="sub-menu">
-                          @foreach($pages as $page)
-                          @if($page->Page_title=='Contact page' )
-                            <li><a href="{{route('front.contactus')}}">{{ $page->Page_title }}</a></li>
-                        @elseif($page->Page_title=='About Page')
-                        <li><a href="{{route('front.aboutus')}}">{{ $page->Page_title }}</a></li>
-                        @else
-                        <li><a href="#">{{ $page->Page_title }}</a></li>
-                        @endif
-                            @endforeach
-                        </ul>
-                    </li>
+        <!--  -->
+        <div class="wrap-main-nav">
+            <div class="main-nav">
+                <!-- Menu desktop -->
+                <nav class="menu-desktop">
+                    <ul class="main-menu">
+                        <li class="main-menu-active">
+                            <a href="{{route('front.home')}}">Home</a>
+                        </li>
 
-                    <!-- Categories Loop -->
-    
-                  @foreach($categories->take(4) as $category)
-                    <li class="mega-menu-item">
-                        <a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a>
-                    </li>
-                    @endforeach
-
-                    <!-- More Categories if count is greater than 7 -->
-                    @if($categories->count() > 4)
-                    <li class="mega-menu-item">
-                        <a href="#">More</a>
-                        <ul class="sub-menu">
-                            @foreach($categories->skip(4) as $category)
-                            <li><a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li>
-                    @endif
-                </ul>
-            </nav>
+                        <li>
+                            <a href="#">About Us</a>
+                            <ul class="sub-menu">
+                                @foreach($pages as $page)
+                                @if($page->Page_title=='Contact page' )
+                                <li><a href="{{route('front.contactus')}}">{{ $page->Page_title }}</a></li>
+                                @elseif($page->Page_title=='About Page')
+                                <li><a href="{{route('front.aboutus')}}">{{ $page->Page_title }}</a></li>
+                                @else
+                                <li><a href="#">{{ $page->Page_title }}</a></li>
+                                @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                        @foreach($categories->take(4) as $category)
+                        <li>
+                            <a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a>
+                        </li>
+                        @endforeach
+                        <li>
+                            <a href="#">More</a>
+                            <ul class="sub-menu">
+                                @if($categories->count() > 4)
+                                        @foreach($categories->skip(4) as $category)
+                                        <li><a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a></li>
+                                        @endforeach
+                                        @endif
+                                    </ul>
+                                </li>
+                             
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </header>

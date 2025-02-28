@@ -109,7 +109,7 @@
                             // SweetAlert2 success popup
                             Swal.fire({
                                 title: 'Success!',
-                                text: 'The post deleted sucessfully.',
+                                text: 'The item deleted sucessfully.',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {
@@ -122,7 +122,7 @@
                             // Handle any errors
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'An error occurred while deleting the post.',
+                                text: 'An error occurred while deleting the item.',
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });

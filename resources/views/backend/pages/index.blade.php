@@ -172,7 +172,7 @@
                             // SweetAlert2 success popup
                             Swal.fire({
                                 title: 'Success!',
-                                text: 'The post deleted sucessfully.',
+                                text: 'The page deleted sucessfully.',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {
@@ -185,7 +185,7 @@
                             // Handle any errors
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'An error occurred while deleting the post.',
+                                text: 'An error occurred while deleting the page.',
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
@@ -217,10 +217,10 @@
 
                     if (response.data.Page_status == 1) {
                         $('#createEventModal #Status').prop('checked', true); // If status is 1, check the box
-                        $('#eventcreateForm #Status').val(1);
+                        // $('#eventcreateForm #Status').val(1);
                     } else {
                         $('#createEventModal #Status').prop('checked', false); // If status is 0, uncheck the box
-                        $('#eventcreateForm #Status').val(0);
+                        // $('#eventcreateForm #Status').val(0);
                     }
 
                     // No need to refresh the toggle, just ensure it visually reflects the state

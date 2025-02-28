@@ -94,7 +94,7 @@
                     // SweetAlert2 success popup
                     Swal.fire({
                         title: 'Success!',
-                        text: 'The author shas been updated.',
+                        text: 'The author has been updated.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });

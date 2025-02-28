@@ -10,14 +10,18 @@
                     </div>
 
                     <div>
+                        @if($seodescription && $seophone)
                         <p class="f1-s-1 cl11 p-b-16">
                             {{ $seodescription->value }}
                         </p>
-
                         <p class="f1-s-1 cl11 p-b-16">
                             Any questions? Call us on   {{ $seophone->value }}
                         </p>
-
+                        @else
+                        <p class="f1-s-1 cl11 p-b-16">
+                          
+                        </p>
+                        @endif
                         <div class="p-t-15">
                             <a href="#" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
                                 <span class="fab fa-facebook-f"></span>
@@ -51,6 +55,7 @@
 
                     <ul>
                         @foreach($latestPosts as $post)
+                        @if($post)
                         <li class="flex-wr-sb-s p-b-20">
                             @if($post->image)
                             <a href="#" class="size-w-4 wrap-pic-w hov1 trans-03">
@@ -71,6 +76,13 @@
                                 </span>
                             </div>
                         </li>
+                        @else
+                        <h6 class="p-b-5">
+                                    <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03">
+                                        No Post
+                                    </a>
+                                </h6>
+                                @endif
                         @endforeach
                     </ul>
                 </div>
@@ -122,7 +134,6 @@
     <div class="bg11">
         <div class="container size-h-4 flex-c-c p-tb-15">
             <span class="f1-s-1 cl0 txt-center">
-                Copyright © 2018
 
                 <a href="#" class="f1-s-1 cl10 hov-link1"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>

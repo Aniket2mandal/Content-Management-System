@@ -9,12 +9,11 @@
                 <a href="{{ route('front.home') }}" class="text-muted text-decoration-none">
                     Home
                 </a>
-                <span class="mx-2"></span>
+                <span class="mx-2"> </span>
                 <a href="{{route('front.latestpostlist')}}" class="text-muted text-decoration-none">
                     Latest Post
                 </a>
             </div>
-
             <form action="{{ route('front.postsearch') }}" method="GET">
             <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
                 <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
@@ -24,7 +23,6 @@
             </div>
         </form>
         </div>
-
         <!-- Main Content (Post Listing & Sidebar) -->
         <div class="row">
             <!-- Latest Posts Section -->
@@ -47,31 +45,33 @@
                         </a>
 
                         <div class="card-body p-3">
-                            <h5 class="card-title">
+                            <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
                                 <a href="{{ route('front.postdetail', $post->id) }}" class="text-dark hov-cl10 trans-03">
                                     {{ $post->Title }}
                                 </a>
-                            </h5>
+                            </h3>
 
                             <span class="text-muted small">
                                 @foreach($post->categories as $category)
-                                <a href="{{route('front.postlist', $category->id)}}" class="text-secondary">{{ $category->Title }}</a>
-                                <span class="mx-2">•</span>
-                                @endforeach
-                                <span>{{ $post->created_at->format('M d, Y') }}</span>
+                                <a href="{{route('front.postlist', $category->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">{{ $category->Title }}</a>
+                                <span class="mx-2"> </span>
+                            @if($post->authors->isNotEmpty())
+                            @foreach($post->authors as $author)
+                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                by {{ $author->Name  }}
+                            </a>
+                            @endforeach
+                            @else
+                            <span class="text-muted">No Authors</span>
+                            @endif
+                            @endforeach
+                            <span class="m-rl-3">-</span>
+                            <span>{{ $post->created_at->format('M d, Y') }}</span>
                             </span>
 
                             <p class="mt-2 text-muted">
-                            {!! Str::limit(strip_tags($post->Description), 100) !!}
+                            {!! Str::limit(strip_tags($post->Summary), 100) !!}
                             </p>
-
-                            <span class="text-muted small">
-                                <strong>Authors:</strong>
-                                @foreach($post->authors as $author)
-                                <a href="{{ route('front.authorpost', $author->id) }}" class="text-primary">{{ $author->Name }}</a>
-                                @if(!$loop->last), @endif
-                                @endforeach
-                            </span>
                         </div>
                     </div>
                 </div>

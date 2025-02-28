@@ -40,7 +40,7 @@ class TestimonialController extends Controller
         }
         $purifier = new HTMLPurifier();
         $cleanDescription = $purifier->purify($request->message);
-        
+
         $testimonial = new Testimonial;
         $testimonial->name = $request->name;
         $testimonial->message = $cleanDescription;
@@ -148,14 +148,22 @@ class TestimonialController extends Controller
         $request->validate([
             'Status' => 'integer',
         ]);
+        $purifier = new HTMLPurifier();
+        $cleanDescription = $purifier->purify($request->message);
+
         $testimonial = Testimonial::find($id);
+        // dd($testimonial);
         // Update the status field
         $testimonial->published = $request->Status;
         $testimonial->save();
         // dd($request->Status);
         $newTestimonialStatus = [
             'db_id' => $id,
-            'published' => $request->Status
+            'name' => $testimonial->name,
+            'message' => $cleanDescription,
+            'image' => $testimonial->image,
+            'published' => $request->Status,
+
         ];
 
         $updated = updateTestimonialsStatus($newTestimonialStatus);

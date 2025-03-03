@@ -11,43 +11,29 @@ use Illuminate\Support\Facades\Log;
 if (!function_exists('initializeBhittaConfig')) {
     function initializeBhittaConfig()
     {
-        // $testFile = storage_path('app/test.txt');
-        // file_put_contents($testFile, 'Test content');
-        // Log::info('Test file written at: ' . $testFile);
-
-
         $bhittaPath = storage_path('app/bhitta.json');
 
-        // Check if file exists
-        if (file_exists($bhittaPath)) {
-            // Log::info('Inside initializeBhittaConfig if condition');
-            $defaultConfig = [
-                "limit" => 5,
-                "slider_settings" => [
-                    "autoplay" => true,
-                    "speed" => 3000
-                ],
-                "testimonial_settings" => [
-                    "show_on_homepage" => true
-                ],
-                "partner_settings" => [
-                    "display_type" => "grid"
-                ]
-            ];
-            // Log::info('Attempting to write to bhitta.json at: ' . $bhittaPath);
-            // Save default settings
+        // Default config settings
+        $defaultConfig = [
+            "limit" => 5,
+            "slider_settings" => [
+                "autoplay" => true,
+                "speed" => 3000
+            ],
+            "testimonial_settings" => [
+                "show_on_homepage" => true
+            ],
+            "partner_settings" => [
+                "display_type" => "grid"
+            ]
+        ];
+
+        // If the file does not exist, create it and write default config
+        if (!file_exists($bhittaPath)) {
             file_put_contents($bhittaPath, json_encode($defaultConfig, JSON_PRETTY_PRINT));
-            // Log::info('bhitta.json written successfully');
         }
     }
 }
-
-
-
-
-
-
-
 
 
 
@@ -61,6 +47,10 @@ if (!function_exists('getLatestTestimonials')) {
         $filePath  = storage_path('app/public/cache/testimonial.json');
         if (!file_exists($filePath)) {
             File::makeDirectory(dirname($filePath), 0755, true, true);
+        }
+
+        if (!file_exists($filePath)) {
+            File::put($filePath, json_encode(['testimonials' => []])); // Create an empty JSON file
         }
 
         // Get limit from JSON file (default to 5 if not set)
@@ -122,26 +112,6 @@ if (!function_exists('saveTestimonials')) {
         file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
     }
 }
-
-// EDIT TESTIMONIAL
-// if (!function_exists('editTestimonial')) {
-//     function editTestimonials($newTestimonial)
-//     {
-//         $filePath = storage_path('app/public/cache/testimonial.json');
-//         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['testimonials' => [], 'limit' => 5];
-//         // $found = false;
-//         foreach ($jsonData['testimonials'] as &$testimonial) {
-//             if ($testimonial['id'] == $newTestimonial['id']) {
-//                 // $testimonial['published'] = $newTestimonialStatus['published'];
-//                 return $testimonial;
-//                 // $found=true;
-//                 break;
-//             }
-//         }
-//         // file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
-//         return null;
-//     }
-// }
 
 // UPDATE TESTIMONIAL
 if (!function_exists('updateTestimonials')) {
@@ -240,18 +210,6 @@ if (!function_exists('deleteTestimonials')) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 // // PARTNERS
 
 if (!function_exists('getLatestPartners')) {
@@ -262,6 +220,10 @@ if (!function_exists('getLatestPartners')) {
         $filePath  = storage_path('app/public/cache/partner.json');
         if (!file_exists($filePath)) {
             File::makeDirectory(dirname($filePath), 0755, true, true);
+        }
+
+        if (!file_exists($filePath)) {
+            File::put($filePath, json_encode(['partners' => []])); // Create an empty JSON file
         }
 
         // Get limit from JSON file (default to 5 if not set)
@@ -293,7 +255,6 @@ if (!function_exists('getLatestPartners')) {
         return array_slice($partners, 0);
     }
 }
-
 
 // PARTNER STORE
 if (!function_exists('savePartners')) {
@@ -330,23 +291,6 @@ if (!function_exists('savePartners')) {
         file_put_contents($filePath, json_encode($jsonData, JSON_PRETTY_PRINT));
     }
 }
-
-// EDIT PARTNERS
-// if (!function_exists('editPartners')) {
-//     function editPartners($newPartner)
-//     {
-//         $filePath = storage_path('app/public/cache/partner.json');
-//         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['partners' => [], 'limit' => 5];
-
-//         foreach ($jsonData['partners'] as &$partner) {
-//             if ($partner['id'] == $newPartner['id']) {
-//                 return $partner;
-//                 break;
-//             }
-//         }
-//         return null;
-//     }
-// }
 
 // UPDATE PARTNERS
 if (!function_exists('updatePartners')) {
@@ -445,20 +389,6 @@ if (!function_exists('deletePartners')) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // SLIDERS
 if (!function_exists('getLatestSliders')) {
     function getLatestSliders()
@@ -468,6 +398,10 @@ if (!function_exists('getLatestSliders')) {
         $filePath  = storage_path('app/public/cache/slider.json');
         if (!file_exists($filePath)) {
             File::makeDirectory(dirname($filePath), 0755, true, true);
+        }
+
+        if (!file_exists($filePath)) {
+            File::put($filePath, json_encode(['sliders' => []])); // Create an empty JSON file
         }
 
         // Get limit from JSON file (default to 5 if not set)
@@ -568,24 +502,6 @@ if (!function_exists('updateSlidersStatus')) {
         return $found;
     }
 }
-
-
-// if (!function_exists('editSliders')) {
-//     function editSliders($newSlider)
-//     {
-//         $filePath = storage_path('app/public/cache/slider.json');
-//         $jsonData = file_exists($filePath) ? json_decode(file_get_contents($filePath), true) : ['sliders' => [], 'limit' => 5];
-
-//         foreach ($jsonData['sliders'] as &$slider) {
-//             if ($slider['id'] == $newSlider['id']) {
-//                 return $slider;
-//                 break;
-//             }
-//         }
-//         return null;
-//     }
-// }
-
 
 if (!function_exists('updateSliders')) {
     function updateSliders($newSlider)

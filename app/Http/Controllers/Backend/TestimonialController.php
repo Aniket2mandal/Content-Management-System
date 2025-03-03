@@ -50,6 +50,7 @@ class TestimonialController extends Controller
 
         if ($request->Status == 1) {
             $testimonialdata = Testimonial::where('published', 1)->latest()->first();
+            
             // dd($testimonialdata);
             // Initialize $newTestimonial
             $newTestimonial = [];

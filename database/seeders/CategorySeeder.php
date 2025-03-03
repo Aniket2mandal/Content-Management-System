@@ -14,7 +14,16 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
+
+        
         $faker = Faker::create();
+
+        DB::table('categories')->insert([
+            'Title' => 'Book',  
+            'Slug' => 'book',   
+            'Description' => 'A category for books.', 
+            'Status' => 0, 
+        ]);
 
         // Generate 10 fake categories
         for ($i = 0; $i < 25; $i++) {

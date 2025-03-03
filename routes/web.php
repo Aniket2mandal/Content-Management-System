@@ -76,18 +76,22 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HeaderController::class, 'index'])->name('front.home');
+Route::get('/testimonial', [HeaderController::class, 'testimonial'])->name('front.testimonial');
+
 Route::get('/list/{id}', [PostlistController::class, 'index'])->name('front.postlist');
 Route::get('/latest', [PostlistController::class, 'latestpost'])->name('front.latestpostlist');
+Route::get('/author/{id}', [PostlistController::class, 'authorpost'])->name('front.authorpost');
+
 Route::get('/detail/{id}', [PostdetailController::class, 'index'])->name('front.postdetail');
 Route::get('/search', [PostdetailController::class, 'search'])->name('front.postsearch');
-Route::get('/author/{id}', [PostlistController::class, 'authorpost'])->name('front.authorpost');
+
 // ROUTES FOR CONTACT US FORM
 Route::get('/contactus', [ContactusController::class, 'index'])->name('front.contactus');
 Route::post('/contactus/store', [ContactusController::class, 'store'])->name('front.contactstore');
 // ROUTES FOR ABOUT US PAGE
 Route::get('/aboutus', [AboutusController::class, 'index'])->name('front.aboutus');
 // ROUTE FOR TESTIMONIAL
-Route::get('/testimonial', [HeaderController::class, 'testimonial'])->name('front.testimonial');
+
 
 
 // Route::get('/front/authorlist',[AuthorlistController::class,'index'])->name('front.auhtordetail');
@@ -232,7 +236,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     // ERROR
-    Route::get('/error', [ErrorController::class, 'showError'])->name('logger.error');
+    Route::get('/logger', [ErrorController::class, 'showError'])->name('logger.error');
 });
 
 

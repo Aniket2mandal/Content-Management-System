@@ -811,7 +811,7 @@
 </section>
 @endif
 
-@if(isset($testimonial['testimonials']))
+@if(count($testimonials)>0)
 <!-- TESTIMONIAL -->
 <section class="bg0 p-t-70">
     <div class="container">

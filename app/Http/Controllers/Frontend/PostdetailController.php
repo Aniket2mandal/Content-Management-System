@@ -14,21 +14,19 @@ class PostdetailController extends Controller
         $posts = Post::with(['categories' => function ($query) {
             $query->where('Status', 1); // Fetch only active posts
         }])->has('categories')->with('authors')->where('id', $id)->first();
+        $latestpost = Post::where('Status', 1)->latest()->get();
+        // dd($latestpost);
         // dd($posts->categories->first()->Title);
         // dd($categories);
 
         // $singlepost = $posts->firstOrFail();
         // dd($singlepost);
         //    dd($singlepost->categories->first()->Title);
-        if ($posts->categories->first()->Title == "Books") {
-            $categories = Category::where('Title', 'Books')->first();
-            $bookpost = $categories->posts()->where('Status', 1)->latest()->get();
-            // dd($bookpost);
-            return view('frontend.post.postdetailsingle', compact('posts', 'bookpost'));
-        }
+     
         // dd($posts);
-        return view('frontend.post.postdetail', compact('posts'));
+        return view('frontend.post.postdetailsingle', compact('posts','latestpost'));
     }
+
 
     public function search(Request $request)
     {

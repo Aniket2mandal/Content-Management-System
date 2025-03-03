@@ -63,7 +63,6 @@ class HeaderController extends Controller
         if (file_exists($jsonsliderPath)) {
             // Get the content of the JSON file
             $jsonsliderContent = file_get_contents($jsonsliderPath);
-
             // Decode the JSON data
             $sliders = json_decode($jsonsliderContent, true);
         } else {

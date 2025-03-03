@@ -10,14 +10,15 @@
                 <a href="{{ route('front.home') }}" class="text-secondary text-decoration-none">
                     Home
                 </a>
-              
+
                 @foreach($posts->categories as $category)
                 <span class="mx-2"> </span>
                 <a href="{{route('front.postlist', $category->id)}}" class="text-muted text-decoration-none">{{ $category->Title }}</a>
+                @endforeach
                 <span class="mx-2"> </span>
                 <a href="{{ route('front.postdetail', $posts->id) }}" class="text-muted text-decoration-none">{{ $posts->Title }}</a>
-                @endforeach
-          
+
+
             </div>
 
             <form action="{{ route('front.postsearch') }}" method="GET">
@@ -31,8 +32,8 @@
         </div>
 
         <div class="p-b-70">
-         
-            @foreach($posts->categories as $category)
+
+
             <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
                 {{ $posts->Title }}
             </h3>
@@ -76,12 +77,12 @@
                         </a>
                     </p>
                     <hr class="my-4">
-                    @endforeach
-            
+
+
                 </div>
             </div>
 
-          
+
 
             <!-- Pagination -->
             <div class="d-flex justify-content-center mt-4">

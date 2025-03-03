@@ -89,7 +89,7 @@ if (!function_exists('saveTestimonials')) {
         $bhittaPath = storage_path('app/bhitta.json');
 
         if (!file_exists($folderPath)) {
-            mkdir($folderPath, 0777, true);
+            File::mkdir($folderPath, 0777, true);
         }
 
         if (file_exists($bhittaPath)) {

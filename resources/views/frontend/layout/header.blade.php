@@ -89,16 +89,16 @@
                         <li>
                             <a href="#">
                                 Pages
-                                @if($pages->count() > 1)
+                                @if($pages->count() > 0)
                                 <span class="dropdown-icon">▼</span>
                                 @endif
                             </a>
-                            @if($pages->count() > 1)
+                            @if($pages->count() > 0)
                             <ul class="sub-menu">
                                 @foreach($pages as $page)
                                 @if($page->Page_title == 'Contact page')
                                 <li><a href="{{ route('front.contactus') }}">{{ $page->Page_title }}</a></li>
-                                @elseif($page->Page_title == 'About Page')
+                                @elseif($page->Page_title == 'About page')
                                 <li><a href="{{ route('front.aboutus') }}">{{ $page->Page_title }}</a></li>
                                 @endif
                                 @endforeach

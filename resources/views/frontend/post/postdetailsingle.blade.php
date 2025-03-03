@@ -8,9 +8,11 @@
         style="background-image: url('{{ asset('images/post/' . $posts->image) }}'); background-size: cover; background-position: center;">
         <div class="container h-full flex-col-e-c p-b-58">
             <!-- Category -->
+             @foreach($posts->categories as $category)
             <a href="" class="f1-s-10 cl0 hov-cl10 trans-03 text-uppercase txt-center m-b-33">
-                {{ $posts->categories->first()->Title ?? 'Uncategorized' }}
+                {{ $category->Title  ?? 'Uncategorized' }}
             </a>
+            @endforeach
 
             <!-- Post Title -->
             <h3 class="f1-l-5 cl0 p-b-16 txt-center respon2">
@@ -20,9 +22,11 @@
             <!-- Post Meta -->
             <div class="flex-wr-c-s">
                 <span class="f1-s-3 m-rl-7 txt-center" style="color: #fff;">
+                    @foreach($posts->authors as $author)
                     <a href="#" class="f1-s-4 hov-cl10 trans-03" style="color: #fff;">
-                        by {{ $posts->authors->first()->Name ?? 'Unknown Author' }}
+                        by {{  $author->Name?? 'Unknown Author' }}
                     </a>
+                    @endforeach
                     <span class="m-rl-3">-</span>
                     <span>
                         {{ $posts->created_at->format('M d, Y') }}
@@ -54,7 +58,7 @@
 
                     <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
                         <h3 class="f1-m-2 cl12 tab01-title">
-                            Book Posts
+                            Latest Posts
                         </h3>
                     </div>
                     <div class="col-sm-12 p-r-25 p-r-15-sr991">
@@ -65,7 +69,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($bookpost->take(5) as $popular)
+                            @foreach($latestpost->take(5) as $popular)
                             <tr>
                                 <td>
                                     <a href="{{ route('front.postdetail', $popular->id) }}" class="text-muted text-decoration-none">

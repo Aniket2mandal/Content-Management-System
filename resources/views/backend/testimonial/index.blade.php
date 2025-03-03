@@ -93,7 +93,7 @@
             console.log(Status);
             $.ajax({
                 method: 'POST',
-                url: '/testimonial/statusUpdate/' + testimonialId,
+                url: '/testimonial/status/update/' + testimonialId,
                  data: {
                    '_token': '{{ csrf_token() }}',
                     'Status': Status

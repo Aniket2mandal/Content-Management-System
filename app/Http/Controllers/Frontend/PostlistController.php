@@ -27,6 +27,7 @@ class PostlistController extends Controller
         $posts = Post::with(['categories' => function ($query) {
             $query->where('Status', 1); // Fetch only active posts
         }])->has('categories')->with('authors')->latest()->paginate(4);
+        // dd($posts);
         return view('frontend.post.latestpost', compact('posts'));
     }
 

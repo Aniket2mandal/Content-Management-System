@@ -5,27 +5,27 @@
 <section class="bg0 p-b-70 p-t-5">
     <!-- Hero Section -->
     <div class="bg-img1 size-a-18 how-overlay1"
-        style="background-image: url('{{ asset('images/post/' . $singlepost->image) }}'); background-size: cover; background-position: center;">
+        style="background-image: url('{{ asset('images/post/' . $posts->image) }}'); background-size: cover; background-position: center;">
         <div class="container h-full flex-col-e-c p-b-58">
             <!-- Category -->
             <a href="" class="f1-s-10 cl0 hov-cl10 trans-03 text-uppercase txt-center m-b-33">
-                {{ $singlepost->categories->first()->Title ?? 'Uncategorized' }}
+                {{ $posts->categories->first()->Title ?? 'Uncategorized' }}
             </a>
 
             <!-- Post Title -->
             <h3 class="f1-l-5 cl0 p-b-16 txt-center respon2">
-                {{ $singlepost->Title }}
+                {{ $posts->Title }}
             </h3>
 
             <!-- Post Meta -->
             <div class="flex-wr-c-s">
                 <span class="f1-s-3 m-rl-7 txt-center" style="color: #fff;">
                     <a href="#" class="f1-s-4 hov-cl10 trans-03" style="color: #fff;">
-                        by {{ $singlepost->authors->first()->Name ?? 'Unknown Author' }}
+                        by {{ $posts->authors->first()->Name ?? 'Unknown Author' }}
                     </a>
                     <span class="m-rl-3">-</span>
                     <span>
-                        {{ $singlepost->created_at->format('M d, Y') }}
+                        {{ $posts->created_at->format('M d, Y') }}
                     </span>
                 </span>
             </div>
@@ -42,7 +42,7 @@
                     <!-- Blog Detail -->
                     <div class="p-b-70">
                         <p class="f1-s-11 cl6 p-b-25">
-                            {!! $singlepost->Description !!}
+                            {!! $posts->Description !!}
                         </p>
                     </div>
                 </div>

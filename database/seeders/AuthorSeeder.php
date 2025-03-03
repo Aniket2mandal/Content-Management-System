@@ -4,6 +4,7 @@ namespace Database\Seeders;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class AuthorSeeder extends Seeder
 {
@@ -15,6 +16,12 @@ class AuthorSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $authorImagePath = public_path('images/author');
+    
+        if (!File::exists($authorImagePath)) {
+            File::makeDirectory($authorImagePath, 0755, true); // Create directory with permissions
+        }
+    
         $imageName = $faker->image(public_path('images/author'), 400, 300, 'people', true);
         // Generate 10 fake categories
         for ($i = 0; $i < 35; $i++) {

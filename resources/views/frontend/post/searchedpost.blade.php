@@ -83,12 +83,12 @@
             @endforeach
             @else
             <div style="text-align: center; width: 100%;">
-    <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
-        <a href="" class="text-dark hov-cl10 trans-03">
-            Not Found !
-        </a>
-    </h3>
-</div>
+                <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
+                    <a href="" class="text-dark hov-cl10 trans-03">
+                        Not Found !
+                    </a>
+                </h3>
+            </div>
             @endif
         </div>
 

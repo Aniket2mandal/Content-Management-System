@@ -27,6 +27,7 @@
         </div>
 
         <!-- Main Content (Post Listing) -->
+         @if($posts->isNotEmpty())
         <div class="row">
             <div class="col-md-12">
                 <h2 class="f1-m-2 cl12 mb-4 font-weight-bold text-dark" style="font-size: 35px;">
@@ -80,6 +81,9 @@
             </div>
             @endforeach
         </div>
+        @else
+        <h3>No Posts !</h3>
+        @endif
 
         <!-- Pagination -->
         <div class="d-flex justify-content-center mt-4">

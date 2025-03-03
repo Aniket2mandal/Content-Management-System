@@ -108,7 +108,7 @@
             console.log(Status);
             $.ajax({
                 method: 'POST',
-                url: '/userstatus/' + userId,
+                url: '/user/status/' + userId,
                 data: {
                     '_token': '{{ csrf_token() }}',
                     'Status': Status

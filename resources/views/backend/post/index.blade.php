@@ -113,7 +113,7 @@
             var Status = $(this).prop('checked') ? '1' : '0';
             $.ajax({
                 method: 'POST',
-                url: '/poststatus/' + postId,
+                url: '/post/status/' + postId,
                 data: {
                     '_token': '{{csrf_token()}}',
                     'Status': Status

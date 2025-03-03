@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+
 
 
 
@@ -58,7 +60,7 @@ if (!function_exists('getLatestTestimonials')) {
         //  = storage_path('app/bhitta.json');
         $filePath  = storage_path('app/public/cache/testimonial.json');
         if (!file_exists($filePath)) {
-            return [];
+            File::makeDirectory(dirname($filePath), 0755, true, true);
         }
 
         // Get limit from JSON file (default to 5 if not set)
@@ -259,7 +261,7 @@ if (!function_exists('getLatestPartners')) {
         //  = storage_path('app/bhitta.json');
         $filePath  = storage_path('app/public/cache/partner.json');
         if (!file_exists($filePath)) {
-            return [];
+            File::makeDirectory(dirname($filePath), 0755, true, true);
         }
 
         // Get limit from JSON file (default to 5 if not set)
@@ -465,7 +467,7 @@ if (!function_exists('getLatestSliders')) {
         //  = storage_path('app/bhitta.json');
         $filePath  = storage_path('app/public/cache/slider.json');
         if (!file_exists($filePath)) {
-            return [];
+            File::makeDirectory(dirname($filePath), 0755, true, true);
         }
 
         // Get limit from JSON file (default to 5 if not set)

@@ -84,7 +84,7 @@
             console.log(Status);
             $.ajax({
                 method: 'POST',
-                url: '/authorstatus/' + authorId,
+                url: '/authors/status/' + authorId,
                 data: {
                     '_token': '{{ csrf_token() }}',
                     'Status': Status
@@ -127,7 +127,7 @@
                     console.log("yess it is");
                     $.ajax({
                         method: 'GET',
-                        url: '/author/delete/' + postId,
+                        url: '/authors/delete/' + postId,
 
                         success: function(response) {
 

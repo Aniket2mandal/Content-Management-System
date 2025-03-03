@@ -123,6 +123,7 @@ class PostController extends Controller
 
         // dd($request->file('image'));
         if ($request->hasFile('image')) {
+            
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images/post'), $imageName);
         } else {

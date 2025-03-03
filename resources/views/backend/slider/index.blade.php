@@ -102,7 +102,7 @@
             console.log(Status);
             $.ajax({
                 method: 'POST',
-                url: '/slider/statusUpdate/' + sliderId,
+                url: '/slider/status/update/' + sliderId,
                 data: {
                     '_token': '{{ csrf_token() }}',
                     'Status': Status

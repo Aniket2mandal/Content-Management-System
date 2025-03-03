@@ -440,7 +440,7 @@ a.left-topbar-item:hover {
 }
 
 .main-menu > li > a::after {
-  content: "\f2f9";
+  /* content: "\f2f9";
   font-family: Material-Design-Iconic-Font;
   font-size: 16px;
   color: #222;
@@ -450,7 +450,7 @@ a.left-topbar-item:hover {
   transition: all 0.3s;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
-  -moz-transition: all 0.3s;
+  -moz-transition: all 0.3s; */
 }
 
 li.main-menu-active > a::before {

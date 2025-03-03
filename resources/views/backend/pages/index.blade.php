@@ -122,7 +122,7 @@
             console.log(postId + Status);
             $.ajax({
                 method: 'POST',
-                url: '/pagestatus/' + postId,
+                url: '/page/status/' + postId,
                 data: {
                     '_token': '{{csrf_token()}}',
                     'Status': Status

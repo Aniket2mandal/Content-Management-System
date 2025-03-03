@@ -40,6 +40,7 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         View::composer('frontend.layout.footer', function ($view) {
             $latestPosts = Post::latest()->take(3)->get();
+            $seo=Seo::all();
             $seodescription=Seo::where('name','description')->first();
             $seophone=Seo::where('name','number')->first();
             $facebook=Seo::where('name','facebook')->first();
@@ -48,6 +49,7 @@ class ViewComposerServiceProvider extends ServiceProvider
              // Fetch latest 3 posts
             $view->with([
                 'latestPosts'=>$latestPosts,
+                'seo'=>$seo,
                 'seodescription'=>$seodescription,
                 'seophone'=>$seophone,
                 'facebook'=>$facebook,

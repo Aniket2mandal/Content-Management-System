@@ -26,30 +26,30 @@ class HeaderController extends Controller
 
 
         // Path to the JSON file
-$folderPath = storage_path('app/public/cache');
-$filePath = $folderPath . '/testimonial.json';
+        $folderPath = storage_path('app/public/cache');
+        $filePath = $folderPath . '/testimonial.json';
 
-// Check if the file exists
-if (file_exists($filePath)) {
-    // Get the content of the JSON file
-    $jsonContent = file_get_contents($filePath);
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            // Get the content of the JSON file
+            $jsonContent = file_get_contents($filePath);
 
-    // Decode the JSON data
-    $testimonialData = json_decode($jsonContent, true);
+            // Decode the JSON data
+            $testimonialData = json_decode($jsonContent, true);
 
-    // Ensure testimonials exist
-    if (isset($testimonialData['testimonials']) && is_array($testimonialData['testimonials'])) {
-        // Get the latest 2 testimonials
-        $testimonials = array_slice($testimonialData['testimonials'], 0, 2);
-        // dd($testimonials);
-    } else {
-        $testimonials = [];
-    }
-} else {
-    $testimonials = [];
-}
+            // Ensure testimonials exist
+            if (isset($testimonialData['testimonials']) && is_array($testimonialData['testimonials'])) {
+                // Get the latest 2 testimonials
+                $testimonials = array_slice($testimonialData['testimonials'], 0, 2);
+                // dd($testimonials);
+            } else {
+                $testimonials = [];
+            }
+        } else {
+            $testimonials = [];
+        }
 
-// dd($testimonials); // Debug the result
+        // dd($testimonials); // Debug the result
 
         // dd($testimonials);
 

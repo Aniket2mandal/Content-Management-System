@@ -39,6 +39,8 @@
                 </h2>
             </div>
 
+
+            @if(count($posts)>0)
             @foreach($posts as $post)
             <div class="col-md-6 mb-4">
                 <div class="card border-0 shadow-sm">
@@ -83,6 +85,7 @@
                 </div>
             </div>
             @endforeach
+            @endif
         </div>
 
         <!-- Pagination -->

@@ -15,13 +15,13 @@
                 </a>
             </div>
             <form action="{{ route('front.postsearch') }}" method="GET">
-            <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
-                <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-                <button type="submit" class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
-                    <i class="zmdi zmdi-search"></i>
-                </button>
-            </div>
-        </form>
+                <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
+                    <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
+                    <button type="submit" class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+                </div>
+            </form>
         </div>
         <!-- Main Content (Post Listing & Sidebar) -->
         <div class="row">
@@ -30,7 +30,7 @@
                 <h2 class="f1-m-2 cl12 mb-4 font-weight-bold text-dark" style="font-size: 35px;">
                     Latest Posts
                 </h2>
-
+                @if(count($posts)>0)
                 @foreach($posts as $post)
                 <div class="col-md-12 mb-4">
                     <div class="card border-0 shadow-sm">
@@ -55,28 +55,30 @@
                                 @foreach($post->categories as $category)
                                 <a href="{{route('front.postlist', $category->id)}}" class="f1-s-4 cl8 hov-cl10 trans-03">{{ $category->Title }}</a>
                                 <span class="mx-2"> </span>
-                            @if($post->authors->isNotEmpty())
-                            @foreach($post->authors as $author)
-                            <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
-                                by {{ $author->Name  }}
-                            </a>
-                            @endforeach
-                            @else
-                            <span class="text-muted">No Authors</span>
-                            @endif
-                            @endforeach
-                            <span class="m-rl-3">-</span>
-                            <span>{{ $post->created_at->format('M d, Y') }}</span>
+                                @if($post->authors->isNotEmpty())
+                                @foreach($post->authors as $author)
+                                <a href="{{ route('front.authorpost', $author->id) }}" class="f1-s-4 cl8 hov-cl10 trans-03">
+                                    by {{ $author->Name  }}
+                                </a>
+                                @endforeach
+                                @else
+                                <span class="text-muted">No Authors</span>
+                                @endif
+                                @endforeach
+                                <span class="m-rl-3">-</span>
+                                <span>{{ $post->created_at->format('M d, Y') }}</span>
                             </span>
 
                             <p class="mt-2 text-muted">
-                            {!! Str::limit(strip_tags($post->Summary), 100) !!}
+                                {!! Str::limit(strip_tags($post->Summary), 100) !!}
                             </p>
                         </div>
                     </div>
                 </div>
                 @endforeach
-
+                @else
+                <h3>No Latest Post !</h3>
+                @endif
                 <!-- Pagination -->
                 <div class="d-flex justify-content-center mt-4">
                     {{ $posts->links('pagination::bootstrap-4') }}
@@ -84,6 +86,7 @@
             </div>
 
             <!-- Sidebar (Popular Posts) -->
+             @if($posts && $posts->isNotEmpty())
             <div class="col-md-4">
                 <h3 class="f1-m-2 cl12 mb-3 font-weight-bold text-dark" style="font-size: 28px;">
                     Popular Posts
@@ -105,13 +108,13 @@
                                     </a>
                                 </td>
                                 <td>
-                                @if($popular->image)
-                                <img src="{{ asset('images/post/'.$popular->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 50px; width:50px; object-fit: cover;">
-                                @else
-                                <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
-                                    <i class="fa fa-image" style="font-size: 50px;"></i>
-                                </div>
-                                @endif
+                                    @if($popular->image)
+                                    <img src="{{ asset('images/post/'.$popular->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 50px; width:50px; object-fit: cover;">
+                                    @else
+                                    <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
+                                        <i class="fa fa-image" style="font-size: 50px;"></i>
+                                    </div>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -119,6 +122,7 @@
                     </table>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </section>

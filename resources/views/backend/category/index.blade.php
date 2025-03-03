@@ -86,7 +86,7 @@
             console.log(Status);
             $.ajax({
                 method: 'POST',
-                url: '/categorystatus/' + categoryId,
+                url: '/category/status/' + categoryId,
                 data: {
                     '_token': '{{ csrf_token() }}',
                     'Status': Status

@@ -132,6 +132,7 @@
 <!-- Post -->
 
 <!-- SLIDER -->
+@if(isset($sliders['sliders']))
 <div class="container">
     <div class="bg0 flex-wr-sb-c p-rl-20 p-tb-8">
         <div class="f2-s-1 p-r-30 size-w-0 m-tb-6 flex-wr-s-c">
@@ -176,7 +177,9 @@
     </div>
 
 </div>
+@endif
 
+@if($categories && $categories->isNotEmpty())
 <!-- FIRST CATEGORY -->
 <section class="bg0 p-t-70">
     <div class="container">
@@ -419,7 +422,7 @@
 
             <!-- Right Side: Latest Post -->
             <div class="col-md-4 col-lg-4">
-                @if($categorieslist)
+                @if(count($categorieslist)>0)
                 <div class="tab01 p-b-20">
                     <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
                         <h3 class="f1-m-2 cl12 tab01-title">
@@ -450,11 +453,6 @@
                     </div>
                 </div>
                 @endif
-                <h5 class="f1-s-3">
-                    <!-- <a href="{{route('front.latestpostlist')}}" class="f1-s-3 cl2 hov-cl10 trans-03">
-                        View All > > 
-                    </a> -->
-                </h5>
             </div>
         </div>
     </div>
@@ -811,9 +809,9 @@
         </div>
     </div>
 </section>
+@endif
 
-
-
+@if(isset($testimonial['testimonials']))
 <!-- TESTIMONIAL -->
 <section class="bg0 p-t-70">
     <div class="container">
@@ -853,6 +851,6 @@
         <!-- Pagination (if necessary) -->
     </div>
 </section>
-
+@endif
 
 @endsection

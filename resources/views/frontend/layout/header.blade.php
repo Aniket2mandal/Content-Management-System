@@ -85,34 +85,48 @@
                             <a href="{{route('front.home')}}">Home</a>
                         </li>
 
+                        @if($pages->count() > 0)
                         <li>
-                            <a href="#">About Us</a>
+                            <a href="#">
+                                Pages
+                                @if($pages->count() > 1)
+                                <span class="dropdown-icon">▼</span>
+                                @endif
+                            </a>
+                            @if($pages->count() > 1)
                             <ul class="sub-menu">
                                 @foreach($pages as $page)
-                                @if($page->Page_title=='Contact page' )
-                                <li><a href="{{route('front.contactus')}}">{{ $page->Page_title }}</a></li>
-                                @elseif($page->Page_title=='About Page')
-                                <li><a href="{{route('front.aboutus')}}">{{ $page->Page_title }}</a></li>
-                                @else
-                                <li><a href="#">{{ $page->Page_title }}</a></li>
+                                @if($page->Page_title == 'Contact page')
+                                <li><a href="{{ route('front.contactus') }}">{{ $page->Page_title }}</a></li>
+                                @elseif($page->Page_title == 'About Page')
+                                <li><a href="{{ route('front.aboutus') }}">{{ $page->Page_title }}</a></li>
                                 @endif
                                 @endforeach
                             </ul>
+                            @endif
                         </li>
+                        @endif
+
+
                         @foreach($categories->take(4) as $category)
                         <li>
-                            <a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a>
+                            <a href="{{ route('front.postlist', $category->id) }}">{{ $category->Title }}</a>
                         </li>
                         @endforeach
+
+                        @if($categories->count() > 4)
                         <li>
-                            <a href="#">More</a>
+                            <a href="#">
+                                More
+                                <span class="dropdown-icon">▼</span> <!-- Show dropdown icon only if more categories exist -->
+                            </a>
                             <ul class="sub-menu">
-                              
                                 @foreach($categories->skip(4) as $category)
-                                <li><a href="{{route('front.postlist',$category->id)}}">{{ $category->Title }}</a></li>
+                                <li><a href="{{ route('front.postlist', $category->id) }}">{{ $category->Title }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

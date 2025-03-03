@@ -185,8 +185,8 @@ class TestimonialController extends Controller
             // 'published' => $request->Status
         ];
 
-        $deleted = deleteTestimonials($newTestimonial);
-        if ($deleted) {
+       deleteTestimonials($newTestimonial);
+        if ($testimonial) {
             return response()->json(['success' => 'Testimonial deleted successfully!']);
         } else {
             return response()->json(['error' => 'Testimonial not found!'], 404);

@@ -10,14 +10,14 @@
                 <a href="{{ route('front.home') }}" class="text-secondary text-decoration-none">
                     Home
                 </a>
-                @foreach($posts as $post)
-                @foreach($post->categories as $category)
+              
+                @foreach($posts->categories as $category)
                 <span class="mx-2"> </span>
                 <a href="{{route('front.postlist', $category->id)}}" class="text-muted text-decoration-none">{{ $category->Title }}</a>
                 <span class="mx-2"> </span>
-                <a href="{{ route('front.postdetail', $post->id) }}" class="text-muted text-decoration-none">{{ $post->Title }}</a>
+                <a href="{{ route('front.postdetail', $posts->id) }}" class="text-muted text-decoration-none">{{ $posts->Title }}</a>
                 @endforeach
-                @endforeach
+          
             </div>
 
             <form action="{{ route('front.postsearch') }}" method="GET">
@@ -31,15 +31,15 @@
         </div>
 
         <div class="p-b-70">
-            @foreach($posts as $post)
-            @foreach($post->categories as $category)
+         
+            @foreach($posts->categories as $category)
             <h3 class="f1-l-3 cl2 p-b-16 p-t-33 respon2">
-                {{ $post->Title }}
+                {{ $posts->Title }}
             </h3>
 
             <div class="flex-wr-s-s p-b-40">
                 <span class="f1-s-3 cl8 m-r-15">
-                    @foreach($post->authors as $author)
+                    @foreach($posts->authors as $author)
                     <a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
                         by {{ $author->Name  }}
                     </a>
@@ -47,14 +47,14 @@
                     <span class="m-rl-3">-</span>
 
                     <span>
-                        {{ $post->created_at->format('M d, Y') }}
+                        {{ $posts->created_at->format('M d, Y') }}
                     </span>
                 </span>
             </div>
 
             <div class="wrap-pic-max-w p-b-30">
-                @if($post->image)
-                <img src="{{ asset('images/post/'.$post->image) }}"
+                @if($posts->image)
+                <img src="{{ asset('images/post/'.$posts->image) }}"
                     alt="IMG"
                     class="img-fluid w-100"
                     style="height: 500px; object-fit: contain; max-width: 100%; border-radius: 8px;">
@@ -72,12 +72,12 @@
                     <!-- Post Description -->
                     <p class="text-dark ">
                         <a href="#" class="text-dark text-decoration-none">
-                            {!! $post->Description !!}
+                            {!! $posts->Description !!}
                         </a>
                     </p>
                     <hr class="my-4">
                     @endforeach
-                    @endforeach
+            
                 </div>
             </div>
 

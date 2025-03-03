@@ -95,7 +95,7 @@
             console.log(Status);
             $.ajax({
                 method: 'POST',
-                url: '/partner/statusUpdate/' + partnerId,
+                url: '/partner/status/update/' + partnerId,
                  data: {
                    '_token': '{{ csrf_token() }}',
                     'Status': Status

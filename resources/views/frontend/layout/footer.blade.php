@@ -10,19 +10,16 @@
                     </div>
 
                     <div>
-                        @if(isset($seo['description']) && isset($seo['description']->value) && isset($seo['number']) && isset($seo['number']->value))
+                        @if(isset($seo['description']) && isset($seo['description']->value))
                         <p class="f1-s-1 cl11 p-b-16">
                             {{ $seo['description']->value }}
                         </p>
+                        @endif
+                        @if(isset($seo['number']) && isset($seo['number']->value))
                         <p class="f1-s-1 cl11 p-b-16">
                             Any questions? Call us on {{ $seo['number']->value }}
                         </p>
-                        @else
-                        <p class="f1-s-1 cl11 p-b-16">
-                            <!-- Default content if SEO data is not available -->
-                        </p>
                         @endif
-
                         <div class="p-t-15">
                             @if(isset($seo['facebook']) && isset($seo['facebook']->value))
                             <a href="{{ $seo['facebook']->value }}" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">

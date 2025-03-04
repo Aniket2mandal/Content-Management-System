@@ -18,6 +18,9 @@ class HeaderController extends Controller
         // $seo=Seo::all();
         // $seo = json_decode(json_encode(Seo::all()->toArray()));
         // dd( $seo);
+        // $seo=Seo::all();
+        // $seoData = $seo->keyBy('name');
+        // dd($seoData['number']->value);
         // Fetch active categories
         $categories = Category::with(['posts' => function ($query) {
             $query->where('Status', 1)->latest(); // Fetch only active posts

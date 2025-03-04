@@ -12,7 +12,7 @@
                     <div>
                         @if(isset($seo['description']) && isset($seo['description']->value))
                         <p class="f1-s-1 cl11 p-b-16">
-                            {{ $seo['description']->value }}
+                            {{Str::limit($seo['description']->value,200) }}
                         </p>
                         @endif
                         @if(isset($seo['number']) && isset($seo['number']->value))

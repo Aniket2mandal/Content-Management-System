@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 <body class="animsition">
     <!-- Header -->

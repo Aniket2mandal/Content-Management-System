@@ -19,8 +19,8 @@ class ContactusController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string',
-            'website' => 'string',
-            'msg' => 'required|string',
+            'website' => 'required|url|max:255',
+            'msg' => 'required|string|max:255',
         ]);
         // dd($request);
         $contact=new Contact();

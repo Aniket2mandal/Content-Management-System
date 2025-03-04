@@ -13,8 +13,10 @@ class PostdetailController extends Controller
     {
         $posts = Post::with(['categories' => function ($query) {
             $query->where('Status', 1); // Fetch only active posts
-        }])->has('categories')->with('authors')->where('id', $id)->first();
+        }])->has('categories')->with('authors')->where('id', $id)->where('Status',1)->first();
+        // dd($posts);
         $latestpost = Post::where('Status', 1)->latest()->get();
+        
         // dd($latestpost);
         // dd($posts->categories->first()->Title);
         // dd($categories);

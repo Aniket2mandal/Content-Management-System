@@ -2,6 +2,7 @@
 
 @section('content')
 <!-- Post Listing Page -->
+ 
 <section class="bg-light py-5">
     <div class="container">
         <!-- Breadcrumb -->

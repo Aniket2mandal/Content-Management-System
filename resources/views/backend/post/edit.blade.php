@@ -66,8 +66,9 @@
                 </div> -->
 
                 <div class="input-group mb-3">
+
                     <input type="file" class="form-control" id="inputGroupFile02" name="image" onchange="previewImage(event)" />
-                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                    <label class="input-group-text" for="inputGroupFile02">Choose Image</label>
 
                     @if(isset($post) && $post->image)
                     <div class="input-group mb-3 mt-2">
@@ -108,7 +109,7 @@
                 </div>
 
 
-                <div class="mb-3 col-md-4">
+                <div class="mb-3">
                     <label for="status" class="form-label">Category</label>
                     <select class="form-control select2" id="Category" name="Category[]" multiple="multiple">
                         <!-- <option value="" selected>Select Category</option> -->
@@ -122,7 +123,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 col-md-4">
+                <div class="mb-3">
                     <label for="status" class="form-label">Author</label>
                     <select class="form-control select2" id="Author" name="Author[]" multiple="multiple">
                         <!-- <option value="" selected>Select Author</option> -->

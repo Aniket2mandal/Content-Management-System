@@ -189,6 +189,7 @@
                 <div class="p-b-20">
                     <!-- Category-wise Posts -->
                     @foreach($categories->take(1) as $category)
+                    @if($category && $category->posts->isNotEmpty())
                     <div class="tab01 p-b-20">
                         <div class="tab01-head how2 how2-cl1 bocl12 flex-s-c m-r-10 m-r-0-sr991">
                             <h3 class="f1-m-2 cl12 tab01-title">
@@ -245,6 +246,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
             </div>
@@ -313,8 +315,9 @@
         </div>
     </div>
 </section>
+@endif
 
-
+@if($categories && $categories->isNotEmpty())
 <!-- SECOND CATEGORY -->
 <section class="post bg0 p-t-85">
     <div class="container">
@@ -322,6 +325,7 @@
             <!-- Left Side: Category Posts -->
             <div class="col-md-8 col-lg-8 p-b-25 m-r--10 m-r-0-sr991">
                 @foreach($categories->skip(1)->take(1) as $category) <!-- Skip the first category -->
+                @if($category && $category->posts->isNotEmpty())
                 <div class="p-b-25">
                     <div class="how2 how2-cl1 flex-s-c">
                         <h3 class="f1-m-2 cl12 tab01-title">
@@ -417,6 +421,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 @endforeach
             </div>
 
@@ -457,8 +462,10 @@
         </div>
     </div>
 </section>
+@endif
 
 
+@if($categories && $categories->isNotEmpty())
 <!-- THIRD CATEGORY -->
 <section class="post bg0 p-t-85 ">
     <div class="container">
@@ -466,7 +473,7 @@
             <div class="p-b-25 m-r--10 m-r-0-sr991">
                 <!-- Dynamic Category -->
                 @foreach($categories->skip(2)->take(1) as $category) <!-- Skip the first 2 categories -->
-                @if($category)
+                @if($category && $category->posts->isNotEmpty())
                 <div class="how2 how2-cl5 flex-s-c m-r-10 m-r-0-sr991">
                     <h3 class="f1-m-2 cl17 tab01-title">
                         {{ $category->Title }}
@@ -582,18 +589,15 @@
                         </div>
                     </div>
                 </div>
-                @else
-                <span class="f1-s-3">
-                    No Category
-                </span>
                 @endif
                 @endforeach
             </div>
         </div>
     </div>
 </section>
+@endif
 
-
+@if($categories && $categories->isNotEmpty())
 <!-- FOURTH CATEGORY -->
 <section class="post bg0 p-t-85">
     <div class="container">
@@ -601,7 +605,7 @@
             <!-- First Column (Business) -->
             <div class="col-sm-6 p-r-25 p-r-15-sr991 p-b-25">
                 @php $category = $categories->skip(3)->take(1)->first(); @endphp
-                @if($category)
+                @if($category && $category->posts->isNotEmpty())
                 <div class="how2 how2-cl2 flex-sb-c m-b-35">
                     <h3 class="f1-m-2 cl13 tab01-title">
                         {{ $category->Title }}
@@ -619,10 +623,10 @@
                     @php $firstPost = $category->posts->first(); @endphp
                     <a href="{{ route('front.postdetail', $firstPost->id) }}" class="wrap-pic-w hov1 trans-03">
                         @if($firstPost->image)
-                        <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;" alt="IMG">
+                        <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;">
                         @else
 
-                        <i class="fa fa-image" style="font-size: 300px; object-fit: cover; color: gray;"></i>
+                        <i class="fa fa-image" style="font-size: 300px;"></i>
                         @endif
                     </a>
 
@@ -662,9 +666,9 @@
                 <div class="flex-wr-sb-s m-b-30">
                     <a href="{{ route('front.postdetail', $post->id) }}" class="size-w-1 wrap-pic-w hov1 trans-03">
                         @if($post->image)
-                        <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG">
+                        <img src="{{ asset('images/post/'.$post->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;">
                         @else
-                        <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 150px; object-fit: cover; color: gray;"></i>
+                        <i class="fa fa-image" style="font-size: 300px;"></i>
                         @endif
                     </a>
 
@@ -705,7 +709,7 @@
             <!-- Second Column (Technology) -->
             <div class="col-sm-6 p-r-25 p-r-15-sr991 p-b-25">
                 @php $category = $categories->skip(4)->take(1)->first(); @endphp
-                @if($category)
+                @if($category && $category->posts->isNotEmpty())
                 <div class="how2 how2-cl6 flex-sb-c m-b-35">
                     <h3 class="f1-m-2 cl18 tab01-title">
                         {{ $category->Title }}
@@ -723,9 +727,9 @@
                     @php $firstPost = $category->posts->first(); @endphp
                     <a href="{{ route('front.postdetail', $firstPost->id) }}" class="wrap-pic-w hov1 trans-03">
                         @if($firstPost->image)
-                        <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;" alt="IMG">
+                        <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;">
                         @else
-                        <i class="fa fa-image" style="font-size: 50px;width: 100%; height: 200px; object-fit: cover; color: gray;"></i>
+                        <i class="fa fa-image" style="font-size: 300px;"></i>
                         @endif
                     </a>
 

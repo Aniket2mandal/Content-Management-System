@@ -99,7 +99,7 @@
     <script>
     $(document).ready(function() {
         $('#Permission').select2({
-      
+       allowClear:true
         });
        
     });

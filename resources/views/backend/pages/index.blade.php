@@ -46,7 +46,9 @@
                     <td>{{$page->Page_title}}</td>
                     <td>{{$page->Page_slug}}</td>
                     <td>{{$page->Page_summary}}</td>
-                    <td> {!! Str::limit($page->Page_description, 50) !!}</td>
+                    <td>
+                        {!! Str::limit($page->Page_description ?? 'No description available', 50) !!}
+                    </td>
                     <td>
 
                         <div class="form-group ">
@@ -281,12 +283,18 @@
                     });
                 },
                 error: function(xhr, status, error) {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'An error occurred while saving the page.',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                    if (xhr.status === 422) {  // 422 Unprocessable Entity (Validation error)
+                        var errors = xhr.responseJSON.errors;
+                        
+                        // Display errors on the form
+                        $.each(errors, function(key, value) {
+                            var input = $('[name="' + key + '"]');
+                            // console.log(input);
+                            input.addClass('is-invalid'); // Optional: add CSS class for invalid inputs
+                            input.after('<div class="text-danger">' + value[0] + '</div>'); // Show error message
+                            // location.reload();
+                        });
+                    }
                 }
             });
         });

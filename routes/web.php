@@ -19,14 +19,17 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\Frontend\AboutusController;
 use App\Http\Controllers\Frontend\ContactusController;
+use App\Http\Controllers\Frontend\FrontpageController;
 use App\Http\Controllers\Frontend\HeaderController;
 use App\Http\Controllers\Frontend\PostdetailController;
+
 use App\Http\Controllers\Frontend\PostlistController;
 use App\Http\Controllers\HomeController;
 use App\Models\Author;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -88,13 +91,9 @@ Route::get('/search', [PostdetailController::class, 'search'])->name('front.post
 // ROUTES FOR CONTACT US FORM
 Route::get('/contactus', [ContactusController::class, 'index'])->name('front.contactus');
 Route::post('/contactus/store', [ContactusController::class, 'store'])->name('front.contactstore');
-// ROUTES FOR ABOUT US PAGE
-Route::get('/aboutus', [AboutusController::class, 'index'])->name('front.aboutus');
-// ROUTE FOR TESTIMONIAL
+// PAGE
+Route::get('/pagedata/{slug}', [FrontpageController::class, 'pagedetail'])->name('front.pagedetail');
 
-
-
-// Route::get('/front/authorlist',[AuthorlistController::class,'index'])->name('front.auhtordetail');
 
 
 Auth::routes();

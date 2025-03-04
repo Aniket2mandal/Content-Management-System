@@ -40,27 +40,27 @@
                 <div class="p-r-10 p-r-0-sr991">
                     <form id="contactForm" enctype="multipart/form-data">
                         @csrf
-                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" value="{{ old('name') }}" name="name" placeholder="Name*">
+                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-12" type="text" value="{{ old('name') }}" name="name" placeholder="Name*">
                         @error('name')
-                        <div class="text-danger">{{ $message }}</div>
+                        <div class="text-danger" style="margin-top: -10; margin-bottom: 15px;">{{ $message }}</div>
                         @enderror
 
-                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="email" value="{{ old('email') }}" name="email" placeholder="Email*">
+                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-12" type="email" value="{{ old('email') }}" name="email" placeholder="Email*">
                         @error('email')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" value="{{ old('website') }}" name="website" placeholder="Website">
+                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-12" type="text" value="{{ old('website') }}" name="website" placeholder="Website">
                         @error('website')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <textarea class="bo-1-rad-3 bocl13 size-a-15 f1-s-13 cl5 plh6 p-rl-18 p-tb-14 m-b-20" name="msg" placeholder="Your Message">{{ old('msg') }}</textarea>
+                        <textarea class="bo-1-rad-3 bocl13 size-a-15 f1-s-13 cl5 plh6 p-rl-18 p-tb-14 m-b-12" name="msg" placeholder="Your Message">{{ old('msg') }}</textarea>
                         @error('msg')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
 
-                        <button type="submit" class="size-a-20 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-20">
+                        <button type="submit" class="size-a-20 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-12">
                             Send
                         </button>
                     </form>
@@ -146,7 +146,7 @@
                     // SweetAlert2 success popup
                     Swal.fire({
                         title: 'Success!',
-                        text: 'The category deleted sucessfully.',
+                        text: 'Message Sent Successfully',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
@@ -163,8 +163,9 @@
                         // Display errors on the form
                         $.each(errors, function(key, value) {
                             var input = $('[name="' + key + '"]');
+                            // console.log(input);
                             input.addClass('is-invalid'); // Optional: add CSS class for invalid inputs
-                            input.after('<div class="text-danger">' + value[0] + '</div>'); // Show error message
+                            input.after('<div class="text-danger" style="margin-top: -10; margin-bottom: 15px;">' + value[0] + '</div>'); // Show error message
                             // location.reload();
                         });
                     }

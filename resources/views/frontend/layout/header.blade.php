@@ -2,7 +2,7 @@
 <header>
     <!-- Header desktop -->
     <div class="container-menu-desktop">
-        
+
 
         <!-- Logo and Banner -->
         <div class="wrap-logo container">
@@ -33,19 +33,34 @@
 
                         @if($pages->count() > 0)
                         <li>
-                            <a href="#">
-                                Pages
-                                @if($pages->count() > 0)
+                            @foreach($pages->take(1) as $page)
+                            @if($page->Page_title != 'Contact page')
+                            <a href="{{ route('front.pagedetail', $page->Page_slug) }}">
+                                {{ $page->Page_title }}
+                                @if($pages->count() > 1)
                                 <span class="dropdown-icon">▼</span>
                                 @endif
                             </a>
-                            @if($pages->count() > 0)
+                            @else
+                            <a href="{{ route('front.contactus') }}">
+                                {{ $page->Page_title }}
+                                @if($pages->count() > 1)
+                                <span class="dropdown-icon">▼</span>
+                                @endif
+                            </a>
+                            @endif
+                            @endforeach
+
+                            @if($pages->count() > 1)
                             <ul class="sub-menu">
-                                @foreach($pages as $page)
+                                @foreach($pages->skip(1) as $page)
+                                @if($page->Page_title != 'Contact page')
+                                <li><a href="{{ route('front.pagedetail',$page->Page_slug) }}">{{ $page->Page_title }}</a></li>
+                                @endif
+                                @endforeach
+                                @foreach($pages->skip(1) as $page)
                                 @if($page->Page_title == 'Contact page')
                                 <li><a href="{{ route('front.contactus') }}">{{ $page->Page_title }}</a></li>
-                                @elseif($page->Page_title == 'About page')
-                                <li><a href="{{ route('front.aboutus') }}">{{ $page->Page_title }}</a></li>
                                 @endif
                                 @endforeach
                             </ul>

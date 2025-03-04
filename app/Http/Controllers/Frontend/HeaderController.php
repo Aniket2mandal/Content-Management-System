@@ -76,6 +76,11 @@ class HeaderController extends Controller
             $sliders = [];
         }
         // dd($sliders);
-        return view('frontend.index', compact('categories', 'latestPost', 'categorieslist', 'testimonials', 'sliders'));
+
+        // FOR NAVIGATION
+        $pages=Page::where('Page_status',1)->get();
+        
+        // dd($pages);
+        return view('frontend.index', compact('categories', 'latestPost', 'categorieslist', 'testimonials', 'sliders','pages'));
     }
 }

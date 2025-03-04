@@ -23,6 +23,10 @@
                         class="form-control"
                         id="title"
                         name="Title" />
+                        {{-- Error Message --}}
+                    @error('Title')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Slug Field (Required) -->
@@ -34,6 +38,10 @@
                         id="Description"
                         name="Description"
                         rows="5"></textarea>
+                        {{-- Error Message --}}
+                    @error('Description')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Description Field with TinyMCE Editor -->
@@ -45,6 +53,10 @@
                         id="Description"
                         name="Summary"
                         rows="5"></textarea>
+                        {{-- Error Message --}}
+                    @error('Summary')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- <div class="mb-3 ">
@@ -54,6 +66,10 @@
                 <div class="input-group mb-3">
                     <input type="file" class="form-control" id="inputGroupFile02" name="image" onchange="previewImage(event)" />
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                    {{-- Error Message --}}
+                    @error('image')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Image Preview -->

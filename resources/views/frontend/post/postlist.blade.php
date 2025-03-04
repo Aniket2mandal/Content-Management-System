@@ -43,7 +43,7 @@
                         <img src="{{ asset('images/post/'.$post->image) }}" alt="IMG" class="card-img-top rounded-top" style="height: 300px; object-fit: cover;">
                         @else
                         <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 300px;">
-                            <i class="fa fa-image" style="font-size: 50px;"></i>
+                           <i class="fa fa-image" style="font-size: 300px;"></i>
                         </div>
                         @endif
                     </a>

@@ -62,9 +62,6 @@
                             @endif
                         </td>
                         <td>
-                        @can('edit seo', \App\Models\Seo::class)
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            @endcan
                             @can('delete seo', \App\Models\Seo::class)
                             <button type="button" class="delete-btn btn btn-danger delete-field"
                                 data-id="{{ $seo->id }}">Delete</button>
@@ -74,6 +71,9 @@
                 @endforeach
             </tbody>
         </table>
+        @can('edit seo', \App\Models\Seo::class)
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            @endcan
         {!! Form::close() !!}  
       
 

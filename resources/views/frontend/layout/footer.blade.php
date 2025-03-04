@@ -10,22 +10,35 @@
                     </div>
 
                     <div>
-                        @if($seodescription && $seophone)
+                        @if(isset($seo['description']) && isset($seo['description']->value) && isset($seo['number']) && isset($seo['number']->value))
                         <p class="f1-s-1 cl11 p-b-16">
-                            {{ $seodescription->value }}
+                            {{ $seo['description']->value }}
                         </p>
                         <p class="f1-s-1 cl11 p-b-16">
-                            Any questions? Call us on {{ $seophone->value }}
+                            Any questions? Call us on {{ $seo['number']->value }}
                         </p>
                         @else
                         <p class="f1-s-1 cl11 p-b-16">
-
+                            <!-- Default content if SEO data is not available -->
                         </p>
                         @endif
+
                         <div class="p-t-15">
-                            @if($facebook)
-                            <a href="{{$facebook->value}}" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
+                            @if(isset($seo['facebook']) && isset($seo['facebook']->value))
+                            <a href="{{ $seo['facebook']->value }}" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
                                 <span class="fab fa-facebook-f"></span>
+                            </a>
+                            @endif
+
+                            @if(isset($seo['instagram']) && isset($seo['instagram']->value))
+                            <a href="{{ $seo['instagram']->value }}" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
+                                <span class="fab fa-instagram"></span>
+                            </a>
+                            @endif
+
+                            @if(isset($seo['youtube']) && isset($seo['youtube']->value ))
+                            <a href="{{ $seo['youtube']->value }}" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
+                                <span class="fab fa-youtube"></span>
                             </a>
                             @endif
                         </div>
@@ -73,66 +86,23 @@
                     </ul>
                 </div>
 
-
-                <!-- <div class="col-sm-6 col-lg-4 p-b-20">
-                    <div class="size-h-3 flex-s-c">
-                        <h5 class="f1-m-7 cl0">
-                            Category
-                        </h5>
-                    </div>
-
-                    <ul class="m-t--12">
-                        <li class="how-bor1 p-rl-5 p-tb-10">
-                            <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
-                                Fashion (22)
-                            </a>
-                        </li>
-
-                        <li class="how-bor1 p-rl-5 p-tb-10">
-                            <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
-                                Technology (29)
-                            </a>
-                        </li>
-
-                        <li class="how-bor1 p-rl-5 p-tb-10">
-                            <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
-                                Street Style (15)
-                            </a>
-                        </li>
-
-                        <li class="how-bor1 p-rl-5 p-tb-10">
-                            <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
-                                Life Style (28)
-                            </a>
-                        </li>
-
-                        <li class="how-bor1 p-rl-5 p-tb-10">
-                            <a href="#" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
-                                DIY & Crafts (16)
-                            </a>
-                        </li>
-                    </ul>
-                </div> -->
             </div>
         </div>
     </div>
 
+    <!-- COPYRIGHT BAR -->
     <div class="bg11">
         <div class="container size-h-4 flex-c-c p-tb-15">
             <span class="f1-s-1 cl0 txt-center">
 
-            @if($copyrightlink && $copyrighttitle)
+                @if(isset($seo['copyright_link']) && isset($seo['copyright_link']->value) && isset($seo['copyright_title']) && isset($seo['copyright_title']->value))
                 <a href="#" class="f1-s-1 cl10 hov-link1"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>
                         document.write(new Date().getFullYear());
-                    </script> All rights reserved | by <a href="{{$copyrightlink->value}}" target="_blank">{{$copyrighttitle->value}}</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                     @else
-                     <a href="#" class="f1-s-1 cl10 hov-link1"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>
-                        document.write(new Date().getFullYear());
-                    </script> All rights reserved | by <a href="" target="_blank"></a>
+                    </script> All rights reserved | by <a href="{{$seo['copyright_link']->value}}" target="_blank">{{$seo['copyright_title']->value}}</a>
                     @endif
+               
+
             </span>
         </div>
     </div>

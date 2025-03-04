@@ -128,6 +128,9 @@
             // Create FormData object
             var formData = new FormData(this);
 
+            $('#contactForm .text-danger').remove();
+            $('#contactForm .is-invalid').removeClass('is-invalid');
+
             // Log FormData content (iterate over its entries)
             for (var pair of formData.entries()) {
                 console.log(pair[0] + ': ' + pair[1]); // Log each field name and value
@@ -146,7 +149,11 @@
                         text: 'The category deleted sucessfully.',
                         icon: 'success',
                         confirmButtonText: 'OK'
-                    });
+                    }).then(() => {
+                        $('#contactForm')[0].reset();
+                                // Remove the post element from the DOM (you can select the post by its ID or class)
+                                // Assuming each post has an id like "post-1", "post-2", etc.
+                            });
                 },
                 error: function(xhr) {
                     // This is the key part: Handle validation errors
@@ -158,6 +165,7 @@
                             var input = $('[name="' + key + '"]');
                             input.addClass('is-invalid'); // Optional: add CSS class for invalid inputs
                             input.after('<div class="text-danger">' + value[0] + '</div>'); // Show error message
+                            // location.reload();
                         });
                     }
                 }

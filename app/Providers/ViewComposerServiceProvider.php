@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Seo;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,20 +42,12 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer('frontend.layout.footer', function ($view) {
             $latestPosts = Post::latest()->take(3)->get();
             $seo=Seo::all();
-            $seodescription=Seo::where('name','description')->first();
-            $seophone=Seo::where('name','number')->first();
-            $facebook=Seo::where('name','facebook')->first();
-            $copyrightlink=Seo::where('name','copyright_link')->first();
-            $copyrighttitle=Seo::where('name','copyright_title')->first();
+            $seoData = $seo->keyBy('name');
+          
              // Fetch latest 3 posts
             $view->with([
                 'latestPosts'=>$latestPosts,
-                'seo'=>$seo,
-                'seodescription'=>$seodescription,
-                'seophone'=>$seophone,
-                'facebook'=>$facebook,
-                'copyrightlink'=>$copyrightlink,
-                'copyrighttitle'=>$copyrighttitle
+                'seo'=>$seoData,
         ]);
         });
     

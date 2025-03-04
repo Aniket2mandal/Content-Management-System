@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Seo;
 use Illuminate\Http\Request;
 
 
@@ -14,6 +15,9 @@ class HeaderController extends Controller
 {
     public function index()
     {
+        // $seo=Seo::all();
+        // $seo = json_decode(json_encode(Seo::all()->toArray()));
+        // dd( $seo);
         // Fetch active categories
         $categories = Category::with(['posts' => function ($query) {
             $query->where('Status', 1)->latest(); // Fetch only active posts

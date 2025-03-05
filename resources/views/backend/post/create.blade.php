@@ -72,7 +72,6 @@
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-
                 <!-- Image Preview -->
                 <div class="mt-3" id="imagePreviewContainer" style="position: relative; display: none;">
                     <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="width: 100px; border: 1px solid #ddd; padding: 5px;">
@@ -126,6 +125,7 @@
 </div>
 <!--end::Quick Example-->
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function previewImage(event) {
         var reader = new FileReader();
@@ -154,5 +154,7 @@
         outputContainer.style.display = 'none';
         closeButton.style.display = 'none';
     }
+
+    
 </script>
 @endsection

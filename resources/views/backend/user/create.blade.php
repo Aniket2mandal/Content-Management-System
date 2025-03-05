@@ -50,5 +50,14 @@
         reader.readAsDataURL(event.target.files[0]);
     }
 
+    function removeImage() {
+        var output = document.getElementById('imagePreview');
+      
+        var outputContainer = document.getElementById('imagePreviewContainer');
+        var closeButton = document.querySelector('#imagePreviewContainer .btn-close');
+        output.src = '#';
+        outputContainer.style.display = 'none';
+        closeButton.style.display = 'none';
+    }
 </script>
 @endsection

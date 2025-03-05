@@ -164,6 +164,7 @@
 </div>
 <!--end::Quick Example-->
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function previewImage(event) {
         var reader = new FileReader();
@@ -198,5 +199,6 @@
         fileInput.value = '';
         output.src = '#';
     }
+
 </script>
 @endsection

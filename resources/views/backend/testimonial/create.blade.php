@@ -31,7 +31,6 @@
 </div>
 
 <script>
-
     function previewImage(event) {
         var reader = new FileReader();
         reader.onload = function() {
@@ -49,6 +48,18 @@
             closeButton.style.display = 'block';
         };
         reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function removeImage() {
+        var output = document.getElementById('imagePreview');
+        // var mainoutput = document.getElementById('mainimage');
+
+        var outputContainer = document.getElementById('imagePreviewContainer');
+        var closeButton = document.querySelector('#imagePreviewContainer .btn-close');
+        output.src = '#';
+        // mainoutput.src = '#';
+        outputContainer.style.display = 'none';
+        closeButton.style.display = 'none';
     }
 
 </script>

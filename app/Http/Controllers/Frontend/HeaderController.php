@@ -26,10 +26,11 @@ class HeaderController extends Controller
             $query->where('Status', 1)->latest(); // Fetch only active posts
         }, 'posts.authors'])->has('posts')->where('Status', 1)->get();
 
+
         // // Fetch the latest post
         $latestPost = Post::where('Status', 1)->latest()->first();
         $categorieslist = Category::where('Status', 1)->latest()->get();
-        // dd($categorieslist);
+      
 
 
         // Path to the JSON file

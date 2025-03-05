@@ -625,8 +625,7 @@
                         @if($firstPost->image)
                         <img src="{{ asset('images/post/'.$firstPost->image) }}" style="font-size: 50px;width: 100%; height: 300px; object-fit: cover; color: gray;">
                         @else
-
-                        <i class="fa fa-image" style="font-size: 300px;"></i>
+                        <i class="fa fa-image fa-5x" style="display: block; text-align: center; color: gray;"></i>
                         @endif
                     </a>
 

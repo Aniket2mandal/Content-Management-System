@@ -21,13 +21,15 @@
     {!! Form::file('image', ['class' => 'form-control','onchange'=>'previewImage(event)']) !!}
     {{-- Display Current Image if Available --}}
     @if(!empty($slider['image']))
-        <div class="mt-2">
-            <img src="{{ asset('storage/' . $slider->image) }}" alt="Current Image" class="img-thumbnail" width="150">
+        <div class="mt-2 " style="position: relative;">
+            <img src="{{ asset('storage/' . $slider->image) }}"id="mainimage"class="mainimage img-thumbnail" width="150">
         </div>
     @endif
        <!-- Image Preview -->
        <div class="mt-3" id="imagePreviewContainer" style="position: relative; display: none;">
         <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="width: 100px; border: 1px solid #ddd; padding: 5px;">
+         <!-- Cross Button to Remove Image (Initially Hidden) -->
+         <button type="button" class="btn-close" aria-label="Close" onclick="removeImage()" style="position: absolute; top: 5px; right: 5px; display: none;"></button>
         </div>
     {{-- Error Message --}}
     @error('image')

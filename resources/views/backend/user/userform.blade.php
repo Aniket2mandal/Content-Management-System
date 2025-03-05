@@ -46,6 +46,8 @@
     <div class="text-danger">{{ $message }}</div>
     @enderror
     @endif
+
+    {!! Form::label('image', 'Image:', ['class' => 'form-label']) !!}
     {!! Form::file('image', ['class' => 'form-control', 'id' => 'Image','onchange'=>'previewImage(event)']) !!}
     <div class="input-group mb-3 mt-2">
         @if(isset($user) && $user->userimage && $user->userimage->image)

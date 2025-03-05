@@ -68,6 +68,7 @@
         </button> -->
 
                 <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupFile02">Image</label>
                     <input type="file" class="form-control" id="inputGroupFile02" name="image" onchange="previewImage(event)" />
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
                     {{-- Error Message --}}
@@ -78,6 +79,7 @@
 
                 <!-- Image Preview -->
                 <div class="mt-3" id="imagePreviewContainer" style="position: relative; display: none;">
+             
                     <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="width: 100px; border: 1px solid #ddd; padding: 5px;">
 
                     <!-- Cross Button to Remove Image (Initially Hidden) -->

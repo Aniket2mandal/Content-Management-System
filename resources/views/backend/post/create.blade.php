@@ -64,6 +64,7 @@
                    <button type="button" class="btn btn-success" id="Status">Active</button>
                 </div> -->
                 <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupFile02">Image</label>
                     <input type="file" class="form-control" id="inputGroupFile02" name="image" onchange="previewImage(event)" />
                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
                     {{-- Error Message --}}

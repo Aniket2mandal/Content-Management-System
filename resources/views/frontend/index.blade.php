@@ -159,7 +159,7 @@
                 <span class="dis-inline-block slide100-txt-item animated visible-false">
 
                     <div class="banner-header">
-                        <a href={{$slider['url']}}>
+                        <a href={{$slider['url']}}  target="_blank">
 
                             @if($slider['image'])
                             <img src="{{ asset('storage/' . $slider['image']) }}" style="width:450px;height:100px; object-fit:cover" alt="IMG">

@@ -159,7 +159,7 @@
                 <span class="dis-inline-block slide100-txt-item animated visible-false">
 
                     <div class="banner-header">
-                        <a href={{$slider['url']}}  target="_blank">
+                        <a href={{$slider['url']}} target="_blank">
 
                             @if($slider['image'])
                             <img src="{{ asset('storage/' . $slider['image']) }}" style="width:450px;height:100px; object-fit:cover" alt="IMG">
@@ -597,11 +597,14 @@
 </section>
 @endif
 
+
+
 @if($categories && $categories->isNotEmpty())
 <!-- FOURTH CATEGORY -->
 <section class="post bg0 p-t-85">
     <div class="container">
         <div class="row justify-content-center">
+
             <!-- First Column (Business) -->
             <div class="col-sm-6 p-r-25 p-r-15-sr991 p-b-25">
                 @php $category = $categories->skip(3)->take(1)->first(); @endphp
@@ -854,6 +857,9 @@
         <!-- Pagination (if necessary) -->
     </div>
 </section>
+
+{{-- <
+script src="http://127.0.0.1:8000/embed-container/56" id="56" data-env="http://127.0.0.1:8000" data-version="v0.3" data-color="33ae3f" data-text="Book Now" data-showreviews="true"></script> --}}
 @endif
 
 @endsection
